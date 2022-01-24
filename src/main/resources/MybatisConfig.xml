@@ -4,11 +4,25 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 	<typeAliases>
-			<!-- VO 추 -->
-			<typeAlias type="com.springprj.www.security.MemberVO" alias="mvo"/>
-		<typeAlias type="com.springprj.www.security.AuthVO" alias="authVO"/>
+		<!-- VO 추 -->
+		<typeAlias type="com.springprj.www.security.MemberVO"
+			alias="mvo" />
+		<typeAlias type="com.springprj.www.security.AuthVO"
+			alias="authVO" />
+
+		<typeAlias type="com.springprj.www.domain.ReviewVO"
+			alias="rvvo" />
+
+		<typeAlias type="com.springprj.www.domain.RatingVO"
+			alias="rtvo" />
+
+		<typeAlias type="com.springprj.www.domain.LikeVO"
+			alias="lvo" />
+		<typeAlias type="com.springprj.www.domain.MovieVO"
+			alias="mvvo" />
+
 	</typeAliases>
 </configuration>

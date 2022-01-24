@@ -1,0 +1,54 @@
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+nav {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid #000;
+  height: 60px;
+  padding: 0 20px;
+  justify-content: space-between;
+  background-color: #082546;
+  align-items: center;
+}
+
+#logo {
+  font-size: 1.8rem;
+  color: #57b4d8;
+  font-weight: 900;
+  letter-spacing: 3px;
+  margin: 30px;
+}
+.menu {
+  display: inline-block;
+  margin: 0 10px;
+  color: #fff;
+}
+
+#left {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+#right {
+  display: flex;
+  flex-direction: row;
+}
+.movieList {
+  height: 10rem;
+  border-bottom: 1px #aab1b1;
+}
+.movieListContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.movieCard {
+  background-color: grey;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+}

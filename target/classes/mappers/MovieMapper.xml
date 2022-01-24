@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springprj.www.repository.MovieDAO">
+	<!-- movie -->
+	<select id="selectLikedMovieList" parameterType="string" resultType="mvvo">
+		select m.*
+		from (select mid from m_like where email = #{email}) l 
+		left join movie m on l.mid = m.mid  
+	</select>
+	
+	<select id="selectRatedMovieList" parameterType="string" resultType="mvvo">
+		select m.*
+		from (select mid from m_rating where email = #{email}) l
+		left join movie m on l.mid = m.mid		
+	</select>
+	
+	<select id="selectReviewedMovieList" parameterType="string" resultType="mvvo">
+		select m.* 
+		from (select mid from m_review where writer = #{email}) l
+		left join movie m on l.mid = m.mid
+	</select>
+	
+	<insert id="insertMovieData" parameterType="mvvo">
+		insert into movie(mid, title,
+		<if test="poster != null">
+		 poster,
+		</if>
+		  like_cnt)
+		values(#{mid}, #{title},
+		<if test="poster != null">
+		 ${poster}, 
+		</if>
+		 #{likeCnt})
+	</insert>
+
+	<!-- review -->
+	<select id="seleListMovieReview" parameterType="long" resultType="rvvo">
+		select * from m_review where mid = #{mid}
+	</select>
+	
+	<select id="selectOneMovieReview"  resultType="rvvo">
+		select * from m_review where mid = #{mid} and writer = #{writer}
+	</select>
+	
+	<insert id="insertMovieReview" parameterType="rvvo">
+		insert into m_review(mid, writer, content) values(#{mid}, #{writer}, #{content})
+	</insert>
+	
+	<update id="updateMovieReview" parameterType="rvvo">
+		update m_review set content = #{content} , mod_at = now() where mid = #{mid} and writer = #{writer}
+	</update>
+	
+	<delete id="deleteMovieReview">
+		delete from m_review where mid = #{mid} and email = #{email}
+	</delete>
+	
+	<!-- like -->
+	<select id="selectMovieLikeCount" parameterType="long" resultType="int">
+		select count(email) from m_like where mid = #{mid}
+	</select>
+	
+	<select id="selectOneMovieLike" resultType="int">
+		select count(email) from m_like where mid = #{mid} and email = #{email}
+	</select>
+	
+	<insert id="insertMovieLike" parameterType="lvo">
+		insert into m_like(mid, email) values(#{mid}, #{email})
+	</insert>
+	
+	<delete id="deleteMovieLike" >
+		delete from m_like where mid = #{mid} and email = #{email}
+	</delete>
+
+	<!-- rating -->
+	<select id="selectMovieAvgRating" resultType="double">
+		select round(avg(rating), 1) from m_rating where mid = #{mid}
+	</select>
+	
+	<select id="selectOneMovieRating" resultType="double">
+		select rating from m_rating where mid = #{mid} and email = #{email}
+	</select>
+	
+	<insert id="insertMovieRating" parameterType="rtvo">
+		insert into m_rating(mid, email, rating) values(#{mid}, #{email}, #{rating})
+	</insert>
+	
+	<update id="updateMovieRating" parameterType="rtvo">
+		update m_rating set rating = #{rating} where mid = #{mid} and email = #{email}
+	</update>
+	
+	<delete id="deleteMovieRating" >
+		delete from m_rating where mid = #{mid} and email = #{email}
+	</delete>
+	
+</mapper>
