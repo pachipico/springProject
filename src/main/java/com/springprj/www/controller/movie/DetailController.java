@@ -13,9 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/movie/detail/*")
 public class DetailController {
 
-	@GetMapping("/{id}")
-	public String detail(Model model,@PathVariable("id") long id) {
-		model.addAttribute("id", id);
-		return "detail";
-	}
+//	@GetMapping("/{id}")
+//	public String detail(Model model,@PathVariable("id") long id) {
+//		model.addAttribute("id", id);
+//		return "detail";
+//	}
 }

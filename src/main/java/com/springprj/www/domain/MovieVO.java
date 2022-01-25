@@ -15,6 +15,6 @@ public class MovieVO {
 	private long mid;
 	private String title;
 	private String poster;
-	private int likeCnt;
+//	private int likeCnt;
 
 }

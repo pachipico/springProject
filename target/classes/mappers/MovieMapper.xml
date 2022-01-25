@@ -4,35 +4,39 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springprj.www.repository.MovieDAO">
 	<!-- movie -->
-	<select id="selectLikedMovieList" parameterType="string" resultType="mvvo">
+	<select id="selectOneMovie" parameterType="long" resultType="mvvo">
+		select * from movie where mid = #{mid}
+	</select>
+	
+	<select id="selectUserLikedMovieList" parameterType="string" resultType="mvvo">
 		select m.*
 		from (select mid from m_like where email = #{email}) l 
 		left join movie m on l.mid = m.mid  
 	</select>
 	
-	<select id="selectRatedMovieList" parameterType="string" resultType="mvvo">
+	<select id="selectUserRatedMovieList" parameterType="string" resultType="mvvo">
 		select m.*
 		from (select mid from m_rating where email = #{email}) l
 		left join movie m on l.mid = m.mid		
 	</select>
 	
-	<select id="selectReviewedMovieList" parameterType="string" resultType="mvvo">
+	<select id="selectUserReviewedMovieList" parameterType="string" resultType="mvvo">
 		select m.* 
 		from (select mid from m_review where writer = #{email}) l
 		left join movie m on l.mid = m.mid
 	</select>
 	
 	<insert id="insertMovieData" parameterType="mvvo">
-		insert into movie(mid, title,
+		insert into movie(mid, title
 		<if test="poster != null">
-		 poster,
+		 , poster
 		</if>
-		  like_cnt)
-		values(#{mid}, #{title},
+		 )
+		values(#{mid}, #{title}
 		<if test="poster != null">
-		 ${poster}, 
+		 , #{poster}
 		</if>
-		 #{likeCnt})
+		 )
 	</insert>
 
 	<!-- review -->
@@ -58,7 +62,7 @@
 	
 	<!-- like -->
 	<select id="selectMovieLikeCount" parameterType="long" resultType="int">
-		select count(email) from m_like where mid = #{mid}
+		select count(email) likeCount from m_like where mid = #{mid}
 	</select>
 	
 	<select id="selectOneMovieLike" resultType="int">
@@ -75,7 +79,7 @@
 
 	<!-- rating -->
 	<select id="selectMovieAvgRating" resultType="double">
-		select round(avg(rating), 1) from m_rating where mid = #{mid}
+		select round(avg(rating), 1) avgRating from m_rating where mid = #{mid}
 	</select>
 	
 	<select id="selectOneMovieRating" resultType="double">

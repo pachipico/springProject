@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootConfig.class)
 @Slf4j
-public class MovieTest {
+public class MovieDAOTest {
 
 	@Inject 
 	private MovieDAO mdao;
@@ -36,17 +36,17 @@ public class MovieTest {
 	
 	@Test
 	public void getLikedMovieList() {
-		mdao.selectLikedMovieList("123@123.com");
+		mdao.selectUserLikedMovieList("123@123.com");
 	}
 	
 	@Test
 	public void getRatedMovieList() {
-		mdao.selectRatedMovieList("test2@test.com");
+		mdao.selectUserRatedMovieList("test2@test.com");
 	}
 	
 	@Test 
 	public void getReviewedMovieList() {
-		mdao.selectReviewedMovieList("123@123.com");
+		mdao.selectUserReviewedMovieList("123@123.com");
 	}
 	
 	
