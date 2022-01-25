@@ -137,19 +137,19 @@ public class ListController {
 	}
 	
 	// ======================== 유저가 평점,즐겨찾기,평점 남긴 영화 리스트 ==========================
-	@PostMapping("/movie/liked/{email}")
+	@GetMapping("/{email}/liked")
 	public ResponseEntity<List<MovieVO>> getUserLikedMovieList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserLikedList(email);
 		return list.size() > 0 ? new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK) : new ResponseEntity<List<MovieVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping(value = "/movie/{email}/reviewed", produces = {MediaType.APPLICATION_JSON_VALUE})
+	@GetMapping(value = "/{email}/reviewed", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<MovieVO>> getUserReviewedList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserReviewedList(email);
 		return list.size() > 0 ? new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK) : new ResponseEntity<List<MovieVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping(value = "/movie/{email}/rated")
+	@GetMapping(value = "/{email}/rated")
 	public ResponseEntity<List<MovieVO>> getUserRatedList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserRatedList(email);
 		return list.size() > 0 ? new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK) : new ResponseEntity<List<MovieVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
