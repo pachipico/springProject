@@ -27,7 +27,7 @@ public class MovieServiceImpl implements MovieService {
 	public int registerMovieIfNotExists(MovieVO mvvo) {
 		int isUp = 0;
 		if (mdao.selectOneMovie(mvvo.getMid()) != null) {
-			isUp = 1;
+			isUp = 0;
 		} else {
 			isUp = mdao.insertMovieData(mvvo);
 		}
@@ -106,10 +106,8 @@ public class MovieServiceImpl implements MovieService {
 	@Override
 	@Transactional
 	public Double registerRating(RatingVO rtvo) {
-		Double res = mdao.selectOneMovieRating(rtvo.getMid(), rtvo.getEmail());
-		log.info("register rating result: {}", res);
-		if( res == null) {
-			mdao.insertMovieRating(rtvo);			
+		if(mdao.selectOneMovieRating(rtvo.getMid(), rtvo.getEmail()) == null) {
+			mdao.insertMovieRating(rtvo);
 		}
 		return mdao.selectMovieAvgRating(rtvo.getMid());
 	}

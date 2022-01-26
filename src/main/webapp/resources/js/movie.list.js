@@ -33,7 +33,7 @@ const renderMovies = async (json, page = 1) => {
   json.forEach((movie) => {
     const card = `
     <div class="cards col-lg-3">
-    <img
+    <img id="listImg"
     src="https://www.themoviedb.org/t/p/w440_and_h660_face${movie.poster_path}"
     alt=""
     />

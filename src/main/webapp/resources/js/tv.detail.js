@@ -16,7 +16,7 @@ let userData = {
 };
 const getMovieDetail = async () => {
   try {
-    const url = `https://api.themoviedb.org/3/${category}/${detailId}?api_key=${API_KEY}&language=ko-KR`;
+    const url = `https://api.themoviedb.org/3/movie/${detailId}?api_key=${API_KEY}&language=ko-KR`;
     const res = await fetch(url);
     const result = res.json();
     return await result;
@@ -27,7 +27,7 @@ const getMovieDetail = async () => {
 
 const getCredits = async () => {
   try {
-    const url = `https://api.themoviedb.org/3/${category}/${detailId}/credits?api_key=${API_KEY}&language=ko-KR`;
+    const url = `https://api.themoviedb.org/3/tv/${detailId}/credits?api_key=${API_KEY}&language=ko-KR`;
     const res = await fetch(url);
     const result = await res.json();
     return await result;
@@ -38,7 +38,7 @@ const getCredits = async () => {
 
 const getMovieData = async () => {
   try {
-    const url = `/${category}/${detailId}`;
+    const url = `/movie/${detailId}`;
     const res = await fetch(url);
     const result = await res.json();
     return await result;
@@ -49,7 +49,7 @@ const getMovieData = async () => {
 const renderDetail = (json) => {
   console.log("movie detail: ", json);
   poster.setAttribute("src", `https://www.themoviedb.org/t/p/w300_and_h450_face${json.poster_path}`);
-  movieTitle.innerText = category == "movie" ? json.title : json.name;
+  movieTitle.innerText = json.title;
   tagline.innerText = json.tagline;
   overview.innerText = json.overview;
   rating.innerText = json.vote_average * 10 + "%";
@@ -71,7 +71,7 @@ const renderCredits = (json) => {
 
 const getList = async (query) => {
   try {
-    const url = `https://api.themoviedb.org/3/search/${category}?api_key=${API_KEY}&language=ko-KR&query=${query}&page=1&include_adult=false&region=KR`;
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=ko-KR&query=${query}&page=1&include_adult=false&region=KR`;
     const res = await fetch(url);
     const result = await res.json();
     return await result;
@@ -100,7 +100,7 @@ const postReview = async (content, writer) => {
       },
       body: JSON.stringify(data),
     };
-    const url = `/${category}/review/${detailId}`;
+    const url = `/movie/review/${detailId}`;
     const res = await fetch(url, config);
     const result = await res.text();
     return result;
@@ -120,7 +120,7 @@ const addLike = async (email) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    const url = `/${category}/like/${detailId}`;
+    const url = `/movie/like/${detailId}`;
     const res = await fetch(url, config);
     const result = await res.json();
     return await result;
@@ -140,7 +140,7 @@ const postRating = async (email, rating) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     };
-    const url = `/${category}/rating/${detailId}`;
+    const url = `/movie/rating/${detailId}`;
     const res = await fetch(url, config);
     const result = await res.json();
     return await result;

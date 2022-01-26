@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 @RequestMapping("/movie/*")
-public class ListController {
+public class MovieController {
 
 	@Inject
 	private MovieService msv;
@@ -61,6 +61,7 @@ public class ListController {
 
 	@GetMapping("/detail/{id}")
 	public String detail(Model model, @PathVariable("id") long id) {
+		model.addAttribute("category", "movie");
 		model.addAttribute("id", id);
 
 		return "detail";
@@ -83,7 +84,7 @@ public class ListController {
 	}
 
 	@PatchMapping(value = "/review/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<String> updateReview(@PathVariable("mid") long mid, @RequestBody ReviewVO rvvo) {
+	public ResponseEntity<String> modifyReview(@PathVariable("mid") long mid, @RequestBody ReviewVO rvvo) {
 
 		return msv.modifyReview(rvvo) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
