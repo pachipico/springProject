@@ -13,6 +13,7 @@
 		<typeAlias type="com.springprj.www.security.AuthVO"
 			alias="authVO" />
 
+		
 		<typeAlias type="com.springprj.www.domain.ReviewVO"
 			alias="rvvo" />
 
@@ -23,6 +24,10 @@
 			alias="lvo" />
 		<typeAlias type="com.springprj.www.domain.MovieVO"
 			alias="mvvo" />
+
+		<typeAlias type="com.springprj.www.domain.TVVO"
+			alias="tvvo" />
+		
 
 	</typeAliases>
 </configuration>

@@ -1,4 +1,4 @@
-package com.springprj.www.service;
+package com.springprj.www.service.movie;
 
 import java.util.List;
 

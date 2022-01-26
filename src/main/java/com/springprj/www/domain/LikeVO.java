@@ -11,6 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class LikeVO {
+	private long tvid;
 	private long mid;
 	private String email;
 }

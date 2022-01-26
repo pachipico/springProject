@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.springprj.www.controller", "com.springprj.www.handler"})
+@ComponentScan(basePackages = {"com.springprj.www.controller" , "com.springprj.www.handler"})
 public class ServletConfiguration implements WebMvcConfigurer {
 
 	@Override

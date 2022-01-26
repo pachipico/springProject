@@ -22,9 +22,8 @@ import com.springprj.www.domain.LikeVO;
 import com.springprj.www.domain.MovieDTO;
 import com.springprj.www.domain.MovieVO;
 import com.springprj.www.domain.RatingVO;
-
 import com.springprj.www.domain.ReviewVO;
-import com.springprj.www.service.MovieService;
+import com.springprj.www.service.movie.MovieService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -140,18 +139,18 @@ public class ListController {
 	@GetMapping("/{email}/liked")
 	public ResponseEntity<List<MovieVO>> getUserLikedMovieList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserLikedList(email);
-		return list.size() > 0 ? new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK) : new ResponseEntity<List<MovieVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{email}/reviewed", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<MovieVO>> getUserReviewedList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserReviewedList(email);
-		return list.size() > 0 ? new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK) : new ResponseEntity<List<MovieVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{email}/rated")
 	public ResponseEntity<List<MovieVO>> getUserRatedList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserRatedList(email);
-		return list.size() > 0 ? new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK) : new ResponseEntity<List<MovieVO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}
 }

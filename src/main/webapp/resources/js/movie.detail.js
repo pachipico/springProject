@@ -58,6 +58,15 @@ const renderDetail = (json) => {
 
 const renderCredits = (json) => {
   console.log("credits: ", json);
+  let castDiv = document.getElementById("castDiv");
+  let ul = `<ul>`;
+  json.cast.forEach((each) => {
+    let li = `<li><a href="/actor/${each.id}">${each.character} (${each.name})</a></li>`;
+    ul += li;
+  });
+  ul += `</ul>`;
+  console.log(ul);
+  castDiv.innerHTML = castDiv.innerHTML + ul;
 };
 
 const getList = async (query) => {
