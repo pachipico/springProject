@@ -58,7 +58,8 @@ console.log(category);
 
 
 </script>
-<script src="/resources/js/movie.detail.js"></script>
+
+<script src="/resources/js/${category }.detail.js"></script>
 
 
 

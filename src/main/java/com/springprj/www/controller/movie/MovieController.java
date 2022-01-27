@@ -70,6 +70,7 @@ public class MovieController {
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<MovieDTO> getMovieData(@PathVariable("id") long id) {
 		MovieDTO dto = msv.getMovieData(id, "123@123.com");
+		
 		return new ResponseEntity<MovieDTO>(dto, HttpStatus.OK);
 	}
 

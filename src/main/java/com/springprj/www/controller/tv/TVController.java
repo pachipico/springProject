@@ -68,6 +68,7 @@ public class TVController {
 	@GetMapping(value = "/{tvid}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<TVDTO> getTVdata(@PathVariable("tvid") long tvid) {
 		TVDTO dto = tsv.getTVData(tvid, "123@123.com");
+		log.debug(">>>>>>>>>> tv dto : {}", dto);
 		return new ResponseEntity<TVDTO>(dto, HttpStatus.OK);
 	}
 

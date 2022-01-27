@@ -49,7 +49,7 @@ public class TVServiceImpl implements TVService {
 		dto.setRvList(tdao.selectListTVReview(tvid));
 		dto.setLikeCount(tdao.selectTVLikeCount(tvid));
 
-		return null;
+		return dto;
 	}
 
 	@Override
