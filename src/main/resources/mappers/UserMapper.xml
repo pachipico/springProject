@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springprj.www.repository.UserDAO">
+
+	<insert id="insertUser" parameterType="uvo">
+		insert into user (email, pwd, nick_name) 
+		values(#{email}, #{pwd}, #{nickName})
+	</insert>
+	
+	<insert id="insertAuthInit" parameterType="string">
+		insert into auth_user (email,auth ) values(#{email}, 'ROLE_USER')
+	</insert>
+
+	<select id="selectUserList">
+		select email, name, profile_img, curr_points, grade, reg_at, last_login, slang, adult, font_color from user;
+	</select>
+
+	<select id="selectEmail" parameterType="string" resultType="uvo">
+		select email, name, profile_img, curr_points, grade, reg_at, last_login, slang, adult, font_color from user where email = #{email}
+	</select>
+	
+	<select id="selectAuths" parameterType="string" resultType="authVO">
+		select * from auth_user where email = #{email}
+	</select>
+	
+	<select id="selectPoint" parameterType="string" resultType="int">
+		select curr_point from user where email = #{email}
+	</select>
+	
+	<update id="updatePwd">
+		update user set pwd = #{pwd} where email = #{email}
+	</update>
+	
+	<update id="updateNickNamePwd" >
+		update user set nickname = #{nickname} where email = #{email}
+	</update>
+	
+	<update id="updatePoint">
+		update user set 
+		curr_point = curr_point + #{point} 
+		, total_point = total_point + #{point} 
+		where email = #{email}
+	</update>
+	
+	<update id="updateProfileImg" parameterType="string">
+		update user set profile_img = #{img} where email = #{email}
+	</update>
+	
+	<update id="updateSlang" parameterType="boolean">
+		update user set slang = #{value} where email = #{email}
+	</update>
+	
+	<update id="updateAdult" parameterType="boolean">
+		update user set adult = #{value} where email = #{email}
+	</update>
+	
+	<update id="updateLastLogin" parameterType="string">
+		update user set last_login = now() where email = #{email}
+	</update>
+	
+	<delete id="deleteUser"></delete>
+
+</mapper>

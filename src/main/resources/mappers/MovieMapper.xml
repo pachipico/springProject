@@ -40,6 +40,8 @@
 	</insert>
 
 	<!-- review -->
+	
+	
 	<select id="seleListMovieReview" parameterType="long" resultType="rvvo">
 		select * from m_review where mid = #{mid}
 	</select>

@@ -8,7 +8,7 @@
 	</settings>
 	<typeAliases>
 		<!-- VO 추 -->
-		<typeAlias type="com.springprj.www.security.MemberVO"
+		<typeAlias type="com.springprj.www.security.UserVO"
 			alias="mvo" />
 		<typeAlias type="com.springprj.www.security.AuthVO"
 			alias="authVO" />
