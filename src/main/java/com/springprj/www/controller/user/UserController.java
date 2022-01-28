@@ -43,6 +43,7 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String register(UserVO uvo, RedirectAttributes reAttr) {
+//		log.debug(">>>> register uvo {}", uvo);
 		int isSuccess = usv.registerUser(uvo);
 		reAttr.addFlashAttribute("isSuccess", isSuccess);
 		return "redirect:/user/login";
@@ -77,8 +78,9 @@ public class UserController {
 		UserVO uvo = usv.login(email, pwd);
 		if (uvo != null) {
 			reAttr.addFlashAttribute("isSuccess", true);
-			session.setAttribute("ses", uvo.getEmail());
-			return "redirect:/";
+			session.setAttribute("ses", uvo);
+			
+			return "redirect:/home";
 		} else {
 			reAttr.addFlashAttribute("isSuccess", false);
 			return "redirect:/user/login";
@@ -88,7 +90,7 @@ public class UserController {
 	@PostMapping("/logout")
 	public String logout(String email, HttpSession session) {
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/user/login";
 	}
 
 	@GetMapping("/detail")

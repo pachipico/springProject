@@ -13,6 +13,10 @@
       </div>
       <div id="right">
         <div class="rightMenu">
+        <c:if test="${!empty sessionScope.ses  }">
+        <c:out value="${sessionScope.ses.email }" />
+        </c:if>
+        
           <div class="menu">Login</div>
           <div class="menu">Sign in</div>
           <div class="menu">Profile</div>
