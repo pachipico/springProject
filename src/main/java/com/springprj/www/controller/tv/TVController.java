@@ -22,6 +22,7 @@ import com.springprj.www.domain.LikeVO;
 import com.springprj.www.domain.RatingVO;
 import com.springprj.www.domain.ReviewVO;
 import com.springprj.www.domain.TVDTO;
+import com.springprj.www.domain.TVVO;
 import com.springprj.www.service.tv.TVService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -99,7 +100,9 @@ public class TVController {
 	@PostMapping(value = "/like/{tvid}" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> addLike(@PathVariable("tvid") long tvid, @RequestBody TVDTO dto){
 		tsv.registerTVIfNotExists(dto.getTvvo());
-		return tsv.registerLike(dto.getLvo()) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
+		int isUp = tsv.registerLike(dto.getLvo());
+		log.debug("TVController >>> isregistered : {}",isUp);
+		return isUp > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -112,24 +115,39 @@ public class TVController {
 	// ============================= rating ================================
 	
 	@PostMapping(value = "/rating/{tvid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<Double> registerRating(@PathVariable("tvid") long tvid , @RequestBody TVDTO dto){
+	public ResponseEntity<String> registerRating(@PathVariable("tvid") long tvid , @RequestBody TVDTO dto){
 		tsv.registerTVIfNotExists(dto.getTvvo());
 		Double changedRating = tsv.registerRating(dto.getRtvo());
-		return changedRating != null ? new ResponseEntity<Double>(changedRating, HttpStatus.OK)
-				: new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+		log.debug("TVService >>> changedRating : {}", changedRating);
+		return new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
 	
 	@PatchMapping(value = "/rating/{tvid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<Double> modifyRating(@PathVariable("tvid") long tvid, @RequestBody RatingVO rtvo){
+	public ResponseEntity<String> modifyRating(@PathVariable("tvid") long tvid, @RequestBody RatingVO rtvo){
 		Double changedRating = tsv.modifyRating(rtvo);
-		return changedRating != null ? new ResponseEntity<Double>(changedRating, HttpStatus.OK)
-				: new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/rating/{tvid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<Double> deleteRating(@PathVariable("tvid") long tvid, @RequestBody RatingVO rtvo){
+	public ResponseEntity<String> deleteRating(@PathVariable("tvid") long tvid, @RequestBody RatingVO rtvo){
 		Double changedRating = tsv.deleteRating(rtvo.getTvid(), rtvo.getEmail());
-		return changedRating != null ? new ResponseEntity<Double>(changedRating, HttpStatus.OK)
-				: new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
+	//======================== 유저가 평점,즐겨찾기,평점 남긴 tv 리스트 ==========================
+	
+	@GetMapping(value = "/{email}/reviewed", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<TVVO>> getUserReviewedList(@PathVariable("email") String email){
+		return new ResponseEntity<List<TVVO>>(tsv.getUserReviewdList(email), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{email}/liked", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<TVVO>> getUserLikedList (@PathVariable("email") String email){
+		return new ResponseEntity<List<TVVO>>(tsv.getUserLikedList(email), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{email}/rated", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<TVVO>> getUserRatedList(@PathVariable("email") String email){
+		return new ResponseEntity<List<TVVO>>(tsv.getUserRatedList(email), HttpStatus.OK);
+	}
+	
 }

@@ -16,6 +16,7 @@ public class UserVO {
 	private String email;
 	private String name;
 	private String pwd; 
+	private String nickName;
 	private String profileImg;
 	private int totalPoints;
 	private int currPoints;
@@ -26,4 +27,7 @@ public class UserVO {
 	private boolean adult;
 	private String fontColor;
 	private List<AuthVO> authList;
+	private int likeCnt;
+	private int reviewCnt;
+	private int ratingCnt;
 }

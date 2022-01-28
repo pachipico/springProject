@@ -33,18 +33,20 @@ const renderMovies = async (json, page = 1) => {
   json.forEach((movie) => {
     const card = `
     <div class="cards col-lg-3">
-    <img id="listImg"
-    src="https://www.themoviedb.org/t/p/w440_and_h660_face${movie.poster_path}"
-    alt=""
-    />
-    
-    <div class="rating">${movie.vote_average * 10}%</div>
-    <a href="/movie/detail/${movie.id}" class="menu">go</a>
-          <div class="cardContent">
-            <div class="cardTitle">${movie.title}</div>
-            <div class="cardSub">${movie.release_date}</div>
-          </div>
-        </div>`;
+      <a href="/movie/detail/${movie.id}">
+        <img id="listImg"
+        src="https://www.themoviedb.org/t/p/w440_and_h660_face${movie.poster_path}"
+        alt=""
+        />
+        <div class="rating">${movie.vote_average * 10}%</div>
+        <a class="menu">...</a>
+        <div class="cardContent">
+          <div class="cardTitle">${movie.title}</div>
+          <div class="cardSub">${movie.release_date}</div>
+        </div>
+      </a>
+    </div>
+        `;
     cardContainer.innerHTML += card;
   });
 };

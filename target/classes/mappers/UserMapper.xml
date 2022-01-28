@@ -5,20 +5,77 @@
 <mapper namespace="com.springprj.www.repository.UserDAO">
 
 	<insert id="insertUser" parameterType="uvo">
-		insert into user (email, pwd, nick_name) 
-		values(#{email}, #{pwd}, #{nickName})
+		insert into user(email, pwd, name, nick_name
+			<if test="profileImg != null">
+			,profile
+			</if>
+			<if test="grade gt 0">
+			,grade
+			</if>
+		)
+		values(#{email}, #{pwd}, #{name}, #{nickName}
+			<if test="profileImg != null">
+			,#{profileImg}
+			</if>
+			<if test="grade gt 0">
+			,#{grade}
+			</if>
+		)
+		
 	</insert>
 	
 	<insert id="insertAuthInit" parameterType="string">
 		insert into auth_user (email,auth ) values(#{email}, 'ROLE_USER')
 	</insert>
+	
+	<insert id="insertAuthManager" parameterType="string">
+		insert into auth_user (email,auth ) values(#{email}, 'ROLE_MANAGER')
+	</insert>
+	
+	<insert id="insertAuthAdmin" parameterType="string">
+		insert into auth_user (email,auth ) values(#{email}, 'ROLE_ADMIN')
+	</insert>
 
-	<select id="selectUserList">
-		select email, name, profile_img, curr_points, grade, reg_at, last_login, slang, adult, font_color from user;
+	<select id="selectOneUserByEmailAndPwd" resultType="uvo">
+		select email, name, nick_name, profile_img, curr_points,total_points, grade, reg_at, last_login, slang, adult, font_color from user where email = #{email} and pwd = #{pwd}
 	</select>
 
-	<select id="selectEmail" parameterType="string" resultType="uvo">
-		select email, name, profile_img, curr_points, grade, reg_at, last_login, slang, adult, font_color from user where email = #{email}
+	<select id="selectOneUserByEmail" parameterType="string" resultType="uvo">
+		 select email, name, nick_name, profile_img, curr_points,total_points, grade, reg_at, last_login, slang, adult, font_color from user where email = #{email}
+	</select>
+	
+	<select id="selectEmailByNameAndNickName" resultType="string">
+		select email from user where name = #{name} and nick_name = #{nickName}
+	</select>
+	
+	<select id="selectNickNameCount" parameterType="string" resultType="int">
+		select count(nick_name) from user where nick_name = #{nickName}
+	</select>
+	
+	<select id="selectUserList" parameterType="string" resultType="uvo">
+		select email, name, nick_name, profile_img, curr_points,total_points, grade, reg_at, last_login, slang, adult, font_color ,
+		(select count(ml.email) from m_like ml where ml.email = u.email)+0 +(select count(tl.email) from tv_like tl where tl.email = u.email) 'likeCnt'
+		, (select  count(mrv.writer) from m_review mrv where u.email = mrv.writer)+ (select  count(trv.writer) from tv_review trv where u.email = trv.writer) 'reviewCnt'
+		, (select  count(mr.email) from m_rating mr where u.email = mr.email)+(select  count(tr.email) from tv_rating tr where u.email = tr.email) 'ratingCnt'
+		from user u 
+		<if test="sortBy != null">
+			order by
+			<choose>
+			<when test='sortBy eq "likeCnt".toString()'>
+			(select count(ml.email) from m_like ml where ml.email = u.email)+0 +(select count(tl.email) from tv_like tl where tl.email = u.email) desc
+			</when>
+			<when test='sortBy eq "reviewCnt".toString()'>
+			(select  count(mrv.writer) from m_review mrv where u.email = mrv.writer) + (select  count(trv.writer) from tv_review trv where u.email = trv.writer) desc
+			</when>
+			<when test='sortBy == "ratingCnt".toString()'>
+			(select  count(mr.email) from m_rating mr where u.email = mr.email)+(select  count(tr.email) from tv_rating tr where u.email = tr.email) desc
+			</when>
+			<otherwise>
+				${sortBy} desc
+			</otherwise>
+			</choose>
+		</if>
+		
 	</select>
 	
 	<select id="selectAuths" parameterType="string" resultType="authVO">
@@ -26,21 +83,28 @@
 	</select>
 	
 	<select id="selectPoint" parameterType="string" resultType="int">
-		select curr_point from user where email = #{email}
+		select curr_points from user where email = #{email}
 	</select>
 	
 	<update id="updatePwd">
 		update user set pwd = #{pwd} where email = #{email}
 	</update>
 	
-	<update id="updateNickNamePwd" >
-		update user set nickname = #{nickname} where email = #{email}
+	<update id="updateNickName" >
+		update user set nick_name = #{nickName} where email = #{email}
 	</update>
 	
-	<update id="updatePoint">
+	<update id="updatePointUp">
 		update user set 
-		curr_point = curr_point + #{point} 
-		, total_point = total_point + #{point} 
+		curr_points = curr_points + #{point} 
+		, total_points = total_points + #{point} 
+		where email = #{email}
+	</update>
+	
+	<update id="updatePointDown">
+		update user set 
+		curr_points = curr_points - #{point} 
+		, total_points = total_points - #{point} 
 		where email = #{email}
 	</update>
 	
@@ -48,11 +112,11 @@
 		update user set profile_img = #{img} where email = #{email}
 	</update>
 	
-	<update id="updateSlang" parameterType="boolean">
+	<update id="updateSlang">
 		update user set slang = #{value} where email = #{email}
 	</update>
 	
-	<update id="updateAdult" parameterType="boolean">
+	<update id="updateAdult">
 		update user set adult = #{value} where email = #{email}
 	</update>
 	
@@ -60,6 +124,16 @@
 		update user set last_login = now() where email = #{email}
 	</update>
 	
-	<delete id="deleteUser"></delete>
+	<update id="updateFontColor">
+		update user set font_color = #{color} where email = #{email}
+	</update>
+	
+	<update id="updateGrade">
+		update user set grade = #{grade} where email = #{email}
+	</update>
+	
+	<delete id="deleteUser">
+		delete from user where email = #{email} and pwd = #{pwd}
+	</delete>
 
 </mapper>

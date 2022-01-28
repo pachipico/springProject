@@ -9,7 +9,7 @@
 	<typeAliases>
 		<!-- VO 추 -->
 		<typeAlias type="com.springprj.www.security.UserVO"
-			alias="mvo" />
+			alias="uvo" />
 		<typeAlias type="com.springprj.www.security.AuthVO"
 			alias="authVO" />
 

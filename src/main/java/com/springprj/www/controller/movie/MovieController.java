@@ -116,25 +116,22 @@ public class MovieController {
 	// ============================== rating ==================================
 
 	@PostMapping(value = "/rating/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
-	public ResponseEntity<Double> postRating(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
+	public ResponseEntity<String> postRating(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
 		msv.registerMovieIfNotExists(dto.getMvvo());
 		Double changedRating = msv.registerRating(dto.getRtvo());
-		return changedRating != null ? new ResponseEntity<Double>(changedRating, HttpStatus.OK)
-				: new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return	new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
 	
 	@PatchMapping(value = "/rating/{mid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<Double> updateRating(@PathVariable("mid") long mid, @RequestBody RatingVO rtvo){
+	public ResponseEntity<String> updateRating(@PathVariable("mid") long mid, @RequestBody RatingVO rtvo){
 		Double changedRating = msv.modifyRating(rtvo);
-		return changedRating != null ? new ResponseEntity<Double>(changedRating, HttpStatus.OK)
-				: new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return	new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
 	
 	@DeleteMapping(value = "/rating/{mid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<Double> deleteRating(@PathVariable("mid") long mid, @RequestBody RatingVO rtvo){
+	public ResponseEntity<String> deleteRating(@PathVariable("mid") long mid, @RequestBody RatingVO rtvo){
 		Double changedRating = msv.deleteRating(mid, rtvo.getEmail());
-		return changedRating != null ? new ResponseEntity<Double>(changedRating, HttpStatus.OK)
-				: new ResponseEntity<Double>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return	new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
 	
 	// ======================== 유저가 평점,즐겨찾기,평점 남긴 영화 리스트 ==========================

@@ -123,8 +123,8 @@ const addLike = async (email) => {
     };
     const url = `/tv/like/${detailId}`;
     const res = await fetch(url, config);
-    const result = await res.json();
-    return await result;
+    const result = await res.text();
+    return result;
   } catch (e) {
     console.log(e);
   }
@@ -143,8 +143,8 @@ const postRating = async (email, rating) => {
     };
     const url = `/tv/rating/${detailId}`;
     const res = await fetch(url, config);
-    const result = await res.json();
-    return await result;
+    const result = await res.text();
+    return result;
   } catch (e) {
     console.log(e);
   }
