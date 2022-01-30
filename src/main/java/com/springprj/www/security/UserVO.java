@@ -2,6 +2,7 @@ package com.springprj.www.security;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
+@AllArgsConstructor
 public class UserVO {
 	
 	private String email;

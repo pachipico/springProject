@@ -43,7 +43,7 @@ public class MovieServiceTest {
 	@Test
 	public void registerReview() {
 		ReviewVO rvvo = new ReviewVO();
-		rvvo.setMid(524434L);
+		rvvo.setMid(1);
 		rvvo.setWriter("123@123.com");
 		rvvo.setContent("this is test review for eternals");
 		int isUp = msv.registerReview(rvvo);

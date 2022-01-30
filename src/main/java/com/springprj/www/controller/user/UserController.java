@@ -3,11 +3,13 @@ package com.springprj.www.controller.user;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,6 +38,10 @@ public class UserController {
 
 	@Inject
 	private TVService tsv;
+	
+	@Inject
+	private BCryptPasswordEncoder bcpEncoder;
+	
 
 	@GetMapping("/register")
 	public void register() {
@@ -43,7 +49,7 @@ public class UserController {
 
 	@PostMapping("/register")
 	public String register(UserVO uvo, RedirectAttributes reAttr) {
-//		log.debug(">>>> register uvo {}", uvo);
+		uvo.setPwd(bcpEncoder.encode(uvo.getPwd()));
 		int isSuccess = usv.registerUser(uvo);
 		reAttr.addFlashAttribute("isSuccess", isSuccess);
 		return "redirect:/user/login";
@@ -73,18 +79,26 @@ public class UserController {
 	public void login() {
 	}
 
+//	@PostMapping("/login")
+//	public String login(String email, String pwd, RedirectAttributes reAttr, HttpSession session) {
+//		UserVO uvo = usv.login(email, pwd);
+//		if (uvo != null) {
+//			reAttr.addFlashAttribute("isSuccess", true);
+//			session.setAttribute("ses", uvo);
+//			
+//			return "redirect:/home";
+//		} else {
+//			reAttr.addFlashAttribute("isSuccess", false);
+//			return "redirect:/user/login";
+//		}
+//	}
+	
 	@PostMapping("/login")
-	public String login(String email, String pwd, RedirectAttributes reAttr, HttpSession session) {
-		UserVO uvo = usv.login(email, pwd);
-		if (uvo != null) {
-			reAttr.addFlashAttribute("isSuccess", true);
-			session.setAttribute("ses", uvo);
-			
-			return "redirect:/home";
-		} else {
-			reAttr.addFlashAttribute("isSuccess", false);
-			return "redirect:/user/login";
-		}
+	public String login(HttpServletRequest request, RedirectAttributes reAttr) {
+		
+		reAttr.addFlashAttribute("email", request.getAttribute("email"));
+		reAttr.addFlashAttribute("errMsg", request.getAttribute("errMsg"));
+		return "redirect:/user/login";
 	}
 
 	@PostMapping("/logout")

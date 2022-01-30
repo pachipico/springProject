@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
    <nav>
       <div id="left">
         <div id="logo">TMDB</div>
@@ -13,9 +14,7 @@
       </div>
       <div id="right">
         <div class="rightMenu">
-        <c:if test="${!empty sessionScope.ses  }">
-        <c:out value="${sessionScope.ses.email }" />
-        </c:if>
+       
         
           <div class="menu">Login</div>
           <div class="menu">Sign in</div>

@@ -150,4 +150,10 @@ public class UserServiceImpl implements UserService {
 		return udao.deleteUser(email, pwd);
 	}
 
+	@Override
+	public boolean updateLastLogin(String email) {
+		
+		return udao.updateLastLogin(email) > 0 ? true : false;
+	}
+
 }

@@ -41,7 +41,7 @@
 	</select>
 
 	<select id="selectOneUserByEmail" parameterType="string" resultType="uvo">
-		 select email, name, nick_name, profile_img, curr_points,total_points, grade, reg_at, last_login, slang, adult, font_color from user where email = #{email}
+		 select email, name, nick_name,pwd, profile_img, curr_points,total_points, grade, reg_at, last_login, slang, adult, font_color from user where email = #{email}
 	</select>
 	
 	<select id="selectEmailByNameAndNickName" resultType="string">

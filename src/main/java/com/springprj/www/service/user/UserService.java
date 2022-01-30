@@ -24,6 +24,7 @@ public interface UserService {
 	int spendPoint(String email, int point); // 잔여 포인트 반환
 	int updateUserSetting(String email, boolean slang, boolean adult );
 	int updateUserGrade(String email, int grade);
+	boolean updateLastLogin(String email);
 	
 	int removeUser(String email, String pwd);
 }

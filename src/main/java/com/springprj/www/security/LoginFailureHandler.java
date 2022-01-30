@@ -28,7 +28,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		
+		log.debug("login failure");
 		setAuthEmail(request.getParameter("email")); // 로그인 실패한 이메일
 		if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
 			setErrorMessage(exception.getMessage().toString());
@@ -36,7 +36,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		log.debug(">>> Login Failure : {}", errorMessage);
 		request.setAttribute("email" , getAuthEmail());
 		request.setAttribute("errMsg", errorMessage);
-		request.getRequestDispatcher("/member/login?error").forward(request, response);
+		request.getRequestDispatcher("/user/login?error").forward(request, response);
 	}
 
 }
