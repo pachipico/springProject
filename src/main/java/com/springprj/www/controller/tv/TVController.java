@@ -1,5 +1,6 @@
 package com.springprj.www.controller.tv;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -67,9 +68,9 @@ public class TVController {
 	}
 
 	@GetMapping(value = "/{tvid}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<TVDTO> getTVdata(@PathVariable("tvid") long tvid) {
-		TVDTO dto = tsv.getTVData(tvid, "123@123.com");
-		log.debug(">>>>>>>>>> tv dto : {}", dto);
+	public ResponseEntity<TVDTO> getTVdata(@PathVariable("tvid") long tvid, Principal principal) {
+		String loggedInEmail = principal.getName() != null ? principal.getName() : "";
+		TVDTO dto = tsv.getTVData(tvid, loggedInEmail);
 		return new ResponseEntity<TVDTO>(dto, HttpStatus.OK);
 	}
 

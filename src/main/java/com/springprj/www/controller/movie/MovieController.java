@@ -1,10 +1,12 @@
 package com.springprj.www.controller.movie;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -68,8 +70,10 @@ public class MovieController {
 	}
 
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<MovieDTO> getMovieData(@PathVariable("id") long id) {
-		MovieDTO dto = msv.getMovieData(id, "123@123.com");
+	public ResponseEntity<MovieDTO> getMovieData(@PathVariable("id") long id,  Principal principal) {
+		String loggedInEmail = principal.getName() != null ? principal.getName() : "notLoggedIn";
+		log.debug("currently logged in user: {}", loggedInEmail);
+		MovieDTO dto = msv.getMovieData(id, loggedInEmail);
 		
 		return new ResponseEntity<MovieDTO>(dto, HttpStatus.OK);
 	}

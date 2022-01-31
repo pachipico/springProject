@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="common/header.jsp" />
 
 <jsp:include page="common/nav.jsp" />
@@ -29,21 +30,26 @@
       </div>
     </header>
     <main>
+    	<sec:authorize access="isAuthenticated()">
+    	    	<sec:authentication property="principal.uvo.email" var="authEmail" />
+	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
+	          <sec:authentication property="principal.uvo.authList" var="auths" />
     	<div class="row" id="review">
     		<h3>리뷰</h3>
     		<input class="form-control" type="text" name="content" placeholder="content">
-    		<input class="form-control" type="text" name="writer" placeholder="writer" value="123@123.com">
+    		<input class="form-control" type="text" name="writer" placeholder="writer" value="${authEmail }">
     		<button class="form-control btn btn-outline-primary" type="button" id="reviewBtn">submit</button>
     	</div>
     	<div class="row" id="like">
     		<h3>즐겨찾기</h3>
-    		<button class="form-control btn btn-outline-primary" type="button" id="likeBtn" data-email="123@123.com" >즐겨찾기 등록</button>
+    		<button class="form-control btn btn-outline-primary" type="button" id="likeBtn" data-email="${authEmail }" >즐겨찾기 등록</button>
     	</div>
     	<div class="row" id="rating">
     		<h3>평점</h3>
     		<input class="form-control" type="number" name="rating" >
-    		<button type="button" id="ratingBtn" data-email="123@123.com">평점 등록</button>
+    		<button type="button" id="ratingBtn" data-email="${authEmail }">평점 등록</button>
     	</div>
+    	</sec:authorize>
 		<div id="castDiv">
 			
 		</div>

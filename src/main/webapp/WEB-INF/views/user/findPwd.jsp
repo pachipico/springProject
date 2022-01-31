@@ -4,6 +4,14 @@
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
 
+<body class="text-center">
+
+	<main>
+	find Pwd
+	</main>
 
 
-<jsp:include page="../common/footer.jsp" />
+
+</body>
+</html>
+

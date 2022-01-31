@@ -65,7 +65,6 @@ const renderCredits = (json) => {
     ul += li;
   });
   ul += `</ul>`;
-  console.log(ul);
   castDiv.innerHTML = castDiv.innerHTML + ul;
 };
 

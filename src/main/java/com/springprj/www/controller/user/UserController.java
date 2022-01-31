@@ -70,7 +70,7 @@ public class UserController {
 	}
 
 	@PostMapping("findPwd")
-	public String findPwd(String email, String pwd, RedirectAttributes reAttr) {
+	public String findPwd(String email, RedirectAttributes reAttr) {
 		// ??
 		return "redirect:/user/login";
 	}

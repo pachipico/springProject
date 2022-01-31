@@ -29,9 +29,8 @@
           <label for="floatingPassword">Password</label>
         </div>
 
-        <div class="checkbox mb-3">
-          <label> <input type="checkbox" value="remember-me" /> Remember me </label>
-        </div>
+        <a href="/user/findId">아이디를 잊어버리셨나요?</a>
+        <a href="/user/findPwd">비밀번호 찾기</a>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
         <p class="mt-5 mb-3 text-muted">© 2017–2021</p>
       </form>
