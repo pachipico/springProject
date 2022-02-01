@@ -36,6 +36,17 @@ const getCredits = async () => {
   }
 };
 
+const getWatchProviders = async () => {
+  try {
+    const url = `https://api.themoviedb.org/3/movie/${detailId}/watch/providers?api_key=${API_KEY}`;
+    const res = await fetch(url);
+    const result = await res.json();
+    return await result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const getMovieData = async () => {
   try {
     const url = `/movie/${detailId}`;
@@ -186,4 +197,11 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(userData);
   });
   getCredits().then((result) => renderCredits(result));
+  getWatchProviders().then((result) => {
+    console.log("watch providers: ", result.results.KR);
+    movieTitle.innerHtml =
+      movieTitle.innerHTML +
+      `<img id="watchProvider" src="https://www.themoviedb.org/t/p/original/${result.results.KR.flatrate[0].logo_path}" />`;
+    //	https://www.themoviedb.org/t/p/original/dgPueyEdOwpQ10fjuhL2WYFQwQs.jpg
+  });
 });

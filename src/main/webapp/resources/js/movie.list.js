@@ -30,7 +30,7 @@ const renderMovies = async (json, page = 1) => {
     cardContainer.innerHTML = "";
   }
 
-  json.forEach((movie) => {
+  json.forEach((movie, i) => {
     const card = `
     <div class="cards col-lg-3">
       <a href="/movie/detail/${movie.id}">
@@ -39,7 +39,7 @@ const renderMovies = async (json, page = 1) => {
         alt=""
         />
         <div class="rating">${movie.vote_average * 10}%</div>
-        <a class="menu">...</a>
+        <a class="menu" >...</a>
         <div class="cardContent">
           <div class="cardTitle">${movie.title}</div>
           <div class="cardSub">${movie.release_date}</div>

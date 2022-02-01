@@ -2,7 +2,7 @@ const API_KEY = "6e6b78d7518e1d61e33e6121c3d5e62d";
 let page = 1;
 let genreQuery = [];
 let sortQuery = "popularity.desc";
-let url = `https://api.themoviedb.org/3/discover/tv?api_key=6e6b78d7518e1d61e33e6121c3d5e62d&lair_date.gte=&air_date.lte=2022-07-24&certification=&certification_country=KR&debug=&first_air_date.gte=&first_air_date.lte=&ott_region=KR&primary_release_date.gte=&primary_release_date.lte=&region=&release_date.gte=&release_date.lte=2022-07-24&show_me=0&sort_by=popularity.desc&vote_average.gte=0&vote_average.lte=10&vote_count.gte=0&with_genres=&with_keywords=&with_networks=&with_origin_country=&with_original_language=&with_ott_monetization_types=&with_ott_providers=${platform}&with_release_type=&with_runtime.gte=0&with_runtime.lte=400&language=ko&page=`;
+let url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&lair_date.gte=&air_date.lte=2022-07-24&certification=&certification_country=KR&debug=&first_air_date.gte=&first_air_date.lte=&ott_region=KR&primary_release_date.gte=&primary_release_date.lte=&region=&release_date.gte=&release_date.lte=2022-07-24&show_me=0&sort_by=popularity.desc&vote_average.gte=0&vote_average.lte=10&vote_count.gte=0&with_genres=&with_keywords=&with_networks=&with_origin_country=&with_original_language=&with_ott_monetization_types=&with_ott_providers=${platform}&with_release_type=&with_runtime.gte=0&with_runtime.lte=400&language=ko&page=`;
 
 const searchBtn = document.getElementById("searchBtn");
 
@@ -18,9 +18,9 @@ const getJson = async (page = 1) => {
 };
 
 const changeUrl = () => {
-  url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=ko-KR&sort_by=${sortQuery}&timezone=Korea%2FSeoul&include_null_first_air_dates=false&with_watch_providers=${platform}&watch_region=KR&with_genres=${genreQuery.join(
+  url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&lair_date.gte=&air_date.lte=2022-07-24&certification=&certification_country=KR&debug=&first_air_date.gte=&first_air_date.lte=&ott_region=KR&primary_release_date.gte=&primary_release_date.lte=&region=&release_date.gte=&release_date.lte=2022-07-24&show_me=0&sort_by=${sortQuery}&vote_average.gte=0&vote_average.lte=10&vote_count.gte=0&with_genres${genreQuery.join(
     ","
-  )}&with_watch_monetization_types=flatrate&with_status=0&with_type=0&page=`;
+  )}=&with_keywords=&with_networks=&with_origin_country=&with_original_language=&with_ott_monetization_types=&with_ott_providers=${platform}&with_release_type=&with_runtime.gte=0&with_runtime.lte=400&language=ko&page=`;
 };
 
 const renderTVs = async (json, page = 1) => {
