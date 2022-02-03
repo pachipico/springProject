@@ -14,4 +14,5 @@ public class LikeVO {
 	private long tvid;
 	private long mid;
 	private String email;
+	private String regAt;
 }

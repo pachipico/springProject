@@ -6,7 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,6 +14,9 @@ public class MovieVO {
 	private long mid;
 	private String title;
 	private String poster;
-//	private int likeCnt;
+	// 즐겨찾기 & 리뷰 작성일 가져올때 
+	private String regAt;
+	private Double rating;
+	private int isLiked;
 
 }

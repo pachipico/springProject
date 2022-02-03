@@ -5,6 +5,7 @@
 <jsp:include page="common/header.jsp" />
 
 <jsp:include page="common/nav.jsp" />
+<link rel="stylesheet" href="/resources/css/movieDetail.css" />
     <div class="menuContainer">
       <input type="text" id="search" name="searchQuery" placeholder="Search..." />
       <button type="button" id="searchBtn" name="searchBtn">search</button>

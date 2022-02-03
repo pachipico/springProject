@@ -9,20 +9,25 @@
 	</select>
 	
 	<select id="selectUserLikedTVList" parameterType="string" resultType="tvvo">
-		select t.*
-		from (select tvid from tv_like where email = #{email}) l 
+		select t.*, l.reg_at reg_at, 
+		(select count(email) from tv_like where email = l.email and tvid = l.tvid) isLiked,
+		(select rating from tv_rating where email = l.email and tvid = l.tvid) rating
+		from (select tvid, reg_at, email from tv_like where email = #{email}) l 
 		left join tv t on l.tvid = t.tvid  
 	</select>
 	
 	<select id="selectUserRatedTVList" parameterType="string" resultType="tvvo">
-		select t.*
-		from (select tvid from tv_rating where email = #{email}) l
+		select t.*, l.rating rating, 
+		(select count(email) from tv_like where email = l.email and tvid = l.tvid) isLiked
+		from (select tvid, rating, email from tv_rating where email = #{email}) l
 		left join tv t on l.tvid = t.tvid		
 	</select>
 	
 	<select id="selectUserReviewedTVList" parameterType="string" resultType="tvvo">
-		select t.* 
-		from (select tvid from tv_review where writer = #{email}) l
+		select t.* , l.reg_at reg_at, 
+		(select count(email) from tv_like where email = l.writer and tvid = l.tvid) isLiked,
+		(select rating from tv_rating where email = l.writer and tvid = l.tvid) rating
+		from (select tvid, reg_at, writer from tv_review where writer = #{email}) l
 		left join tv t on l.tvid = t.tvid
 	</select>
 	

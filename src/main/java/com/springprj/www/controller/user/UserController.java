@@ -1,6 +1,8 @@
 package com.springprj.www.controller.user;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -9,15 +11,23 @@ import javax.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.springprj.www.security.UserVO;
 import com.springprj.www.service.movie.MovieService;
 import com.springprj.www.service.tv.TVService;
@@ -78,20 +88,6 @@ public class UserController {
 	@GetMapping("/login")
 	public void login() {
 	}
-
-//	@PostMapping("/login")
-//	public String login(String email, String pwd, RedirectAttributes reAttr, HttpSession session) {
-//		UserVO uvo = usv.login(email, pwd);
-//		if (uvo != null) {
-//			reAttr.addFlashAttribute("isSuccess", true);
-//			session.setAttribute("ses", uvo);
-//			
-//			return "redirect:/home";
-//		} else {
-//			reAttr.addFlashAttribute("isSuccess", false);
-//			return "redirect:/user/login";
-//		}
-//	}
 	
 	@PostMapping("/login")
 	public String login(HttpServletRequest request, RedirectAttributes reAttr) {
@@ -107,26 +103,73 @@ public class UserController {
 		return "redirect:/user/login";
 	}
 
-	@GetMapping("/detail")
-	public void detail(HttpSession session, Model model, String email) {
-
+	@GetMapping("/{email}")
+	public String detail(HttpSession session, Model model, @PathVariable("email") String email) {
+		log.debug("{}'s main detail page", email);
+		model.addAttribute("list", "main");
+		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
+		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
-
 		
-		// @@@@@@@@@@@@@ 구매내역에서 포스터 목록 가져오기 추가해야함.@@@@@@@@@@@@@
-
-		
-		model.addAttribute("likedMovies", msv.getUserLikedList(email));   //===========================
-		model.addAttribute("ratedMovies", msv.getUserRatedList(email));
-		model.addAttribute("reviewedMovies", msv.getUserReviewedList(email));
-																		// 			이부분 따로 분리할지?
-		model.addAttribute("likedTVs", tsv.getUserLikedList(email));
-		model.addAttribute("ratedTVs", tsv.getUserRatedList(email));
-		model.addAttribute("reviewedTVs", tsv.getUserReviewdList(email));  //============================
+		return "user/detail";
 	}
 
-	@GetMapping("/modify")
-	public void modify(String email, Model model) { // 받아서 올지? 세션에서 꺼낼지?
+	@GetMapping(value = {"/{email}/likedList", "/{email}/likedList/{tv}"})
+	public String likedList(@PathVariable(name = "email") String email, @PathVariable(name = "tv", required = false) String tv, Model model) {
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("platform" , tv != null ? "tv" : "movie");
+		model.addAttribute("list", "liked");
+		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
+		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
+		model.addAttribute("uvo", usv.getUserDetail(email));
+		try {
+			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserLikedList(email)));
+			model.addAttribute("tvsData", mapper.writeValueAsString(tsv.getUserLikedList(email)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return "user/detail";
+	}
+	
+	@GetMapping(value = {"/{email}/ratedList", "/{email}/ratedList/{tv}"})
+	public String ratedList(@PathVariable(name = "email") String email,@PathVariable(name = "tv", required = false) String tv , Model model) {
+		ObjectMapper mapper = new ObjectMapper();
+		model.addAttribute("platform" , tv != null ? "tv" : "movie");
+		model.addAttribute("list", "rated");
+		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
+		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
+		model.addAttribute("uvo", usv.getUserDetail(email));
+		
+		//영화 id 리스트를 자바스크립트로 주면, 자바스크립트에서 각각 getDetail로 정보 받아오기..?
+		// 받아온 영화 리스트에 좋아요여부를 어떻게 넣을지..?
+		try {
+			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserRatedList(email)));
+			model.addAttribute("tvsData", mapper.writeValueAsString(tsv.getUserRatedList(email)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return "user/detail";
+	}
+	@GetMapping(value = {"/{email}/reviewedList", "/{email}/reviewedList/{tv}"})
+	public String reviewedList(@PathVariable(name = "email") String email, @PathVariable(name = "tv", required = false) String tv, Model model) {
+		ObjectMapper mapper = new  ObjectMapper();
+		model.addAttribute("platform" , tv != null ? "tv" : "movie");
+		model.addAttribute("list", "reviewed");
+		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
+		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
+		model.addAttribute("uvo", usv.getUserDetail(email));
+		
+		try {
+			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserReviewedList(email)));
+			model.addAttribute("tvsData", mapper.writeValueAsString(tsv.getUserReviewdList(email)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return "user/detail";
+	}
+	
+	@GetMapping("/{email}/modify")
+	public void modify(String email, Model model) { 
 		model.addAttribute("uvo", usv.getUserDetail(email));
 	}
 
@@ -159,14 +202,17 @@ public class UserController {
 
 	// ====================== admin =======================
 
-	@GetMapping(value = "/userList", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<List<UserVO>> getUserList() {
-
-		
+	@GetMapping("/userList")
+	public void userList(Authentication authentication, Model model) {
 		// @@@@@@@@@@@@@@@@@ ROLE_MANAGER(grade 50 이상) 인지 @@@@@@@@@@@@@@@@@@
-
+		//
+//		UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//		System.out.println("role = " + userDetails.getAuthorities().stream().map(r -> String.valueOf(r)).collect(Collectors.joining(",")));
+//		
+		List<UserVO> list = usv.getUsersList("grade");
+		log.info("userList: {}", list);
+		model.addAttribute("list", list);
 		
-		return new ResponseEntity<List<UserVO>>(usv.getUsersList("reg_at"), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/modGrade", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
@@ -175,4 +221,9 @@ public class UserController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+//	@PostMapping("/modGrade")
+//	public String modifyGrade(String email ) {
+//		
+//	}
+	
 }

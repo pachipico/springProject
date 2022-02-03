@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
-
+<link rel="stylesheet" href="/resources/css/movieList.css" />
 <div class="container">
       <div class="optionContainer">
         <div class="selectContainer">

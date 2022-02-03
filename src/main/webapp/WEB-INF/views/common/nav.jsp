@@ -39,6 +39,11 @@
        	 <sec:authentication property="principal.uvo.email" var="authEmail" />
 	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          <sec:authentication property="principal.uvo.authList" var="auths" />
+	          <c:if test="${ auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get() }">
+	          	<div class="menu">
+       				<a href="/user/userList">user list</a>
+       			</div>
+	          </c:if>
        		<div class="menu">
        			<form action="/user/logout" method="post">
        				<input type="hidden" value="${authEmail }">
@@ -47,10 +52,10 @@
        			
        		</div>
           	<div class="menu">
-          	<form action="/user/detail" id="myPageForm">
-          		<input type="hidden" name="email" value="${authEmail }">
-          	<button class="nav-btn" type="submit">${authNick }(${authEmail })</button>
-          	</form>
+          	<%-- <form action="/user/detail/${ authEmail}" method="get" id="myPageForm"> --%>
+          		
+          	<a class="nav-btn" href="/user/${ authEmail}" >${authNick }(${authEmail })</a>
+          	<!-- </form> -->
           	</div>
        	</sec:authorize>
        	<sec:authorize access="isAnonymous()">

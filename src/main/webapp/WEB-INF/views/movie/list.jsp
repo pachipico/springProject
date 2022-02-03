@@ -5,6 +5,7 @@
 
 
     <jsp:include page="../common/nav.jsp" />
+    <link rel="stylesheet" href="/resources/css/movieList.css" />
     <div class="container">
       <div class="optionContainer">
         <div class="selectContainer">

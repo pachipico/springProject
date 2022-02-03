@@ -69,6 +69,20 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
+	
+	
+
+	@Override
+	public Double getUsersAvgTVRating(String email) {
+		
+		return udao.selectUserTVAvgRating(email);
+	}
+
+	@Override
+	public Double getUsersAvgMovieRating(String email) {
+		
+		return udao.selectUserMovieAvgRating(email);
+	}
 
 	@Override
 	public UserVO getUserDetail(String email) {

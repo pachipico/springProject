@@ -17,6 +17,8 @@ public interface UserDAO {
 	String selectEmailByNameAndNickName(@Param("name") String name, @Param("nickName") String nickName);
 	int selectNickNameCount(String nickName); // 중복확인
 	UserVO selectOneUserByEmailAndPwd(@Param("email") String email,@Param("pwd") String pwd); // 로그인
+	Double selectUserMovieAvgRating(String email);
+	Double selectUserTVAvgRating(String email);
 	
 	List<UserVO> selectUserList(String sortBy);
 	List<AuthVO> selectAuths(String email);

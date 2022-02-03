@@ -28,16 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.csrf().disable();
 
-		http.authorizeRequests()
+//		http.authorizeRequests()
 //		.antMatchers("/movie/detail/*", "/tv/detail/*").hasRole("ADMIN")
-		.antMatchers("/home","/user/register","/resources/**", "/user/login", "/user/findId","/user/findPwd", "/movie/popular", "/movie/up-coming", "/movie/now-playing", "/movie/rating").permitAll().anyRequest().authenticated();
+//		.antMatchers("/home","/user/register","/resources/**", "/user/login", "/user/findId","/user/findPwd", "/movie/popular", "/movie/up-coming", "/movie/now-playing", "/movie/rating")
+//		.permitAll().anyRequest().authenticated();
 //		
 		http.formLogin().usernameParameter("email").passwordParameter("pwd").loginPage("/user/login")
 				.successHandler(authSuccessHandler()).failureHandler(authFailureHandler());
 
 		// 로그아웃도 무조건 POST 로
 		http.logout().logoutUrl("/user/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID")
-				.logoutSuccessUrl("/");
+				.logoutSuccessUrl("/home");
 	}
 
 	@Bean

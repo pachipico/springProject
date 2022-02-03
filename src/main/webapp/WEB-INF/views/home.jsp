@@ -3,15 +3,15 @@
 <jsp:include page="common/header.jsp" />
 
 <jsp:include page="common/nav.jsp" />
-<h1>
-	Hello world!  
-</h1>
+<div id="searchDiv">
+	<h1>Search!</h1>
+	<input type="text" name="searchInput" >
+</div>
+<div id="popular">
+	
+</div>
+<div id="trailer">
 
-<P>  The time on the server is ${serverTime}. </P>
-<c:out value="${ses }" />
-<form action="/user/logout" method="post">
-	<input type="text" value="${ses.email }">
-	<button type="submit">logout</button>
-</form>
+</div>
 </body>
 </html>

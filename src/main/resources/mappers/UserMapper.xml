@@ -86,6 +86,14 @@
 		select curr_points from user where email = #{email}
 	</select>
 	
+	<select id="selectUserTVAvgRating" resultType="double">
+		select round(avg(rating), 1) from tv_rating where email = #{email}
+	</select>
+	
+	<select id="selectUserMovieAvgRating" parameterType="string" resultType="double">
+		select round(avg(rating), 1) from m_rating where email = #{email}
+	</select>
+	
 	<update id="updatePwd">
 		update user set pwd = #{pwd} where email = #{email}
 	</update>

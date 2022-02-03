@@ -9,20 +9,25 @@
 	</select>
 	
 	<select id="selectUserLikedMovieList" parameterType="string" resultType="mvvo">
-		select m.*
-		from (select mid from m_like where email = #{email}) l 
+		select m.mid, m.title, m.poster, l.reg_at reg_at , 
+		(select count(email) from m_like where email = l.email and mid = l.mid) isLiked,
+		(select rating from m_rating where email = l.email and mid = l.mid) rating
+		from (select mid, reg_at, email from m_like where email = #{email}) l 
 		left join movie m on l.mid = m.mid  
 	</select>
 	
 	<select id="selectUserRatedMovieList" parameterType="string" resultType="mvvo">
-		select m.*
-		from (select mid from m_rating where email = #{email}) l
+		select m.mid, m.title, m.poster, l.rating rating , 
+		(select count(email) from m_like where email = l.email and mid = l.mid) isLiked
+		from (select mid, rating, email from m_rating where email = #{email}) l
 		left join movie m on l.mid = m.mid		
 	</select>
 	
 	<select id="selectUserReviewedMovieList" parameterType="string" resultType="mvvo">
-		select m.* 
-		from (select mid from m_review where writer = #{email}) l
+		select m.* , l.reg_at reg_at, 
+		(select count(email) from m_like where email = l.writer and mid = l.mid) isLiked,
+		(select rating from m_rating where email = l.writer and mid = l.mid) rating
+		from (select mid, reg_at, writer from m_review where writer = #{email}) l
 		left join movie m on l.mid = m.mid
 	</select>
 	
@@ -80,6 +85,7 @@
 	</delete>
 
 	<!-- rating -->
+	
 	<select id="selectMovieAvgRating" resultType="double">
 		select round(avg(rating), 1) avgRating from m_rating where mid = #{mid}
 	</select>

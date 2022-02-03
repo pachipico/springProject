@@ -24,8 +24,8 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="/resources/css/index.css" />
-    <link rel="stylesheet" href="/resources/css/list.css" />
-    <link rel="stylesheet" href="/resources/css/detail.css" />
+    
+    
     <title>Document</title>
   </head>
   <body>
