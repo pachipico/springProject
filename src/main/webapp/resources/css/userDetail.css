@@ -79,8 +79,8 @@
 }
 
 /* 카드 */
-.movieContainer {
-  padding: 0px 50px;
+#movieContainer {
+	padding: 0 50px;
 }
 #listTitleText {
   font-size: 1.5rem;
@@ -97,6 +97,7 @@
   border-radius: 8px;
   -webkit-box-shadow: 1px 1px 9px -1px rgba(0, 0, 0, 0.35);
   box-shadow: 1px 1px 9px -1px rgba(0, 0, 0, 0.35);
+  margin-bottom: 25px;
 }
 .contentDiv {
   padding: 15px;

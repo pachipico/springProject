@@ -64,7 +64,7 @@
 	</update>
 	
 	<delete id="deleteMovieReview">
-		delete from m_review where mid = #{mid} and email = #{email}
+		delete from m_review where mid = #{mid} and writer = #{writer}
 	</delete>
 	
 	<!-- like -->

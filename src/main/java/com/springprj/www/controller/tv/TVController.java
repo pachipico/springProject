@@ -79,7 +79,9 @@ public class TVController {
 	@PostMapping(value = "/review/{tvid}", consumes = "application/json", produces = {
 			MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> registerReview(@PathVariable("tvid") long tvid,@RequestBody TVDTO dto) {
-		tsv.registerTVIfNotExists(dto.getTvvo());
+		if(dto.getTvvo() != null) {
+			tsv.registerTVIfNotExists(dto.getTvvo());
+		}
 		return tsv.registerReview(dto.getRvvo()) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
@@ -100,7 +102,9 @@ public class TVController {
 	
 	@PostMapping(value = "/like/{tvid}" , consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> addLike(@PathVariable("tvid") long tvid, @RequestBody TVDTO dto){
-		tsv.registerTVIfNotExists(dto.getTvvo());
+		if(dto.getTvvo() != null) {
+			tsv.registerTVIfNotExists(dto.getTvvo());
+		}
 		int isUp = tsv.registerLike(dto.getLvo());
 		log.debug("TVController >>> isregistered : {}",isUp);
 		return isUp > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
@@ -117,7 +121,9 @@ public class TVController {
 	
 	@PostMapping(value = "/rating/{tvid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> registerRating(@PathVariable("tvid") long tvid , @RequestBody TVDTO dto){
-		tsv.registerTVIfNotExists(dto.getTvvo());
+		if(dto.getTvvo() != null) {
+			tsv.registerTVIfNotExists(dto.getTvvo());
+		}
 		Double changedRating = tsv.registerRating(dto.getRtvo());
 		log.debug("TVService >>> changedRating : {}", changedRating);
 		return new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
@@ -132,7 +138,7 @@ public class TVController {
 	@DeleteMapping(value = "/rating/{tvid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> deleteRating(@PathVariable("tvid") long tvid, @RequestBody RatingVO rtvo){
 		Double changedRating = tsv.deleteRating(rtvo.getTvid(), rtvo.getEmail());
-		return new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
+		return	new ResponseEntity<String>(changedRating == null ? "NoData" : changedRating.toString(), HttpStatus.OK);
 	}
 	//======================== 유저가 평점,즐겨찾기,평점 남긴 tv 리스트 ==========================
 	

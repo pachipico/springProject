@@ -48,7 +48,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			Authentication authentication) throws IOException, ServletException {
 		setAuthEmail(authentication.getName());
 		setAuthUrl("/home");
-		log.debug("login process");
 		boolean isUp = usv.updateLastLogin(getAuthEmail()); // 질문 : 같은 클래스 안인데 게터 쓰는이유
 
 		HttpSession ses = request.getSession(false); // 기존에 존재하는 세션 받아오기.
@@ -59,7 +58,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			ses.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 		}
 		SavedRequest savedReq = reqCache.getRequest(request, response);
-		
+		log.debug("login success, redirect to : {}", savedReq);
 		reStg.sendRedirect(request, response, (savedReq != null ? savedReq.getRedirectUrl() : getAuthUrl()) );
 	}
 	

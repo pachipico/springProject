@@ -21,7 +21,7 @@ public interface MovieDAO {
 	
 	// review 
 	List<ReviewVO> seleListMovieReview(long mid);
-	ReviewVO selectOneMovieReview( @Param("mid") long mid,@Param("writer") String email); // 중복 리뷰 작성 방지용
+	ReviewVO selectOneMovieReview( @Param("mid") long mid,@Param("writer") String wrier); // 중복 리뷰 작성 방지용
 	int insertMovieReview(ReviewVO rvvo );
 	int updateMovieReview(ReviewVO rvvo);
 	int deleteMovieReview( @Param("mid") long mid,@Param("writer") String writer);

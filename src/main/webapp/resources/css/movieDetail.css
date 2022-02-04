@@ -50,3 +50,53 @@ header {
   margin: 10px 0;
   font-size: 2rem;
 }
+
+.headerRatingDiv {
+	display: flex;
+	flex-direction: row;
+}
+
+.headerBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 45px;
+	height: 45px;
+	background-color: #0d243f;
+	color: white;
+	border-radius: 23px;
+}
+
+.modal-body{
+	text-align: center;
+}
+
+/* star */
+
+.star {
+  position: relative;
+  font-size: 2rem;
+  color: #ddd;
+}
+
+.star input {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.star span {
+  width: 0;
+  position: absolute;
+  left: 0;
+  color: red;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/*  */
+
+

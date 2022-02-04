@@ -12,7 +12,7 @@
 	<div id="header">
       <div id="profileImg"></div>
       <div id="headerInfo">
-        <div id="profileEmailDiv"><span id="profileEmail">${uvo.nickName}</span>
+        <div id="profileEmailDiv"><span id="profileEmail" style="color: ${uvo.fontColor}">${uvo.nickName}</span>
         ${fn:split(uvo.regAt, "-")[1] }월
         ${fn:split(uvo.regAt, "-")[0] }년
         부터 회원 </div>
@@ -48,7 +48,8 @@
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="/user/${uvo.email }">메인</a></li>
           <sec:authorize access="isAuthenticated()">
-			<sec:authentication property="principal.uvo.email" var="authEmail"/>          
+			<sec:authentication property="principal.uvo.email" var="authEmail"/>   
+			<c:set value="${authEmail }" var="email" />
           <li><a class="dropdown-item" href="/user/modify/${authEmail }">프로필 수정</a></li>
           </sec:authorize>
         </ul>
@@ -100,6 +101,9 @@
         </ul>
       </div>
     </div>
+    <script>
+    	let email = `<c:out value="${email}" />`;
+    </script>
       <c:choose>
       	<c:when test="${list eq 'liked' }">
       		 <jsp:include page="list/likedList.jsp" /> 

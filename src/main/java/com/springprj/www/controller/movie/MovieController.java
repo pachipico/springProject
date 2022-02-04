@@ -82,7 +82,9 @@ public class MovieController {
 
 	@PostMapping(value = "/review/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> postReview(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
-		msv.registerMovieIfNotExists(dto.getMvvo());
+		if(dto.getMvvo() != null) {
+			msv.registerMovieIfNotExists(dto.getMvvo());
+		}
 
 		return msv.registerReview(dto.getRvvo()) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -106,7 +108,9 @@ public class MovieController {
 
 	@PostMapping(value = "/like/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> postLike(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
-		msv.registerMovieIfNotExists(dto.getMvvo());
+		if(dto.getMvvo() != null) {
+			msv.registerMovieIfNotExists(dto.getMvvo());
+		}
 
 		return msv.registerLike(dto.getLvo()) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -121,7 +125,10 @@ public class MovieController {
 
 	@PostMapping(value = "/rating/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> postRating(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
-		msv.registerMovieIfNotExists(dto.getMvvo());
+		if(dto.getMvvo() != null) {
+			msv.registerMovieIfNotExists(dto.getMvvo());
+		}
+
 		Double changedRating = msv.registerRating(dto.getRtvo());
 		return	new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
 	}
@@ -135,7 +142,8 @@ public class MovieController {
 	@DeleteMapping(value = "/rating/{mid}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> deleteRating(@PathVariable("mid") long mid, @RequestBody RatingVO rtvo){
 		Double changedRating = msv.deleteRating(mid, rtvo.getEmail());
-		return	new ResponseEntity<String>(changedRating.toString(), HttpStatus.OK);
+		
+		return	new ResponseEntity<String>(changedRating == null ? "NoData" : changedRating.toString(), HttpStatus.OK);
 	}
 	
 	// ======================== 유저가 평점,즐겨찾기,평점 남긴 영화 리스트 ==========================
