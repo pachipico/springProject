@@ -30,6 +30,7 @@
     	    	<sec:authentication property="principal.uvo.email" var="authEmail" />
 	         	<sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          	<sec:authentication property="principal.uvo.authList" var="auths" />
+	          	<c:set value="${authEmail }" var="email" />
           		<a class="btn headerRateBtn headerBtn"  data-bs-toggle="modal" data-bs-target="#ratingModal" data-email="${authEmail }"><i class="bi bi-star-fill"></i></a>
           		<a class="btn headerLikeBtn headerBtn" data-email="${authEmail }"><i class="bi bi-heart-fill"></i></a>
           	</sec:authorize>
@@ -47,13 +48,9 @@
     	    	<sec:authentication property="principal.uvo.email" var="authEmail" />
 	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          <sec:authentication property="principal.uvo.authList" var="auths" />
-    	<div class="row" id="review">
-    		<h3>리뷰</h3>
-    		<input class="form-control" type="text" name="content" placeholder="content">
-    		<input class="form-control" type="text" name="writer" placeholder="writer" value="${authEmail }">
-    		<button class="form-control btn btn-outline-primary" type="button" id="reviewBtn">submit</button>
-    	</div>
+    	
     	</sec:authorize>
+    	<div id="mainTitle">시리즈 출연진</div>
 		<div id="castDiv">
 			
 		</div>

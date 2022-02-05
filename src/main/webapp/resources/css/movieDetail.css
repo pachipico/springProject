@@ -1,54 +1,53 @@
 .menuContainer {
-  text-align: center;
-  height: 50px;
+	text-align: center;
+	height: 50px;
 }
 
 header {
-  height: 500px;
+	height: 500px;
+	background-repeat: no-repeat;
+	background-position: inherit;
+}
 
-  background-repeat: no-repeat;
-  background-position: inherit;
-}
 .shadow {
-  height: 100%;
-  display: flex;
-  background-image: linear-gradient(
-    to right,
-    rgba(5.88%, 7.06%, 3.92%, 1) 150px,
-    rgba(5.88%, 7.06%, 3.92%, 0.8)
-  );
-  padding: 30px 50px;
+	height: 100%;
+	display: flex;
+	background-image: linear-gradient(to right, rgba(5.88%, 7.06%, 3.92%, 1)
+		150px, rgba(5.88%, 7.06%, 3.92%, 0.8));
+	padding: 30px 50px;
 }
+
 .imageContainer {
+	
 }
 
 .image img {
-  border-radius: 5px;
+	border-radius: 5px;
 }
 
-#watchProvider{
+#watchProvider {
 	height: 20%;
 	height: 50px;
 	width: 50px;
 }
 
 .tagLine .tLine {
-  font-size: 12px;
-  color: grey;
+	font-size: 12px;
+	color: grey;
 }
 
 .headerContent {
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  padding-left: 40px;
-  color: #fff;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+	padding-left: 40px;
+	color: #fff;
 }
 
 .headerContent .headerTitle {
-  font-weight: 600;
-  margin: 10px 0;
-  font-size: 2rem;
+	font-weight: 600;
+	margin: 10px 0;
+	font-size: 2rem;
 }
 
 .headerRatingDiv {
@@ -67,36 +66,82 @@ header {
 	border-radius: 23px;
 }
 
-.modal-body{
+.modal-body {
 	text-align: center;
 }
 
 /* star */
-
 .star {
-  position: relative;
-  font-size: 2rem;
-  color: #ddd;
+	position: relative;
+	font-size: 2rem;
+	color: #ddd;
 }
 
 .star input {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  opacity: 0;
-  cursor: pointer;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	opacity: 0;
+	cursor: pointer;
 }
 
 .star span {
-  width: 0;
-  position: absolute;
-  left: 0;
-  color: red;
-  overflow: hidden;
-  pointer-events: none;
+	width: 0;
+	position: absolute;
+	left: 0;
+	color: red;
+	overflow: hidden;
+	pointer-events: none;
 }
 
 /*  */
 
+/* castDiv */
+#mainTitle {
+	font-size: 1.5rem;
+	font-weight: 500;
+	padding: 30px 0px;
+}
 
+main {
+	padding: 0px 30px;
+}
+
+#castDiv{
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 30px;
+	overflow: scroll;
+}
+
+.castCard {
+	-webkit-box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
+	box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
+	border-radius: 10px;
+	margin: 10px;
+	height: 300px;
+}
+
+.castImg a img {
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.castDesc{
+	padding: 8px;
+}
+.realNameText a {
+	font-size: 16px;
+	font-weight: 700;
+	color: black;
+}
+.notRealName{
+	color: light-grey;
+	font-size: 10px;
+	font-weight: 200;
+}
+
+.realNameText a:hover{
+	color: grey;
+}

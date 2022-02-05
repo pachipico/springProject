@@ -49,8 +49,9 @@
           <li><a class="dropdown-item" href="/user/${uvo.email }">메인</a></li>
           <sec:authorize access="isAuthenticated()">
 			<sec:authentication property="principal.uvo.email" var="authEmail"/>   
-			<c:set value="${authEmail }" var="email" />
+			<c:if test="${authEmail eq uvo.email }">
           <li><a class="dropdown-item" href="/user/modify/${authEmail }">프로필 수정</a></li>
+			</c:if>
           </sec:authorize>
         </ul>
       </div>
@@ -59,7 +60,7 @@
       </div>
       <div class="btn-group">
         <button
-          class="menuBtn dropdown-toggle"
+          class="menuBtn dropdown dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -74,7 +75,7 @@
 
       <div class="btn-group">
         <button
-          class="menuBtn dropdown-toggle"
+          class="menuBtn dropdown dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -88,7 +89,7 @@
       </div>
       <div class="btn-group">
         <button
-          class="menuBtn dropdown-toggle"
+          class="menuBtn dropdown dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
           aria-expanded="false"
@@ -101,8 +102,13 @@
         </ul>
       </div>
     </div>
+    
     <script>
     	let email = `<c:out value="${email}" />`;
+    	let platform = `<c:out value="${platform}" />`;
+    	let list = `<c:out value="${list}" />`;
+    	let moviesData = ${moviesData};
+    	let tvsData = ${tvsData};
     </script>
       <c:choose>
       	<c:when test="${list eq 'liked' }">
@@ -121,4 +127,36 @@
       		??
       	</c:otherwise>
       </c:choose>
+        <!-- rating modal -->
+<div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">평점을 남겨주세요!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="star">
+        ★★★★★
+        <span>★★★★★</span>
+        <input
+          type="range"
+          id="ratingStar"
+          name="rating"
+          oninput="drawStar(this)"
+          value="1"
+          step="1"
+          min="0"
+          max="10"
+        />
+      </span>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="deleteRatingBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete Rating</button>
+      </div>
+    </div>
+  </div>
+</div>
     
+<script src="/resources/js/user.detail.js"></script>

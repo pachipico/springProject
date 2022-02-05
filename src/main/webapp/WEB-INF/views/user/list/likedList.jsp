@@ -10,10 +10,4 @@
       
       <!--  -->
     </div>
-<script>
-	let platform = `<c:out value="${platform}" />`;
-	let list = `<c:out value="${list}" />`;
-	let moviesData = ${moviesData};
-	let tvsData = ${tvsData};
-</script>
-<script src="/resources/js/user.detail.js"></script>
+

@@ -4,6 +4,10 @@ let genreQuery = [];
 let sortQuery = "";
 let url = `https://api.themoviedb.org/3/movie/${sortBy}?api_key=${API_KEY}&language=ko-KR&region=KR&page=`;
 const searchBtn = document.getElementById("searchBtn");
+let movieList = null;
+let likedList = null;
+let ratedList = null;
+let reviewedList = null;
 
 const changeUrl = () => {
   url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=ko-KR&region=KR&sort_by=${sortQuery}&include_adult=false&include_video=false&with_genres=${genreQuery.join(
@@ -22,15 +26,117 @@ const getJson = async (page = 1) => {
   }
 };
 
+const getUserLikedList = async () => {
+  try {
+    const res = await fetch(`/movie/${email}/liked`);
+    const result = await res.json();
+    return await result;
+  } catch (e) {
+    console.log();
+  }
+};
+
+const getUserRatedList = async () => {
+  try {
+    const res = await fetch(`/movie/${email}/rated`);
+    const result = await res.json();
+    return await result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getUserReviewdList = async () => {
+  try {
+    const res = await fetch(`/movie/${email}/reviewed`);
+    const result = await res.json();
+    return await result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getUserData = async () => {
+  console.log("fetching...");
+  const likedList_ = await getUserLikedList();
+  const reviewedList_ = await getUserReviewdList();
+  const ratedList_ = await getUserRatedList();
+  likedList = likedList_;
+  reviewedList = reviewedList_;
+  ratedList = ratedList_;
+};
+
+const addLike = async (mid, title, poster) => {
+  try {
+    const data = {
+      mvvo: { mid, title, poster },
+      lvo: { mid, email },
+    };
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/movie/like/${mid}`, config);
+    const result = await res.text();
+    if (result == 1) {
+      alert("즐겨찾기 추가 성공");
+      likedList.push({ mid, title, poster });
+    }
+  } catch (e) {
+    alert("즐겨찾기 추가 실패..");
+    console.log(e);
+  }
+};
+
+const removeLike = async (mid) => {
+  try {
+    const data = {
+      mid,
+      email,
+    };
+    const config = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/movie/like/${mid}`, config);
+    const result = await res.text();
+    if (result) {
+      alert("즐겨찾기 제거 성공");
+      likedList = likedList.filter((each) => each.mid == mid);
+    } else {
+      alert("즐겨찾기 제거 실패..");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const renderMovies = async (json, page = 1) => {
   console.log(json);
   let cardContainer = document.getElementById("cardContainer");
-
+  movieList = json;
   if (page == 1) {
     cardContainer.innerHTML = "";
   }
 
   json.forEach((movie, i) => {
+    let isLiked = 0;
+    let isRated = null;
+    likedList.forEach((liked) => {
+      if (movie.id == liked.mid) {
+        isLiked = 1;
+      }
+    });
+    ratedList.forEach((rated) => {
+      if (movie.id == rated.mid) {
+        isRated = rated.rating;
+      }
+    });
+
     const card = `
     <div class="cards col-lg-3">
       <a href="/movie/detail/${movie.id}">
@@ -39,7 +145,30 @@ const renderMovies = async (json, page = 1) => {
         alt=""
         />
         <div class="rating">${movie.vote_average * 10}%</div>
-        <a class="menu" >...</a>
+        <div class="dropdown menu">
+          <a class="moreBtn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            ···
+          </a>
+
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li>
+            ${
+              isLiked
+                ? `<a onclick="removeLike('${movie.id}')" class="dropdown-item" href="#">즐겨찾기 해제</a>`
+                : `<a onclick="addLike('${movie.id}','${movie.title}','${movie.poster_path}')" class="dropdown-item" href="#">즐겨찾기 추가</a>`
+            }
+            
+            </li>
+            <li>
+            ${
+              isRated != null
+                ? `<a class="dropdown-item" href="#">평점 수정하기</a>`
+                : `<a class="dropdown-item" href="#">평점 남기기</a>`
+            }
+            
+            </li>
+          </ul>
+        </div>
         <div class="cardContent">
           <div class="cardTitle">${movie.title}</div>
           <div class="cardSub">${movie.release_date}</div>
@@ -52,7 +181,9 @@ const renderMovies = async (json, page = 1) => {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  getJson().then((result) => renderMovies(result.results));
+  getUserData().then(() => {
+    getJson().then((result) => renderMovies(result.results));
+  });
 });
 
 document.addEventListener("click", (e) => {

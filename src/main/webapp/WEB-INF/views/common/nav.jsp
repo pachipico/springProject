@@ -6,8 +6,8 @@
       <div id="left">
         <div id="logo"><a href="/home">TMDB</a></div>
         <div class="leftMenu">
-        	<div class="dropdown menu">
-  				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        	<div class="dropdown dropdownNav menu">
+  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			영화
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -17,8 +17,8 @@
 				    <li><a class="dropdown-item" href="/movie/rating">평점순</a></li>
   				</ul>
 			</div>
-			<div class="dropdown menu">
-  				<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+			<div class="dropdown dropdownNav menu">
+  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			TV
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

@@ -1,10 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 	<jsp:include page="../common/header.jsp" />
 
 
     <jsp:include page="../common/nav.jsp" />
+    
+       	<sec:authorize access="isAuthenticated()" >
+       	 <sec:authentication property="principal.uvo.email" var="authEmail" />
+	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
+	          <sec:authentication property="principal.uvo.authList" var="auths" />
+	          <script type="text/javascript">
+				const email = "${authEmail}";
+			  </script>
+	    </sec:authorize>
     <link rel="stylesheet" href="/resources/css/movieList.css" />
     <div class="container">
       <div class="optionContainer">
@@ -48,7 +58,7 @@
     <button id="searchBtn" style="visibility: hidden">검색</button>
   </body>
 </html>
-<script src="list.js"></script>
+
 
 
 <script>

@@ -147,7 +147,7 @@ public class MovieController {
 	}
 	
 	// ======================== 유저가 평점,즐겨찾기,평점 남긴 영화 리스트 ==========================
-	@GetMapping("/{email}/liked")
+	@GetMapping(value = "/{email}/liked", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<MovieVO>> getUserLikedMovieList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserLikedList(email);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
@@ -159,7 +159,7 @@ public class MovieController {
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{email}/rated")
+	@GetMapping(value = "/{email}/rated", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<List<MovieVO>> getUserRatedList(@PathVariable("email") String email){
 		List<MovieVO> list = msv.getUserRatedList(email);
 		return new ResponseEntity<List<MovieVO>>(list, HttpStatus.OK);

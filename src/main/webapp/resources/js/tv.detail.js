@@ -50,7 +50,7 @@ const getTVData = async () => {
 const renderDetail = (json) => {
   console.log("movie detail: ", json);
   poster.setAttribute("src", `https://www.themoviedb.org/t/p/w300_and_h450_face${json.poster_path}`);
-  movieTitle.innerText = json.name;
+  movieTitle.innerText = json.name + `(${json.first_air_date.slice(0, 4)})`;
   tagline.innerText = json.tagline;
   overview.innerText = json.overview;
   rating.innerText = json.vote_average * 10 + "%";
