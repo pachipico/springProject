@@ -1,10 +1,15 @@
 const API_KEY = "6e6b78d7518e1d61e33e6121c3d5e62d";
+// 카테고리별 검색, 페이징에 이용
 let page = 1;
 let genreQuery = [];
 let sortQuery = "";
 let url = `https://api.themoviedb.org/3/movie/${sortBy}?api_key=${API_KEY}&language=ko-KR&region=KR&page=`;
 const searchBtn = document.getElementById("searchBtn");
-let movieList = null;
+
+// post시에 전송할 영화 데이터 변수
+let movieData = {};
+
+// 사용자의 좋아요/평점/리뷰 리스트 받아올 변수
 let likedList = null;
 let ratedList = null;
 let reviewedList = null;
@@ -66,6 +71,10 @@ const getUserData = async () => {
   ratedList = ratedList_;
 };
 
+const drawStar = (target) => {
+  document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+};
+
 const addLike = async (mid, title, poster) => {
   try {
     const data = {
@@ -115,10 +124,49 @@ const removeLike = async (mid) => {
   }
 };
 
+const setData = (rating, mid, title, poster) => {
+  let ratingStar = document.getElementById("ratingStar");
+  if (rating != null) {
+    ratingStar.value = rating;
+    document.querySelector(`.star span`).style.width = `${rating * 10}%`;
+    ratingStar.dataset.status = "mod";
+  } else {
+    ratingStar.value = 0;
+    document.querySelector(`.star span`).style.width = `${0}%`;
+    ratingStar.dataset.status = "reg";
+    movieData = { mid, title, poster };
+  }
+  ratingStar.dataset.mid = mid;
+};
+
+const addRating = async (mid, email, rating) => {
+  try {
+    const data = {
+      mvvo: movieData,
+      rtvo: { mid, email, rating },
+    };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/movie/rating/${detailId}`, config);
+    const result = await res.text();
+    if (result > 0) {
+      alert("평점 등록 성공");
+      // 추가 변경할것.
+    } else {
+      alert("평점 등록 실패..");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const renderMovies = async (json, page = 1) => {
   console.log(json);
   let cardContainer = document.getElementById("cardContainer");
-  movieList = json;
+
   if (page == 1) {
     cardContainer.innerHTML = "";
   }
@@ -126,12 +174,12 @@ const renderMovies = async (json, page = 1) => {
   json.forEach((movie, i) => {
     let isLiked = 0;
     let isRated = null;
-    likedList.forEach((liked) => {
+    likedList?.forEach((liked) => {
       if (movie.id == liked.mid) {
         isLiked = 1;
       }
     });
-    ratedList.forEach((rated) => {
+    ratedList?.forEach((rated) => {
       if (movie.id == rated.mid) {
         isRated = rated.rating;
       }
@@ -162,8 +210,8 @@ const renderMovies = async (json, page = 1) => {
             <li>
             ${
               isRated != null
-                ? `<a class="dropdown-item" href="#">평점 수정하기</a>`
-                : `<a class="dropdown-item" href="#">평점 남기기</a>`
+                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${movie.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-status="mod" href="#">평점 수정하기</a>`
+                : `<a class="dropdown-item" onclick="setData(${isRated})" data-bs-toggle="modal" data-bs-target="#ratingModal" data-status="reg" href="#">평점 남기기</a>`
             }
             
             </li>
@@ -213,5 +261,9 @@ document.addEventListener("change", (e) => {
   if (e.target.id == "orderBy") {
     sortQuery = e.target.value;
     searchBtn.style.visibility = "";
+  } else if (e.target.id == "ratingStar") {
+    console.log(e.target.dataset.status);
+    console.log(e.target.dataset.mid);
+    console.log(e.target.value);
   }
 });

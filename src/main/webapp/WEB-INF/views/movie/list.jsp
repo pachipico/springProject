@@ -57,6 +57,36 @@
     </div>
     <button id="searchBtn" style="visibility: hidden">검색</button>
   </body>
+  <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">평점을 남겨주세요!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <span class="star">
+        ★★★★★
+        <span>★★★★★</span>
+        <input
+          type="range"
+          id="ratingStar"
+          name="rating"
+          oninput="drawStar(this)"
+          value="1"
+          step="1"
+          min="0"
+          max="10"
+        />
+      </span>
+      </div>
+      <div class="modal-footer">
+        <button id="modalCloseBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button id="deleteRatingBtn" type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete Rating</button>
+      </div>
+    </div>
+  </div>
+</div>
 </html>
 
 
