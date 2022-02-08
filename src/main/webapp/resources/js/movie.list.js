@@ -1,9 +1,10 @@
 const API_KEY = "6e6b78d7518e1d61e33e6121c3d5e62d";
 // 카테고리별 검색, 페이징에 이용
 let page = 1;
+
 let genreQuery = [];
 let sortQuery = "";
-let url = `https://api.themoviedb.org/3/movie/${sortBy}?api_key=${API_KEY}&language=ko-KR&region=KR&page=`;
+let url = `https://api.themoviedb.org/3/movie/${sortBy}?api_key=${API_KEY}&language=ko-KR&region=KR&include_adult=${isAdult}&page=`;
 const searchBtn = document.getElementById("searchBtn");
 
 // post시에 전송할 영화 데이터 변수
@@ -15,7 +16,7 @@ let ratedList = null;
 let reviewedList = null;
 
 const changeUrl = () => {
-  url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=ko-KR&region=KR&sort_by=${sortQuery}&include_adult=false&include_video=false&with_genres=${genreQuery.join(
+  url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=ko-KR&region=KR&sort_by=${sortQuery}&include_adult=false&include_video=false&include_adult=${isAdult}&with_genres=${genreQuery.join(
     ","
   )}&with_watch_monetization_types=flatrate&page=`;
 };

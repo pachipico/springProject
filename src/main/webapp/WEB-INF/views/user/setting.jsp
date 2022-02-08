@@ -8,7 +8,7 @@
 
     <div id="emailDiv">
       <div >
-      	<img id="profileImg" src="/fileUpload/${uvo.profileImg }">
+      	<img class="profileImg" src="/fileUpload/${uvo.profileImg }">
       </div>
       <span><c:out value="${uvo.nickName }"/></span>
     </div>
@@ -22,12 +22,18 @@
           <a href="/user/${uvo.email }/setting" id="currMenu"> 계정 설정 </a>
         </div>
       </div>
+      
+     
+      
+      <!--  -->
       <div id="settingMain">
         <h4>계정 설정</h4>
        
         <form method="POST" action="/user/${uvo.email }/setting">
+          	
           <input type="hidden" value="${uvo.email }" name="email">
           <div class="setting">
+          
             <label for="adultSel">검색에 성인용을 포함 시키겠습니까?</label>
             <select name="adult" id="adultSel">
               <option value="false" ${uvo.adult ? "" : "selected" } >아니오</option>
@@ -36,7 +42,8 @@
           </div>
           <button id="settingSubmitBtn" class="btn rounded-pill" type="submit">저장</button>
         </form>
-      </div>
+      </div> 
+      <!--  -->
     </div>
   </body>
   <!-- Modal -->

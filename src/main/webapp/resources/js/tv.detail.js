@@ -60,13 +60,27 @@ const renderDetail = (json) => {
 const renderCredits = (json) => {
   console.log("credits: ", json);
   let castDiv = document.getElementById("castDiv");
-  let ul = `<ul>`;
+
   json.cast.forEach((each) => {
-    let li = `<li><a href="/actor/${each.id}">${each.character} (${each.name})</a></li>`;
-    ul += li;
+    const card = `
+    <div class="castCard">
+				<div class="castImg">
+				<a href="/actor/${each.id}">
+				${
+          each.profile_path != null
+            ? `<img  src="https://themoviedb.org/t/p/w138_and_h175_face${each.profile_path}">`
+            : `<img style="height: 175px;width: 138px;" >`
+        }
+				</a>
+				</div>
+				<div class="castDesc">
+					<div class="realNameText"><a href="">${each.name}</a></div>
+					<div class="castNameText">${each.character}</div>
+				</div>
+			</div>
+    `;
+    castDiv.innerHTML = castDiv.innerHTML + card;
   });
-  ul += `</ul>`;
-  castDiv.innerHTML = castDiv.innerHTML + ul;
 };
 
 const getList = async (query) => {

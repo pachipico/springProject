@@ -11,7 +11,7 @@
 <%-- <jsp:include page="userDetailHeader.jsp" /> --%>
 	<div id="header">
       <div >
-      	<img id="profileImg" src="/fileUpload/${uvo.profileImg }">
+      	<img id="profileImg" src="/fileUpload/og_${uvo.profileImg }">
       </div>
       <div id="headerInfo">
         <div id="profileEmailDiv"><span id="profileEmail" style="color: ${uvo.fontColor}">${uvo.nickName}</span>

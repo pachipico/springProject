@@ -1,11 +1,13 @@
 package com.springprj.www.controller.user;
 
+import java.io.File;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -14,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -200,6 +203,12 @@ public class UserController {
 		model.addAttribute("purchased",ssv.getList());
 		return "user/modify";
 	}
+	
+	@GetMapping("/modify/nickName")
+	public String modifyNickName(Principal principal, Model model) {
+		model.addAttribute("uvo",usv.getUserDetail(principal.getName()));
+		return "user/changeNickName";
+	}
 
 	@PostMapping("/modify/nickName")
 	public String modifyEmail (String email, String nickName,String pwd, RedirectAttributes reAttr) {
@@ -208,25 +217,40 @@ public class UserController {
 			isUp = usv.updateUserNickName(email, nickName);
 		}
 		reAttr.addFlashAttribute("isUp", isUp);
-		return "redirect:/user/detail/"+ email;
+		return "redirect:/user/"+ email+"/modify";
+	}
+
+	@GetMapping("/modify/pwd")
+	public String modifyPwd(Principal principal, Model model) {
+		String email = principal.getName();
+		model.addAttribute("email",email);
+		
+		return "user/changePassword";
 	}
 
 	@PostMapping("/modify/pwd")
-	public String modifyPwd(String email, String pwd, String newPwd, RedirectAttributes reAttr) {
+	public String modifyPwd(HttpServletRequest request, HttpServletResponse response, Authentication authentication, String email, String pwd, String newPwd, RedirectAttributes reAttr) {
 		int isUp = 0;
 		if(bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
-			isUp = usv.updateUserPwd(email, newPwd);
+			isUp = usv.updateUserPwd(email, bcpEncoder.encode(newPwd));
+			if(isUp > 0) {
+				reAttr.addFlashAttribute("isUp", isUp);
+				new SecurityContextLogoutHandler().logout(request, response, authentication);
+				return "redirect:/user/login";
+			}
+		} else {
+			reAttr.addFlashAttribute("wrongPwd", "1");
 		}
 		reAttr.addFlashAttribute("isUp", isUp);
-		return "redirect:/user/detail/" + email;
+		return "redirect:/user/"+ email + "/modify";
 	}
 	
 	@PostMapping("/modify/profileImg")
 	public String modifyProfileImg (String email, String url,@RequestParam("file") MultipartFile file , RedirectAttributes reAttr) {
 		String fileName = phd.uploadFile(file);
+		phd.removeFile(usv.getUserDetail(email).getProfileImg());
 		int isUp = usv.updateUserProfileImg(email, fileName);
-		log.debug("profile img modify {}", isUp > 0 ? "success" : "failed");
-//		reAttr.addFlashAttribute("isUp", usv.updateUserProfileImg(email, fileName));
+		reAttr.addFlashAttribute("isUp", isUp);
 		return "redirect:/user/"+ email + "/modify"; 
 	}
 	

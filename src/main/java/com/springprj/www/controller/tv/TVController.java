@@ -24,7 +24,9 @@ import com.springprj.www.domain.movietv.RatingVO;
 import com.springprj.www.domain.movietv.ReviewVO;
 import com.springprj.www.domain.movietv.TVDTO;
 import com.springprj.www.domain.movietv.TVVO;
+import com.springprj.www.security.UserVO;
 import com.springprj.www.service.tv.TVService;
+import com.springprj.www.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,27 +37,45 @@ public class TVController {
 
 	@Inject
 	private TVService tsv;
+	
+	@Inject UserService usv;
 
 	@GetMapping("/netflix")
-	public String netflixList(Model model) {
+	public String netflixList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("platform", "8");
 		return "tv/list";
 	}
 
 	@GetMapping("/amazon")
-	public String amazonList(Model model) {
+	public String amazonList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("platform", "119");
 		return "tv/list";
 	}
 
 	@GetMapping("/watcha")
-	public String watchaList(Model model) {
+	public String watchaList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("platform", "97");
 		return "tv/list";
 	}
 
 	@GetMapping("/wavve")
-	public String wavveList(Model model) {
+	public String wavveList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("platform", "356");
 		return "tv/list";
 	}

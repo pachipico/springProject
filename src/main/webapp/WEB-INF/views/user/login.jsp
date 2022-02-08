@@ -36,5 +36,11 @@
       </form>
     </main>
   </body>
+  <script>
+  let isUp = `<c:out value="${isUp}" />`;
+	if(isUp > 0){
+		alert("정보 수정 완료");
+	}
+  </script>
 </html>
 

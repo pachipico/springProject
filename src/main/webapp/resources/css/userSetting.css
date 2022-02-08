@@ -18,7 +18,7 @@
   background-color: #fff;
 }
 
-#profileImg{
+.profileImg{
 	height: 40px;
 	width: 40px;
 	border-radius: 20px;
@@ -89,8 +89,11 @@
   color: black;
 }
 
-.secondRow input {
+input {
   width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #e9e9e9;
 }
 
 #imgUploadModalBtn {
@@ -116,7 +119,7 @@
   background-color: rgb(201, 199, 199);
 }
 
-#settingSubmitBtn {
+.rounded-pill {
   background-color: rgb(235, 92, 216);
   color: #fff;
   padding-left: 18px;
@@ -124,7 +127,23 @@
   font-weight: 500;
 }
 
-#settingSubmitBtn:hover {
+.rounded-pill:hover {
   background-color: lightgrey;
   color: black;
+}
+
+#changePwdDiv{
+	text-align: center;
+	padding: 40px;
+}
+
+#changePwdSubmitBtn{
+	background-color: lightskyblue;
+	color: #fff;
+	margin-top: 30px;
+}
+
+#changePwdSubmitBtn:hover{
+	background-color: black;
+	
 }

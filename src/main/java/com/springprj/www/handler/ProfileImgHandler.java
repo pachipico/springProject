@@ -18,10 +18,10 @@ import net.coobird.thumbnailator.Thumbnails;
 @Component
 public class ProfileImgHandler {
 
-	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/fileUpload";
+	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
 
 	public String uploadFile(MultipartFile file) {
-		String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
+		
 
 		File folders = new File(UP_DIR);
 		if (!folders.exists()) {
@@ -35,7 +35,7 @@ public class ProfileImgHandler {
 
 		UUID uuid = UUID.randomUUID();
 
-		String fullFileName = "og_" + uuid.toString() + onlyFileName;
+		String fullFileName = "og_" + uuid.toString() +"_"+ onlyFileName;
 		File storeFile = new File(folders, fullFileName);
 		log.debug("업로드할 파일 : {}", storeFile);
 		try {
@@ -52,7 +52,18 @@ public class ProfileImgHandler {
 			e.printStackTrace();
 		}
 		log.debug("+++++++++++++{}", folders);
-		return fullFileName;
+		return fullFileName.substring(3);
+	}
+	
+	public boolean removeFile(String fileName) {
+		
+		File file = new File(UP_DIR);
+		String ogFileName = "og_" + fileName;
+		File ogFile = new File(file, ogFileName);
+		File thFile = new File(file, fileName);
+		ogFile.delete();
+		
+		return thFile.delete();
 	}
 
 	private boolean isImgFile(File storeFile) throws IOException {

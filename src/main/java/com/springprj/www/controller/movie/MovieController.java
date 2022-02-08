@@ -25,7 +25,9 @@ import com.springprj.www.domain.movietv.MovieDTO;
 import com.springprj.www.domain.movietv.MovieVO;
 import com.springprj.www.domain.movietv.RatingVO;
 import com.springprj.www.domain.movietv.ReviewVO;
+import com.springprj.www.security.UserVO;
 import com.springprj.www.service.movie.MovieService;
+import com.springprj.www.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,27 +38,46 @@ public class MovieController {
 
 	@Inject
 	private MovieService msv;
+	
+	@Inject
+	private UserService usv;
 
 	@GetMapping("/popular")
-	public String popularList(Model model) {
+	public String popularList(Model model, Principal principal) {
+		if(principal != null) {
+		UserVO uvo = usv.getUserDetail(principal.getName());
+		model.addAttribute("isAdult", uvo.isAdult());
+		}
 		model.addAttribute("sortBy", "popular");
 		return "movie/list";
 	}
 
 	@GetMapping("/now-playing")
-	public String nowPlayingList(Model model) {
+	public String nowPlayingList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("sortBy", "now_playing");
 		return "movie/list";
 	}
 
 	@GetMapping("/up-coming")
-	public String upComingList(Model model) {
+	public String upComingList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("sortBy", "upcoming");
 		return "movie/list";
 	}
 
 	@GetMapping("/rating")
-	public String ratingList(Model model) {
+	public String ratingList(Model model, Principal principal) {
+		if(principal != null) {
+			UserVO uvo = usv.getUserDetail(principal.getName());
+			model.addAttribute("isAdult", uvo.isAdult());
+			}
 		model.addAttribute("sortBy", "top_rated");
 		return "movie/list";
 	}

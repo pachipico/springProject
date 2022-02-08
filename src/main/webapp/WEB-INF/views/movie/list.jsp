@@ -57,6 +57,7 @@
     </div>
     <button id="searchBtn" style="visibility: hidden">검색</button>
   </body>
+  <!-- 모달 -->
   <div class="modal fade" id="ratingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -93,6 +94,10 @@
 
 <script>
 	let sortBy = `<c:out value="${sortBy}" />`
-	
+	let isAdult = `<c:out value="${isAdult}" />`
+	if(isAdult == null || isAdult == ""){
+		isAdult = false;
+	}
+	console.log(isAdult);
 </script>
 <script src="/resources/js/movie.list.js"></script>
