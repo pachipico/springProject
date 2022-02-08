@@ -8,9 +8,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.springprj.www.config.RootConfig;
-import com.springprj.www.domain.ReviewVO;
-import com.springprj.www.domain.TVDTO;
-import com.springprj.www.domain.TVVO;
+import com.springprj.www.domain.movietv.ReviewVO;
+import com.springprj.www.domain.movietv.TVDTO;
+import com.springprj.www.domain.movietv.TVVO;
 import com.springprj.www.service.tv.TVService;
 
 import lombok.extern.slf4j.Slf4j;

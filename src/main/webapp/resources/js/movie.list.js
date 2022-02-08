@@ -93,6 +93,9 @@ const addLike = async (mid, title, poster) => {
     if (result == 1) {
       alert("즐겨찾기 추가 성공");
       likedList.push({ mid, title, poster });
+      // 즐겨찾기 추가 -> 삭제 구현
+      let likeBtn = document.querySelector(`a[data-likeId="${mid}"]`);
+      likeBtn.outerHTML = `<a onclick="removeLike('${mid}')" class="dropdown-item" href="#" data-likeId="${mid}">즐겨찾기 해제</a>`;
     }
   } catch (e) {
     alert("즐겨찾기 추가 실패..");
@@ -100,7 +103,7 @@ const addLike = async (mid, title, poster) => {
   }
 };
 
-const removeLike = async (mid) => {
+const removeLike = async (mid, title, poster) => {
   try {
     const data = {
       mid,
@@ -116,6 +119,9 @@ const removeLike = async (mid) => {
     if (result) {
       alert("즐겨찾기 제거 성공");
       likedList = likedList.filter((each) => each.mid == mid);
+      // 즐겨찾기 추가 -> 삭제 구현
+      let likeBtn = document.querySelector(`a[data-likeId="${mid}"]`);
+      likeBtn.outerHTML = `<a onclick="addLike('${mid}','${title}','${poster}')" data-likeId="${mid}" class="dropdown-item" href="#">즐겨찾기 추가</a>`;
     } else {
       alert("즐겨찾기 제거 실패..");
     }
@@ -134,8 +140,8 @@ const setData = (rating, mid, title, poster) => {
     ratingStar.value = 0;
     document.querySelector(`.star span`).style.width = `${0}%`;
     ratingStar.dataset.status = "reg";
-    movieData = { mid, title, poster };
   }
+  movieData = { mid, title, poster };
   ratingStar.dataset.mid = mid;
 };
 
@@ -150,13 +156,76 @@ const addRating = async (mid, email, rating) => {
       method: "POST",
       body: JSON.stringify(data),
     };
-    const res = await fetch(`/movie/rating/${detailId}`, config);
+    const res = await fetch(`/movie/rating/${mid}`, config);
     const result = await res.text();
+    let rateBtn = document.querySelector(`a[data-ratingId="${mid}"]`);
+
     if (result > 0) {
+      // 평점 남기기 -> 평점 수정 구현
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${movieData.mid}', '${movieData.title}', '${movieData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movieData.id}" data-status="mod" href="#">평점 수정하기</a>`;
+      document.getElementById("modalCloseBtn").click();
       alert("평점 등록 성공");
-      // 추가 변경할것.
     } else {
       alert("평점 등록 실패..");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const modifyRating = async (mid, email, rating) => {
+  try {
+    const data = {
+      mid,
+      email,
+      rating,
+    };
+    const config = {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/movie/rating/${mid}`, config);
+    const result = await res.text();
+    if (result != null || result != "NoData") {
+      let rateBtn = document.querySelector(`a[data-ratingId="${mid}"]`);
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${movieData.mid}', '${movieData.title}', '${movieData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movieData.mid}" data-status="mod" href="#">평점 수정하기</a>`;
+      document.getElementById("modalCloseBtn").click();
+      alert("평점 수정 성공");
+    } else {
+      alert("평점 수정 실패..");
+    }
+  } catch (e) {
+    alert("평점 수정 실패..");
+    console.log(e);
+  }
+};
+
+const removeRating = async (mid, email) => {
+  try {
+    const data = {
+      mid,
+      email,
+    };
+    const config = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/movie/rating/${mid}`, config);
+    const result = await res.text();
+    if (result != null || result != "NoData") {
+      let rateBtn = document.querySelector(`a[data-ratingId="${mid}"]`);
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${null}, '${movieData.id}', '${
+        movieData.title
+      }', '${movieData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+        movieData.id
+      }" data-status="reg" href="#">평점 남기기</a>`;
+      alert("평점 삭제 성공");
+    } else {
+      alert("평점 삭제 실패..");
     }
   } catch (e) {
     console.log(e);
@@ -202,16 +271,16 @@ const renderMovies = async (json, page = 1) => {
             <li>
             ${
               isLiked
-                ? `<a onclick="removeLike('${movie.id}')" class="dropdown-item" href="#">즐겨찾기 해제</a>`
-                : `<a onclick="addLike('${movie.id}','${movie.title}','${movie.poster_path}')" class="dropdown-item" href="#">즐겨찾기 추가</a>`
+                ? `<a onclick="removeLike('${movie.id}','${movie.title}','${movie.poster_path}')" class="dropdown-item" href="#" data-likeId="${movie.id}">즐겨찾기 해제</a>`
+                : `<a onclick="addLike('${movie.id}','${movie.title}','${movie.poster_path}')" data-likeId="${movie.id}" class="dropdown-item" href="#">즐겨찾기 추가</a>`
             }
             
             </li>
             <li>
             ${
               isRated != null
-                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${movie.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-status="mod" href="#">평점 수정하기</a>`
-                : `<a class="dropdown-item" onclick="setData(${isRated})" data-bs-toggle="modal" data-bs-target="#ratingModal" data-status="reg" href="#">평점 남기기</a>`
+                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${movie.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movie.id}" data-status="mod" href="#">평점 수정하기</a>`
+                : `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${movie.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movie.id}" data-status="reg" href="#">평점 남기기</a>`
             }
             
             </li>
@@ -238,8 +307,7 @@ document.addEventListener("click", (e) => {
   if (e.target.id == "moreBtn") {
     page++;
     getJson(page).then((result) => renderMovies(result.results, page));
-  }
-  if (e.target.classList.contains("genreBtn")) {
+  } else if (e.target.classList.contains("genreBtn")) {
     if (genreQuery.includes(e.target.dataset.genre)) {
       genreQuery = genreQuery.filter((query) => query != e.target.dataset.genre);
       e.target.classList.remove("btn-secondary");
@@ -250,10 +318,12 @@ document.addEventListener("click", (e) => {
       e.target.classList.add("btn-secondary");
     }
     searchBtn.style.visibility = "";
-  }
-  if (e.target.id == "searchBtn") {
+  } else if (e.target.id == "searchBtn") {
     changeUrl();
     getJson().then((result) => renderMovies(result.results));
+  } else if (e.target.id == "deleteRatingBtn") {
+    const mid = document.getElementById("ratingStar").dataset.mid;
+    removeRating(mid, email);
   }
 });
 
@@ -262,8 +332,14 @@ document.addEventListener("change", (e) => {
     sortQuery = e.target.value;
     searchBtn.style.visibility = "";
   } else if (e.target.id == "ratingStar") {
-    console.log(e.target.dataset.status);
-    console.log(e.target.dataset.mid);
-    console.log(e.target.value);
+    const status = e.target.dataset.status;
+    const mid = e.target.dataset.mid;
+    const rating = e.target.value;
+    if (status == "reg") {
+      addRating(mid, email, rating);
+    } else {
+      console.log("변경");
+      modifyRating(mid, email, rating);
+    }
   }
 });

@@ -6,6 +6,8 @@
       <!--  -->
       <div class="listTitle">
         <span id="listTitleText">나의 평점 ${platform }</span>
+        <a>영화:	${mRatedCnt }</a>
+        <a>tv:	${tRatedCnt }</a>
       </div>
       
       <!--  -->

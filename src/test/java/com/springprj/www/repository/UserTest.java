@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.springprj.www.config.RootConfig;
+import com.springprj.www.repository.user.UserDAO;
 import com.springprj.www.security.UserVO;
 
 import lombok.extern.slf4j.Slf4j;

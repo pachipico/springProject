@@ -20,13 +20,19 @@ public interface UserService {
 	Double getUsersAvgTVRating(String email);
 	Double getUsersAvgMovieRating(String email);
 	
-	int updateUser(UserVO uvo); // 한꺼번에 묶을수 있으면 묶는쪽으로..
+//	int updateUser(UserVO uvo); // 한꺼번에 묶을수 있으면 묶는쪽으로..
 	
 	int gainPoint(String email, int point); //	잔여포인트반환
 	int spendPoint(String email, int point); // 잔여 포인트 반환
 	int updateUserSetting(String email, boolean slang, boolean adult );
 	int updateUserGrade(String email, int grade);
+	int updateUserNickName(String email, String nickName);
+	int updateUserPwd(String email, String pwd);
+	int updateUserProfileImg(String email, String url);
+	int updateUserFontColor(String email, String color);
+
 	boolean updateLastLogin(String email);
+	
 	
 	int removeUser(String email, String pwd);
 }

@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.springprj.www.domain.LikeVO;
-import com.springprj.www.domain.MovieDTO;
-import com.springprj.www.domain.MovieVO;
-import com.springprj.www.domain.RatingVO;
-import com.springprj.www.domain.ReviewVO;
+import com.springprj.www.domain.movietv.LikeVO;
+import com.springprj.www.domain.movietv.MovieDTO;
+import com.springprj.www.domain.movietv.MovieVO;
+import com.springprj.www.domain.movietv.RatingVO;
+import com.springprj.www.domain.movietv.ReviewVO;
 import com.springprj.www.service.movie.MovieService;
 
 import lombok.extern.slf4j.Slf4j;

@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springprj.www.repository.UserDAO;
+import com.springprj.www.repository.user.UserDAO;
 import com.springprj.www.security.AuthVO;
 import com.springprj.www.security.UserVO;
 
@@ -67,20 +67,18 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return null;
 		}
-		
+
 	}
-	
-	
 
 	@Override
 	public Double getUsersAvgTVRating(String email) {
-		
+
 		return udao.selectUserTVAvgRating(email);
 	}
 
 	@Override
 	public Double getUsersAvgMovieRating(String email) {
-		
+
 		return udao.selectUserMovieAvgRating(email);
 	}
 
@@ -110,11 +108,43 @@ public class UserServiceImpl implements UserService {
 		return udao.selectPoint(email);
 	}
 
-	// 이건 제가 조금더 생각해서 말씀드릴게요.
 	@Override
-	public int updateUser(UserVO uvo) {
+	public int updateUserNickName(String email,  String nickName) {
+		if (udao.selectOneUserByEmail(email) != null) {
+			return udao.updateNickName(email,  nickName);
+		} else {
+			return 0;
+		}
+	}
 
-		return 0;
+	@Override
+	public int updateUserPwd(String email, String pwd) {
+		if (udao.selectOneUserByEmail(email) != null) {
+			return udao.updatePwd(email, pwd);
+		} else {
+
+			return 0;
+		}
+	}
+
+	@Override
+	public int updateUserProfileImg(String email, String url) {
+		if (udao.selectOneUserByEmail(email) != null) {
+			return udao.updateProfileImg(email, url);
+		} else {
+
+			return 0;
+		}
+	}
+
+	@Override
+	public int updateUserFontColor(String email, String color) {
+		if (udao.selectOneUserByEmail(email) != null) {
+			return udao.updateFontColor(email, color);
+		} else {
+
+			return 0;
+		}
 	}
 
 	// 해당 이메일을 가진 유저가 포인트를 얻고, 그 유저의 포인트 반환.
@@ -130,7 +160,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public int spendPoint(String email, int point) {
 		int currPoint = udao.selectPoint(email);
-		if(currPoint < point) {
+		if (currPoint < point) {
 			return -1;
 		} else {
 			udao.updatePointDown(email, point);
@@ -166,7 +196,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean updateLastLogin(String email) {
-		
+
 		return udao.updateLastLogin(email) > 0 ? true : false;
 	}
 

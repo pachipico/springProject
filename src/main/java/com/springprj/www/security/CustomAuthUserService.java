@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.springprj.www.repository.UserDAO;
+import com.springprj.www.repository.user.UserDAO;
 
 import lombok.extern.slf4j.Slf4j;
 

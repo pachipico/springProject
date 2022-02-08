@@ -8,10 +8,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.springprj.www.config.RootConfig;
-import com.springprj.www.domain.LikeVO;
-import com.springprj.www.domain.MovieVO;
-import com.springprj.www.domain.RatingVO;
-import com.springprj.www.domain.ReviewVO;
+import com.springprj.www.domain.movietv.LikeVO;
+import com.springprj.www.domain.movietv.MovieVO;
+import com.springprj.www.domain.movietv.RatingVO;
+import com.springprj.www.domain.movietv.ReviewVO;
+import com.springprj.www.repository.movie.MovieDAO;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springprj.www.repository.tvBoard.TvBoardDAO">
+	<insert id="insertTvBoard" parameterType="tvbvo">
+		insert into tv_board (writer, tvid, title, like_hate, content, poster)
+		values (#{writer}, #{tvid}, #{title}, #{likeHate}, #{content}, #{poster})
+	</insert>
+	<sql id="search">
+		<if test="type != null">
+			<trim prefix="and (" suffix=")" prefixOverrides="OR">
+				<foreach collection="typeToArray" item="type">
+					<trim prefix="OR">
+						<choose>
+							<when test="type == 't'.toString()">
+								c.title like concat('%',#{keyword},'%')
+							</when>
+							<when test="type == 'v'.toString()">
+								t.title like concat('%',#{keyword},'%')
+							</when>
+							<when test="type == 'w'.toString()">
+								writer like concat('%',#{keyword},'%')
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<select id="selectLikeListTvBoardPaging" parameterType="pgvo" resultType="tvbvo">
+		select b.tvb_id, b.title, writer, mod_at, read_count, 
+		(select count(*) from tv_heart h where h.tvb_id = b.tvb_id) as heart
+		from (
+			select tvb_id from tv_board
+			where tvb_id > 0
+			<include refid="search"></include>
+			limit #{pageStart}, #{qty}
+		) a left join tv_board b
+		on a.tvb_id = b.tvb_id
+		where like_hate = 1
+		order by b.tvb_id desc
+	</select>
+	<select id="selectHateListTvBoardPaging" parameterType="pgvo" resultType="tvbvo">
+		select b.tvb_id, b.title, writer, mod_at, read_count, 
+		(select count(*) from tv_heart h where h.tvb_id = b.tvb_id) as heart
+		from (
+			select tvb_id from tv_board
+			where tvb_id > 0
+			<include refid="search"></include>
+			limit #{pageStart}, #{qty}
+		) a left join tv_board b
+		on a.tvb_id = b.tvb_id
+		where like_hate = 0
+		order by b.tvb_id desc
+	</select>
+	<update id="updateTvBoard" parameterType="tvbvo">
+		update tv_board set
+		title = #{title}, content = #{content}, mod_at = now()
+		where tvb_id = #{tvbId}
+	</update>
+	<select id="selectOneTvBoard" parameterType="long" resultType="tvbvo">
+		select * from tv_board where tvb_id = #{tvbId}
+	</select>
+	<delete id="deleteTvBoard" parameterType="long">
+		delete from tv_board where tvb_id = #{tvbId}
+	</delete>
+	<select id="selectOneTotalCount" parameterType="pgvo" resultType="int">
+		select count(tvb_id) from tv_board where tvb_id > 0
+		<include refid="search"></include>
+	</select>
+	<update id="updateTvBoardReadCount">
+		update tv_board set read_count = read_count + #{cnt} where tvb_id = #{tvbId}
+	</update>
+	<update id="updateTvBoardCmtQty">
+		update tv_board set cmt_qty = cmt_qty + #{cnt} where tv_bid = #{tvbId}
+	</update>
+</mapper>

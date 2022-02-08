@@ -10,7 +10,9 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 <%-- <jsp:include page="userDetailHeader.jsp" /> --%>
 	<div id="header">
-      <div id="profileImg"></div>
+      <div >
+      	<img id="profileImg" src="/fileUpload/${uvo.profileImg }">
+      </div>
       <div id="headerInfo">
         <div id="profileEmailDiv"><span id="profileEmail" style="color: ${uvo.fontColor}">${uvo.nickName}</span>
         ${fn:split(uvo.regAt, "-")[1] }월
@@ -50,7 +52,7 @@
           <sec:authorize access="isAuthenticated()">
 			<sec:authentication property="principal.uvo.email" var="authEmail"/>   
 			<c:if test="${authEmail eq uvo.email }">
-          <li><a class="dropdown-item" href="/user/modify/${authEmail }">프로필 수정</a></li>
+          <li><a class="dropdown-item" href="/user/${authEmail }/modify">프로필 수정</a></li>
 			</c:if>
           </sec:authorize>
         </ul>
@@ -109,10 +111,19 @@
     	let list = `<c:out value="${list}" />`;
     	let moviesData = ${moviesData};
     	let tvsData = ${tvsData};
+    	let mLikedCnt = `<c:out value="${mLikedCnt}" />`
+   		let tLikedCnt = `<c:out value="${tLikedCnt}" />`
+   		let mRatedCnt = `<c:out value="${mRatedCnt}" />`
+		let tRatedCnt = `<c:out value="${tRatedCnt}" />`
+		let mReviewedCnt = `<c:out value="${mReviewedCnt}" />` 
+		let tReviewedCnt = `<c:out value="${tReviewedCnt}" />` 
     </script>
       <c:choose>
       	<c:when test="${list eq 'liked' }">
-      		 <jsp:include page="list/likedList.jsp" /> 
+      		 <jsp:include page="list/likedList.jsp" flush="false" >
+      		 	<jsp:param value="${mLikedCnt }" name="mLikedCnt"/>
+      		 	<jsp:param value="${tLikedCnt }" name="tLikedCnt"/>
+      		 </jsp:include> 
       	</c:when>
       	<c:when test="${list eq 'rated'}">
       		 <jsp:include page="list/ratedList.jsp" />

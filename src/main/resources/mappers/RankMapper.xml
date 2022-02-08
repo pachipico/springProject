@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springprj.www.repository.rank.RankDAO">
+	<select id="selectPointList" resultType="prvo">
+		select email, nick_name, total_points
+		from user 
+		order by total_points desc limit 50
+	</select>
+	<select id="selectPointLowList" resultType="prvo">
+		select email, nick_name, total_points
+		from user 
+		order by total_points asc limit 50
+	</select>
+	
+	<select id="selectTReadCountList" resultType="brvo">
+		select sum(read_count), writer,
+		(select nick_name from user u where m.writer = u.email) as nick_name 
+		from m_board m 
+		group by writer 
+		order by writer
+		desc limit 50;
+	</select>
+	<select id="selectMReadCountList" resultType="brvo">
+		select sum(read_count), writer,
+		(select nick_name from user u where tv.writer = u.email ) as nick_name 
+		from tv_board tv 
+		group by writer 
+		order by writer
+		desc limit 50;
+	</select>
+</mapper>

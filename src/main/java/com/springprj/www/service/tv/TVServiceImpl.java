@@ -7,12 +7,12 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.springprj.www.domain.LikeVO;
-import com.springprj.www.domain.RatingVO;
-import com.springprj.www.domain.ReviewVO;
-import com.springprj.www.domain.TVDTO;
-import com.springprj.www.domain.TVVO;
-import com.springprj.www.repository.TVDAO;
+import com.springprj.www.domain.movietv.LikeVO;
+import com.springprj.www.domain.movietv.RatingVO;
+import com.springprj.www.domain.movietv.ReviewVO;
+import com.springprj.www.domain.movietv.TVDTO;
+import com.springprj.www.domain.movietv.TVVO;
+import com.springprj.www.repository.tv.TVDAO;
 
 import lombok.extern.slf4j.Slf4j;
 

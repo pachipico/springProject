@@ -1,0 +1,130 @@
+#emailDiv {
+  background-color: #082546;
+  height: 100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 20px;
+}
+
+#emailDiv div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 20px;
+  border-radius: 20px;
+  background-color: #fff;
+}
+
+#profileImg{
+	height: 40px;
+	width: 40px;
+	border-radius: 20px;
+}
+
+#emailDiv span {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+#settingContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 40px;
+}
+
+#leftMenu {
+  -webkit-box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
+  width: 220px;
+  border-radius: 8px;
+}
+
+#settingTitle {
+  background-color: rgb(235, 92, 216);
+  color: #fff;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.settingMenu {
+  padding: 10px 20px;
+}
+.settingMenu a {
+  text-decoration: none;
+  color: black;
+}
+
+#currMenu {
+  color: rgb(235, 92, 216);
+}
+
+#settingMain {
+  padding: 0 40px;
+  width: 100%;
+}
+#settingMain h4 {
+  font-weight: bold;
+  margin-bottom: 40px;
+}
+
+.setting {
+  margin: 15px 0px;
+}
+
+.setting a {
+  background-color: lightgrey;
+  border: none;
+  padding: 5px 20px;
+  color: black;
+  margin: 0px 5px;
+}
+
+.setting a:hover {
+  background-color: rgb(179, 178, 178);
+  color: black;
+}
+
+.secondRow input {
+  width: 100%;
+}
+
+#imgUploadModalBtn {
+  background-color: #fff;
+  color: rgb(235, 92, 216);
+  padding: 0px;
+}
+
+#imgUploadModalBtn:hover {
+  cursor: pointer;
+}
+
+#adultSel {
+  width: 100%;
+  cursor: pointer;
+  background-color: rgb(223, 223, 223);
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+}
+
+#adultSel:hover {
+  background-color: rgb(201, 199, 199);
+}
+
+#settingSubmitBtn {
+  background-color: rgb(235, 92, 216);
+  color: #fff;
+  padding-left: 18px;
+  padding-right: 18px;
+  font-weight: 500;
+}
+
+#settingSubmitBtn:hover {
+  background-color: lightgrey;
+  color: black;
+}

@@ -6,6 +6,8 @@
       <!--  -->
       <div class="listTitle">
         <span id="listTitleText">나의 즐겨찾기 ${platform }</span>
+        <a>영화: <c:out value="${mLikedCnt}" /> </a>
+        <a>tv: ${tLikedCnt }</a>
       </div>
       
       <!--  -->

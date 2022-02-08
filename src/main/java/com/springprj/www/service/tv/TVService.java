@@ -2,11 +2,11 @@ package com.springprj.www.service.tv;
 
 import java.util.List;
 
-import com.springprj.www.domain.LikeVO;
-import com.springprj.www.domain.RatingVO;
-import com.springprj.www.domain.ReviewVO;
-import com.springprj.www.domain.TVDTO;
-import com.springprj.www.domain.TVVO;
+import com.springprj.www.domain.movietv.LikeVO;
+import com.springprj.www.domain.movietv.RatingVO;
+import com.springprj.www.domain.movietv.ReviewVO;
+import com.springprj.www.domain.movietv.TVDTO;
+import com.springprj.www.domain.movietv.TVVO;
 
 public interface TVService {
 	

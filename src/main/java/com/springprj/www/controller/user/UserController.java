@@ -22,14 +22,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.springprj.www.handler.ProfileImgHandler;
 import com.springprj.www.security.UserVO;
 import com.springprj.www.service.movie.MovieService;
+import com.springprj.www.service.shop.ShopService;
 import com.springprj.www.service.tv.TVService;
 import com.springprj.www.service.user.UserService;
 
@@ -51,8 +55,13 @@ public class UserController {
 	
 	@Inject
 	private BCryptPasswordEncoder bcpEncoder;
-	
 
+	@Inject
+	private ShopService ssv;
+
+	@Inject
+	private ProfileImgHandler phd;
+	
 	@GetMapping("/register")
 	public void register() {
 	}
@@ -106,10 +115,21 @@ public class UserController {
 	@GetMapping("/{email}")
 	public String detail(HttpSession session, Model model, @PathVariable("email") String email) {
 		log.debug("{}'s main detail page", email);
+		if(usv.getUserDetail(email) == null) {
+			// 존재하지 않는 회원 페이지 추가.
+//			return "redirect:/???"
+		}
 		model.addAttribute("list", "main");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
+		
+		model.addAttribute("mLikedCnt", msv.getUserLikedList(email).size());
+		model.addAttribute("tLikedCnt", tsv.getUserLikedList(email).size());
+		model.addAttribute("mRatedCnt", msv.getUserRatedList(email).size());
+		model.addAttribute("tRatedCnt", tsv.getUserRatedList(email).size());
+		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
+		model.addAttribute("tReviewCnt", tsv.getUserReviewdList(email).size());
 		
 		return "user/detail";
 	}
@@ -122,6 +142,8 @@ public class UserController {
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
+		model.addAttribute("mLikedCnt", msv.getUserLikedList(email).size());
+		model.addAttribute("tLikedCnt", tsv.getUserLikedList(email).size());
 		try {
 			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserLikedList(email)));
 			model.addAttribute("tvsData", mapper.writeValueAsString(tsv.getUserLikedList(email)));
@@ -139,6 +161,8 @@ public class UserController {
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
+		model.addAttribute("mRatedCnt", msv.getUserRatedList(email).size());
+		model.addAttribute("tRatedCnt", tsv.getUserRatedList(email).size());
 		
 		//영화 id 리스트를 자바스크립트로 주면, 자바스크립트에서 각각 getDetail로 정보 받아오기..?
 		// 받아온 영화 리스트에 좋아요여부를 어떻게 넣을지..?
@@ -158,6 +182,8 @@ public class UserController {
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
+		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
+		model.addAttribute("tReviewedCnt", tsv.getUserReviewdList(email).size());
 		
 		try {
 			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserReviewedList(email)));
@@ -169,29 +195,62 @@ public class UserController {
 	}
 	
 	@GetMapping("/{email}/modify")
-	public void modify(String email, Model model) { 
+	public String modify(@PathVariable("email") String email, Model model) { 
 		model.addAttribute("uvo", usv.getUserDetail(email));
+		model.addAttribute("purchased",ssv.getList());
+		return "user/modify";
 	}
 
-	@PostMapping("/modify")
-	public String modify(UserVO uvo, RedirectAttributes reAttr) {
-		int isSuccess = usv.updateUser(uvo); // 아직 구현 안함.
-		reAttr.addFlashAttribute("isSuccess", isSuccess);
-		return "redirect:/user/detail";
+	@PostMapping("/modify/nickName")
+	public String modifyEmail (String email, String nickName,String pwd, RedirectAttributes reAttr) {
+		int isUp = 0;
+		if(bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
+			isUp = usv.updateUserNickName(email, nickName);
+		}
+		reAttr.addFlashAttribute("isUp", isUp);
+		return "redirect:/user/detail/"+ email;
 	}
 
-	@GetMapping("/setting")
-	public void setting(Model model, String email) {
+	@PostMapping("/modify/pwd")
+	public String modifyPwd(String email, String pwd, String newPwd, RedirectAttributes reAttr) {
+		int isUp = 0;
+		if(bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
+			isUp = usv.updateUserPwd(email, newPwd);
+		}
+		reAttr.addFlashAttribute("isUp", isUp);
+		return "redirect:/user/detail/" + email;
+	}
+	
+	@PostMapping("/modify/profileImg")
+	public String modifyProfileImg (String email, String url,@RequestParam("file") MultipartFile file , RedirectAttributes reAttr) {
+		String fileName = phd.uploadFile(file);
+		int isUp = usv.updateUserProfileImg(email, fileName);
+		log.debug("profile img modify {}", isUp > 0 ? "success" : "failed");
+//		reAttr.addFlashAttribute("isUp", usv.updateUserProfileImg(email, fileName));
+		return "redirect:/user/"+ email + "/modify"; 
+	}
+	
+	@PostMapping("/modify/fontColor")
+	public String modiftFontColor(String email, String color, RedirectAttributes reAttr) {
+		reAttr.addFlashAttribute("isUp", usv.updateUserFontColor(email, color));
+		return "redirect:/user/detail/" + email;
+	}
+	
+	@GetMapping("/{email}/setting")
+	public String setting(Model model,@PathVariable("email") String email) {
 		UserVO uvo = usv.getUserDetail(email);
+		model.addAttribute("uvo", uvo);
 		model.addAttribute("adult", uvo.isAdult());
 		model.addAttribute("slang", uvo.isSlang());
+		return "user/setting";
 	}
 
-	@PostMapping("/setting")
-	public String setting(String email, boolean slang, boolean adult, RedirectAttributes reAttr) {
+	@PostMapping("/{email}/setting")
+	public String setting(@PathVariable("email") String email, boolean slang, boolean adult, RedirectAttributes reAttr) {
+		log.debug("{}'s adult setting: {}",email, adult);
 		int isSuccess = usv.updateUserSetting(email, slang, adult);
 		reAttr.addFlashAttribute("isSuccess", isSuccess);
-		return "redirect:/user/detail";
+		return "redirect:/user/"+ email + "/setting";
 	}
 
 	@PostMapping(value = "/remove", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.springprj.www.repository.MovieDAO">
+<mapper namespace="com.springprj.www.repository.movie.MovieDAO">
 	<!-- movie -->
 	<select id="selectOneMovie" parameterType="long" resultType="mvvo">
 		select * from movie where mid = #{mid}

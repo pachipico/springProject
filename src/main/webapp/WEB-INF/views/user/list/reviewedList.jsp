@@ -5,6 +5,8 @@
       <!--  -->
       <div class="listTitle">
         <span id="listTitleText">나의 리뷰 ${platform }</span>
+        <a>영화:	${mReviewedCnt }</a>
+        <a>tv: ${tReviewedCnt}</a>
       </div>
       
       <!--  -->

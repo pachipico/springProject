@@ -29,9 +29,31 @@
   				</ul>
 			</div>
           
-          <div class="menu">게시판(드랍다운)</div>
+          <div class="dropdown dropdownNav menu">
+  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    			영화 게시판
+  				</button>
+  				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				    <li><a class="dropdown-item" href="/mBoard/likeList">좋아요</a></li>
+				    <li><a class="dropdown-item" href="/mBoard/hateList">싫어요</a></li>
+  				</ul>
+			</div>
+        <div class="dropdown dropdownNav menu">
+  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    			tv 게시판
+  				</button>
+  				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+				    <li><a class="dropdown-item" href="/tvBoard/likeList">좋아요</a></li>
+				    <li><a class="dropdown-item" href="/tvBoard/hateList">싫어요</a></li>
+  				</ul>
+			</div>
         </div>
-      </div>
+        <div class="menu">
+        	<a class="btn btn-secondary" href="/rank/pointlist">랭킹</a>
+        </div>
+       </div>
+        
+    
       <div id="right">
         <div class="rightMenu">
        
