@@ -15,21 +15,28 @@
       </div>
       <div id="headerInfo">
         <div id="profileEmailDiv"><span id="profileEmail" style="color: ${uvo.fontColor}">${uvo.nickName}</span>
+        <span>
         ${fn:split(uvo.regAt, "-")[1] }월
         ${fn:split(uvo.regAt, "-")[0] }년
-        부터 회원 </div>
+        부터 회원 
+        </span>
+        </div>
         <div id="scoreDiv">
           <div class="scoreBlock">
             <div class="score"><fmt:formatNumber type="number" pattern="0" value="${movieAvg*10 }" />%</div>
+            <span class="scoreText">
             평균
             <br />
             영화 점수
+            </span>
           </div>
           <div class="scoreBlock">
             <div class="score"><fmt:formatNumber type="number" pattern="0" value="${tvAvg*10 }" />%</div>
+            <span class="scoreText">
             평균
             <br />
             tv 점수
+            </span>
           </div>
         </div>
       </div>
@@ -120,10 +127,7 @@
     </script>
       <c:choose>
       	<c:when test="${list eq 'liked' }">
-      		 <jsp:include page="list/likedList.jsp" flush="false" >
-      		 	<jsp:param value="${mLikedCnt }" name="mLikedCnt"/>
-      		 	<jsp:param value="${tLikedCnt }" name="tLikedCnt"/>
-      		 </jsp:include> 
+      		 <jsp:include page="list/likedList.jsp" />
       	</c:when>
       	<c:when test="${list eq 'rated'}">
       		 <jsp:include page="list/ratedList.jsp" />

@@ -6,31 +6,24 @@
 <jsp:include page="../common/header.jsp" />
    
 <jsp:include page="../common/nav.jsp" />
-    <div class="menuContainer">
-     	menu menu menu menu
-    </div>
-
-    <header style="">
-      <div class="shadow">
-        <div class="imageContainer">
-          <div class="image">
-            <img id="poster" src="" alt="" />
-          </div>
-          <div class="play">something</div>
-        </div>
-        <div class="headerContent">
-          <div class="headerTitle" id="movieTitle">영화 제목</div>
-          <div class="headerRating">00</div>
-          <div class="tagLine"><i class="tLine">태그라인</i></div>
-          <div class="overview">
-            <h3 class="overviewTitle">개요</h3>
-            <p class="overviewSub">줄거리</p>
-          </div>
+<link rel="stylesheet" href="/resources/css/actor.css" >
+   <div id="profileDiv">
+      <img id="profileImg" src="" alt="" />
+      <div id="descDiv">
+        <h3 id="name"></h3>
+        <div id="desc">
+          <p>참여한 작품 수: <span id="castCnt">200</span></p>
+          <p>생일: <span id="bDay"></span> (<span id="age"></span>세)</p>
+          <p>출생지: <span id="bPlace"></span></p>
+          <p>tmdb내 인기도지수: <span id="popularity"></span></p>
         </div>
       </div>
-    </header>
+    </div>
     <main>
-    
+      <div id="mainTitle">출연한 영화</div>
+      <div id="cardContainer">
+      
+      </div>
     </main>
   </body>
 </html>

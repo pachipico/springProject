@@ -8,15 +8,19 @@
         <div id="scoreDiv">
           <div class="scoreBlock">
             <div class="score"></div>
+            <span class="scoreText">
             평균
-            <br />
+            
             영화 점수
+            </span>
           </div>
           <div class="scoreBlock">
             <div class="score"></div>
+            <span class="scoreText">
             평균
             <br />
             tv 점수
+            </span>
           </div>
         </div>
       </div>

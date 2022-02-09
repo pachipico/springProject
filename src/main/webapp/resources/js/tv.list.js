@@ -14,9 +14,9 @@ let likedList = null;
 let ratedList = null;
 let reviewedList = null;
 const changeUrl = () => {
-  url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&lair_date.gte=&air_date.lte=2022-07-24&certification=&certification_country=KR&debug=&first_air_date.gte=&first_air_date.lte=&ott_region=KR&primary_release_date.gte=&primary_release_date.lte=&include_adult=${isAdult}&region=&release_date.gte=&release_date.lte=2022-07-24&show_me=0&sort_by=${sortQuery}&vote_average.gte=0&vote_average.lte=10&vote_count.gte=0&with_genres${genreQuery.join(
+  url = `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&lair_date.gte=&air_date.lte=2022-07-24&certification=&certification_country=KR&debug=&first_air_date.gte=&first_air_date.lte=&ott_region=KR&primary_release_date.gte=&primary_release_date.lte=&include_adult=${isAdult}&region=&release_date.gte=&release_date.lte=2022-07-24&show_me=0&sort_by=${sortQuery}&vote_average.gte=0&vote_average.lte=10&vote_count.gte=0&with_genres=${genreQuery.join(
     ","
-  )}=&with_keywords=&with_networks=&with_origin_country=&with_original_language=&with_ott_monetization_types=&with_ott_providers=${platform}&with_release_type=&with_runtime.gte=0&with_runtime.lte=400&language=ko&page=`;
+  )}&with_keywords=&with_networks=&with_origin_country=&with_original_language=&with_ott_monetization_types=&with_ott_providers=${platform}&with_release_type=&with_runtime.gte=0&with_runtime.lte=400&language=ko&page=`;
 };
 
 const getJson = async (page = 1) => {
@@ -74,10 +74,10 @@ const drawStar = (target) => {
   document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
 };
 
-const addLike = async (tvid, name, poster) => {
+const addLike = async (tvid, title, poster) => {
   try {
     const data = {
-      tvvo: { tvid, name, poster },
+      tvvo: { tvid, title, poster },
       lvo: { tvid, email },
     };
     const config = {
@@ -91,7 +91,7 @@ const addLike = async (tvid, name, poster) => {
     const result = await res.text();
     if (result == 1) {
       alert("즐겨찾기 추가 성공");
-      likedList.push({ tvid, name, poster });
+      likedList.push({ tvid, title, poster });
       // 즐겨찾기 추가 -> 삭제 구현
       let likeBtn = document.querySelector(`a[data-likeId="${tvid}"]`);
       likeBtn.outerHTML = `<a onclick="removeLike('${tvid}')" class="dropdown-item" href="#" data-likeId="${tvid}">즐겨찾기 해제</a>`;
@@ -129,7 +129,7 @@ const removeLike = async (tvid, name, poster) => {
   }
 };
 
-const setData = (rating, tvid, name, poster) => {
+const setData = (rating, tvid, title, poster) => {
   let ratingStar = document.getElementById("ratingStar");
   if (rating != null) {
     ratingStar.value = rating;
@@ -140,7 +140,7 @@ const setData = (rating, tvid, name, poster) => {
     document.querySelector(`.star span`).style.width = `${0}%`;
     ratingStar.dataset.status = "reg";
   }
-  tvData = { tvid, name, poster };
+  tvData = { tvid, title, poster };
   ratingStar.dataset.tvid = tvid;
 };
 
@@ -161,7 +161,7 @@ const addRating = async (tvid, email, rating) => {
 
     if (result > 0) {
       // 평점 남기기 -> 평점 수정 구현
-      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${tvData.name}', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tvData.id}" data-status="mod" href="#">평점 수정하기</a>`;
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${tvData.title}', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tvData.id}" data-status="mod" href="#">평점 수정하기</a>`;
       document.getElementById("modalCloseBtn").click();
       alert("평점 등록 성공");
     } else {
@@ -190,7 +190,7 @@ const modifyRating = async (tvid, email, rating) => {
     const result = await res.text();
     if (result != null || result != "NoData") {
       let rateBtn = document.querySelector(`a[data-ratingId="${tvid}"]`);
-      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${tvData.name}', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tvData.tvid}" data-status="mod" href="#">평점 수정하기</a>`;
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${tvData.title}', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tvData.tvid}" data-status="mod" href="#">평점 수정하기</a>`;
       document.getElementById("modalCloseBtn").click();
       alert("평점 수정 성공");
     } else {
@@ -218,7 +218,7 @@ const removeRating = async (tvid, email) => {
     if (result != null || result != "NoData") {
       let rateBtn = document.querySelector(`a[data-ratingId="${tvid}"]`);
       rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${null}, '${tvData.id}', '${
-        tvData.name
+        tvData.title
       }', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
         tvData.id
       }" data-status="reg" href="#">평점 남기기</a>`;
@@ -252,6 +252,13 @@ const renderTVs = async (json, page = 1) => {
         isRated = rated.rating;
       }
     });
+    if (json == null || json.length == 0) {
+      cardContainer.innerHTML = `<div style="text-align: center; padding: 100px 0px;"><h5 class="noDataMsg">정보가 없습니다.</h5></div>`;
+      console.log(document.getElementById("moreBtn"));
+      document.getElementById("moreBtn").style.display = "none";
+    } else if (json.length < 20) {
+      document.getElementById("moreBtn").style.display = "none";
+    }
     const card = `
     <div class="cards col-lg-3">
       <a href="/tv/detail/${tv.id}" >
@@ -305,8 +312,7 @@ document.addEventListener("click", (e) => {
   if (e.target.id == "moreBtn") {
     ++page;
     getJson(page).then((result) => renderTVs(result.results, page));
-  }
-  if (e.target.classList.contains("genreBtn")) {
+  } else if (e.target.classList.contains("genreBtn")) {
     if (genreQuery.includes(e.target.dataset.genre)) {
       genreQuery = genreQuery.filter((query) => query != e.target.dataset.genre);
       e.target.classList.remove("btn-secondary");
@@ -317,10 +323,10 @@ document.addEventListener("click", (e) => {
       e.target.classList.add("btn-secondary");
     }
     searchBtn.style.visibility = "";
-  }
-  if (e.target.id == "searchBtn") {
+  } else if (e.target.id == "searchBtn") {
     changeUrl();
     getJson().then((result) => renderTVs(result.results));
+    e.target.style.visibility = "hidden";
   } else if (e.target.id == "deleteRatingBtn") {
     const tvid = document.getElementById("ratingStar").dataset.tvid;
     removeRating(tvid, email);

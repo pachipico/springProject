@@ -5,11 +5,22 @@
 <div id="movieContainer">
       <!--  -->
       <div class="listTitle">
-        <span id="listTitleText">나의 평점 ${platform }</span>
-        <a>영화:	${mRatedCnt }</a>
-        <a>tv:	${tRatedCnt }</a>
+      	<div class="left">
+        <span id="listTitleText">나의 평점</span>
+        <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/ratedList"><span class="platformBtn" >영화</span> <span class="platformCnt">${mRatedCnt}</span></a>
+        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/ratedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt">${tRatedCnt }</span></a>
+        </div>
+        <div class="right">
+        	<select id="optSel">
+        		<option value="rating">평점 순</option>
+        	</select>
+        	<select id="ascdesc">
+        		<option value="desc">내림차순</option>
+        		<option value="asc">오름차순</option>
+        	</select>
+        </div>
       </div>
-      
+      <div id="cardContainer"></div>
       <!--  -->
     </div>
 

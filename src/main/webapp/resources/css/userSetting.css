@@ -1,5 +1,5 @@
 #emailDiv {
-  background-color: #082546;
+  background-image: linear-gradient(45deg, #082546,#243B55);
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -34,6 +34,7 @@
   display: flex;
   flex-direction: row;
   padding: 40px;
+  height: 500px;
 }
 
 #leftMenu {

@@ -240,7 +240,13 @@ const renderMovies = async (json, page = 1) => {
   if (page == 1) {
     cardContainer.innerHTML = "";
   }
-
+  if (json == null || json.length == 0) {
+    cardContainer.innerHTML = `<div style="text-align: center; padding: 100px 0px;"><h5 class="noDataMsg">정보가 없습니다.</h5></div>`;
+    console.log(document.getElementById("moreBtn"));
+    document.getElementById("moreBtn").style.display = "none";
+  } else if (json.length < 20) {
+    document.getElementById("moreBtn").style.display = "none";
+  }
   json.forEach((movie, i) => {
     let isLiked = 0;
     let isRated = null;
@@ -322,6 +328,7 @@ document.addEventListener("click", (e) => {
   } else if (e.target.id == "searchBtn") {
     changeUrl();
     getJson().then((result) => renderMovies(result.results));
+    e.target.style.visibility = "hidden";
   } else if (e.target.id == "deleteRatingBtn") {
     const mid = document.getElementById("ratingStar").dataset.mid;
     removeRating(mid, email);

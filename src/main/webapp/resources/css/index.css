@@ -37,8 +37,15 @@ a{
 .menu {
   display: inline-block;
   margin: 0 10px;
+  background-color: #082546;
   color: #fff;
 }
+
+.menu button{
+	color: #fff;
+}
+
+
 
 #left {
   align-items: center;

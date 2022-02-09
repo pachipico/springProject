@@ -17,18 +17,7 @@
 	    </sec:authorize>
     <link rel="stylesheet" href="/resources/css/movieList.css" />
     <div class="container">
-      <div class="optionContainer">
-        <div class="selectContainer">
-          <select name="orderBy" id="orderBy">
-            <option value="popularity.desc">인기도 내림차순</option>
-            <option value="popularity.asc">인기도 오름차순</option>
-            <option value="vote_average.desc">평점 내림차순</option>
-            <option value="vote_average.asc">평점 오름차순</option>
-            <option value="release_date.desc">상영일 내림차순</option>
-            <option value="release_date.asc">상영일 오름차순</option>
-            <option value="original_title.asc">제목순</option>
-          </select>
-        </div>
+       <div id="wrapper">
         <div class="btnContainer">
           <button type="button" data-genre="28" class="btn btn-outline-secondary genreBtn">액션</button>
           <button type="button" data-genre="12" class="btn btn-outline-secondary genreBtn">어드벤쳐</button>
@@ -50,8 +39,20 @@
           <button type="button" data-genre="10752" class="btn btn-outline-secondary genreBtn">전쟁</button>
           <button type="button" data-genre="37" class="btn btn-outline-secondary genreBtn">서부</button>
         </div>
-        <div class="keywordContainer"></div>
-      </div>
+        <div class="optionContainer">
+	        <div class="selectContainer">
+	          <select name="orderBy" id="orderBy">
+	            <option value="popularity.desc">인기도 내림차순</option>
+	            <option value="popularity.asc">인기도 오름차순</option>
+	            <option value="vote_average.desc">평점 내림차순</option>
+	            <option value="vote_average.asc">평점 오름차순</option>
+	            <option value="release_date.desc">상영일 내림차순</option>
+	            <option value="release_date.asc">상영일 오름차순</option>
+	            <option value="original_title.asc">제목순</option>
+	          </select>
+	        </div>
+      	</div>
+      	</div>
       <div id="cardContainer" class="row"></div>
       <button id="moreBtn">more</button>
     </div>

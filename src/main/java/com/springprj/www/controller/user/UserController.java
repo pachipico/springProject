@@ -92,8 +92,16 @@ public class UserController {
 	}
 
 	@PostMapping("findPwd")
-	public String findPwd(String email, RedirectAttributes reAttr) {
-		// ??
+	public String findPwd(String email, String name, String nickName,String pwd, RedirectAttributes reAttr) {
+		UserVO uvo = usv.getUserDetail(email);
+		int isMatch = 1;
+		isMatch *= uvo.getEmail().equals(email) ? 1 : 0;
+		isMatch *= uvo.getName().equals(name) ? 1 : 0;
+		isMatch *= uvo.getNickName().equals(nickName) ? 1 : 0;
+		if(isMatch > 0) {
+			isMatch *= usv.updateUserPwd(email, bcpEncoder.encode(pwd));
+		}
+		reAttr.addFlashAttribute("isUp", isMatch);
 		return "redirect:/user/login";
 	}
 
@@ -222,8 +230,10 @@ public class UserController {
 
 	@GetMapping("/modify/pwd")
 	public String modifyPwd(Principal principal, Model model) {
-		String email = principal.getName();
-		model.addAttribute("email",email);
+		if(principal != null) {
+			String email = principal.getName();
+			model.addAttribute("email",email);			
+		}
 		
 		return "user/changePassword";
 	}

@@ -69,7 +69,7 @@ const renderCredits = (json) => {
 				${
           each.profile_path != null
             ? `<img  src="https://themoviedb.org/t/p/w138_and_h175_face${each.profile_path}">`
-            : `<img style="height: 175px;width: 138px;" >`
+            : `<div style="height: 175px;width: 138px;display:flex;justify-content:center;align-items:center;color:black;background-colol:#e6e6e6;" >no image</>`
         }
 				</a>
 				</div>
@@ -93,13 +93,6 @@ const getList = async (query) => {
     console.log(e);
   }
 };
-
-const searchBtn = document.getElementById("searchBtn").addEventListener("click", (e) => {
-  let query = document.getElementById("search").value;
-  getList(query).then((result) => {
-    console.log(result);
-  });
-});
 
 const postReview = async (content, writer) => {
   try {
@@ -320,6 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     if (userData.rating != null) {
       // 좋아요 기록 있을시 해당 별점 임시저장
+      document.querySelector(".headerRateBtn").setAttribute("style", "color:#ffc107;");
       document.getElementById("ratingStar").value = userData.rating;
       document.querySelector(`.star span`).style.width = `${userData.rating * 10}%`;
       currentRating = userData.rating;

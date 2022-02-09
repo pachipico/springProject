@@ -5,7 +5,10 @@
 <jsp:include page="common/nav.jsp" />
 <div id="searchDiv">
 	<h1>Search!</h1>
-	<input type="text" name="searchInput" >
+	<form action="/search/movie" method="get">
+		<input type="text" id="searchQuery" name="query" >
+		<button type="submit" id="searchBtn">search</button>
+	</form>
 </div>
 <div id="popular">
 	
@@ -14,4 +17,5 @@
 
 </div>
 </body>
+<script src="/resources/js/home.js" ></script>
 </html>

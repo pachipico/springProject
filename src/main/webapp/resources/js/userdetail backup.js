@@ -1,3 +1,5 @@
+// userdetail backup
+
 const API_KEY = "6e6b78d7518e1d61e33e6121c3d5e62d";
 let cardContainer = document.getElementById("cardContainer");
 let currentRating = null;
@@ -5,14 +7,14 @@ const getDetail = async (id, platform) => {
   try {
     const url = `https://api.themoviedb.org/3/${platform}/${id}?api_key=${API_KEY}&language=ko-KR`;
     const res = await fetch(url);
-    const result = await res.json();
+    const result = res.json();
     return await result;
   } catch (e) {
     console.log(e);
   }
 };
 
-const renderCard = async (opt, ascdesc) => {
+const renderCard = (opt, ascdesc) => {
   cardContainer.innerHTML = "";
   console.log(opt, ascdesc);
   if (platform == "tv") {
@@ -42,10 +44,9 @@ const renderCard = async (opt, ascdesc) => {
         break;
     }
     console.log(tvsData);
-    let string = "";
     tvsData.forEach((each) => {
-      console.log(each.title);
       getDetail(each.tvid, platform).then((result) => {
+        console.log(each.title);
         let tv = `
       <div class="movie" data-id="${result.id}">
         <div class="imageDiv">
@@ -92,12 +93,10 @@ const renderCard = async (opt, ascdesc) => {
           </div>
         </div>
       </div>`;
-        cardContainer.innerHTML = cardContainer.innerHTML + tv;
-        string = tv;
-        console.log(string);
+        console.log(tv);
+        cardContainer.innerHTML = tv + cardContainer.innerHTML;
       });
     });
-    console.log(string);
   } else {
     console.log("movie");
     switch (opt) {
@@ -126,8 +125,8 @@ const renderCard = async (opt, ascdesc) => {
     }
     console.log(moviesData);
     moviesData.forEach((each) => {
-      console.log(each.title);
       getDetail(each.mid, platform).then((result) => {
+        console.log(each.title);
         let movie = `
       <div class="movie" data-id="${result.id}">
         <div class="imageDiv">
@@ -174,8 +173,8 @@ const renderCard = async (opt, ascdesc) => {
           </div>
         </div>
       </div>`;
-
-        cardContainer.innerHTML = cardContainer.innerHTML + movie;
+        console.log(movie);
+        cardContainer.innerHTML = movie + cardContainer.innerHTML;
       });
     });
   }

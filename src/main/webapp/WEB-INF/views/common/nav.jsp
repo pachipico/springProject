@@ -7,7 +7,7 @@
         <div id="logo"><a href="/home">TMDB</a></div>
         <div class="leftMenu">
         	<div class="dropdown dropdownNav menu">
-  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			영화
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -18,7 +18,7 @@
   				</ul>
 			</div>
 			<div class="dropdown dropdownNav menu">
-  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			TV
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -30,7 +30,7 @@
 			</div>
           
           <div class="dropdown dropdownNav menu">
-  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			영화 게시판
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -39,7 +39,7 @@
   				</ul>
 			</div>
         <div class="dropdown dropdownNav menu">
-  				<button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			tv 게시판
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -49,7 +49,7 @@
 			</div>
         </div>
         <div class="menu">
-        	<a class="btn btn-secondary" href="/rank/pointlist">랭킹</a>
+        	<a class="btn" style="color: #fff;" href="/rank/pointlist">랭킹</a>
         </div>
        </div>
         

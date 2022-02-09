@@ -55,6 +55,13 @@ header {
 	flex-direction: row;
 }
 
+.headerRating {
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 10px;
+}
+
 .headerBtn {
 	display: flex;
 	justify-content: center;
@@ -64,6 +71,7 @@ header {
 	background-color: #0d243f;
 	color: white;
 	border-radius: 23px;
+	margin: 0px 10px;
 }
 
 .modal-body {
@@ -90,7 +98,7 @@ header {
 	width: 0;
 	position: absolute;
 	left: 0;
-	color: red;
+	color: #ffc107;
 	overflow: hidden;
 	pointer-events: none;
 }
@@ -131,6 +139,7 @@ main {
 .castDesc{
 	padding: 8px;
 }
+
 .realNameText a {
 	font-size: 16px;
 	font-weight: 700;
@@ -144,4 +153,13 @@ main {
 
 .realNameText a:hover{
 	color: grey;
+}
+
+.castNameText {
+	overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 라인수 */
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
 }
