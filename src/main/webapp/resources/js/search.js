@@ -162,11 +162,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-document.getElementById("searchInput").addEventListener("change", (e) => {
-  console.log(e.target.value);
-  if (platform == "movie") {
-    searchMovieData(e.target.value, 1).then((result) => {
-      console.log(result);
-    });
+const getRequest = async (query) => {
+  try {
+    fetch(`/search/${platform}?query=${query}`);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+document.getElementById("searchInput").addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    location.replace(`/search/${platform}?query=${e.target.value}`);
   }
 });

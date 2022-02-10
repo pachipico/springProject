@@ -2,7 +2,7 @@ const API_KEY = `6e6b78d7518e1d61e33e6121c3d5e62d`;
 const poster = document.getElementById("poster");
 let movieTitle = document.getElementById("movieTitle");
 let tagline = document.querySelector(".tLine");
-let rating = document.querySelector(".headerRating");
+let rating = document.getElementById("rt");
 let overview = document.querySelector(".overviewSub");
 let header = document.querySelector("header");
 let currentRating = null; // 좋아요 기록 유무 임시 저장
@@ -51,9 +51,10 @@ const renderDetail = (json) => {
   console.log("movie detail: ", json);
   poster.setAttribute("src", `https://www.themoviedb.org/t/p/w300_and_h450_face${json.poster_path}`);
   movieTitle.innerText = json.name + `(${json.first_air_date.slice(0, 4)})`;
+  document.getElementById("dbRating").innerText = json.vote_average;
   tagline.innerText = json.tagline;
   overview.innerText = json.overview;
-  rating.innerText = json.vote_average * 10 + "%";
+
   header.style.backgroundImage = `url('https://www.themoviedb.org/t/p/w1920_and_h800_multi_faces${json.backdrop_path}')`;
 };
 
@@ -256,6 +257,8 @@ document.addEventListener("click", (e) => {
       if (parseFloat(result) > 0 || result == "NoData") {
         alert("평점 삭제 성공");
         // 삭제후 별점 초기화 안됨;;
+        rating.innerText = result;
+        document.querySelector(".headerRateBtn").style.color = "#fff";
         currentRating = null;
         document.querySelector(`.star span`).style.width = 0;
       } else {
@@ -277,6 +280,8 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
       if (parseFloat(result) > 0) {
         alert("평점 등록 성공");
         // 평균 평점 result로 변하게.
+        document.querySelector(".headerRateBtn").style.color = "#ffc107";
+        rating.innerText = result;
       } else {
         alert("평점 등록 실패..");
       }
@@ -287,6 +292,7 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
       if (parseFloat(result) > 0) {
         alert("평점 수정 성공");
         // 평균 평점 result로 변하게
+        rating.innerText = result;
       } else {
         alert("평점 수정 실패..");
       }
@@ -305,13 +311,16 @@ document.addEventListener("DOMContentLoaded", () => {
   getTVData().then((result) => {
     userData = result;
     console.log(userData);
-    if (userData.isLiked) {
+    if (userData.avgRating != null) {
+      rating.innerText = parseFloat(userData.avgRating).toFixed(1);
+    }
+    if (userData?.isLiked) {
       //좋아요 있을시 색 변하게 하기
       let headerLikeBtn = document.querySelector(".headerLikeBtn");
       headerLikeBtn.setAttribute("style", "color: red;");
       headerLikeBtn.classList.add("clicked");
     }
-    if (userData.rating != null) {
+    if (userData?.rating != null) {
       // 좋아요 기록 있을시 해당 별점 임시저장
       document.querySelector(".headerRateBtn").setAttribute("style", "color:#ffc107;");
       document.getElementById("ratingStar").value = userData.rating;

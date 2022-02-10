@@ -33,4 +33,8 @@ public interface TVService {
 	Double modifyRating(RatingVO rtvo);
 	Double deleteRating(long tvid, String email);
 	
+	//rank
+	List<TVVO> getLikeRankList();
+	List<TVVO> getRatingRankList();
+	
 }

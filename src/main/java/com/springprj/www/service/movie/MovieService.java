@@ -7,6 +7,7 @@ import com.springprj.www.domain.movietv.MovieDTO;
 import com.springprj.www.domain.movietv.MovieVO;
 import com.springprj.www.domain.movietv.RatingVO;
 import com.springprj.www.domain.movietv.ReviewVO;
+import com.springprj.www.domain.movietv.TVVO;
 
 public interface MovieService {
 	
@@ -33,4 +34,8 @@ public interface MovieService {
 	Double registerRating(RatingVO rtvo);
 	Double modifyRating(RatingVO rtvo);
 	Double deleteRating(long mid, String email);
+	
+	//rank
+	List<MovieVO> getLikeRankList();
+	List<MovieVO> getRatingRankList();
 }

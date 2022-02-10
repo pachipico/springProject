@@ -39,4 +39,9 @@ public interface MovieDAO {
 	int insertMovieRating(RatingVO rtvo);
 	int updateMovieRating(RatingVO rtvo);
 	int deleteMovieRating( @Param("mid") long mid,@Param("email") String email);
+	
+//	rank
+	
+	List<MovieVO> selectListLikeRankMovie();
+	List<MovieVO> selectListRatingRankMovie();
 }

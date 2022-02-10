@@ -132,6 +132,18 @@ public class TVServiceImpl implements TVService {
 		tdao.deleteTVRating(tvid, email);
 		return tdao.selectTVAvgRating(tvid);
 	}
+
+	@Override
+	public List<TVVO> getLikeRankList() {
+		
+		return tdao.selectListLikeRankTV();
+	}
+
+	@Override
+	public List<TVVO> getRatingRankList() {
+		
+		return tdao.selectListRatingRankTV();
+	}
 	
 	
 

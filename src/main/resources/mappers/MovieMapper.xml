@@ -106,4 +106,20 @@
 		delete from m_rating where mid = #{mid} and email = #{email}
 	</delete>
 	
+	<!-- rank -->
+	<select id="selectListLikeRankMovie" resultType="mvvo">
+		select m.mid , m.title, m.poster , count(ml.email) 'isLiked'
+		from movie m left join m_like ml on m.mid = ml.mid
+		GROUP BY  m.mid, m.title, m.poster
+		ORDER by count(ml.email) desc
+		limit 0 , 10
+	</select>	
+	
+	<select id="selectListRatingRankMovie" resultType="mvvo">
+		select m.mid, m.title,m.poster, avg(mr.rating) 'rating'
+		from movie m left join m_rating mr on m.mid = mr.mid 
+		group by m.mid, m.title, m.poster
+		ORDER BY avg(mr.rating) desc
+		limit 0, 10
+	</select>
 </mapper>

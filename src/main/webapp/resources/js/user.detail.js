@@ -1,5 +1,7 @@
 const API_KEY = "6e6b78d7518e1d61e33e6121c3d5e62d";
 let cardContainer = document.getElementById("cardContainer");
+// let data = [];
+
 let currentRating = null;
 const getDetail = async (id, platform) => {
   try {
@@ -11,6 +13,13 @@ const getDetail = async (id, platform) => {
     console.log(e);
   }
 };
+// const getData = () => {
+//   tvsData.forEach((each) => {
+//     getDetail(each.tvid, platform).then((result) => {
+//       data.push(result);
+//     });
+//   });
+// };
 
 const renderCard = async (opt, ascdesc) => {
   cardContainer.innerHTML = "";
@@ -42,7 +51,7 @@ const renderCard = async (opt, ascdesc) => {
         break;
     }
     console.log(tvsData);
-    let string = "";
+
     tvsData.forEach((each) => {
       console.log(each.title);
       getDetail(each.tvid, platform).then((result) => {
@@ -93,11 +102,8 @@ const renderCard = async (opt, ascdesc) => {
         </div>
       </div>`;
         cardContainer.innerHTML = cardContainer.innerHTML + tv;
-        string = tv;
-        console.log(string);
       });
     });
-    console.log(string);
   } else {
     console.log("movie");
     switch (opt) {
@@ -125,6 +131,7 @@ const renderCard = async (opt, ascdesc) => {
         break;
     }
     console.log(moviesData);
+
     moviesData.forEach((each) => {
       console.log(each.title);
       getDetail(each.mid, platform).then((result) => {
@@ -489,12 +496,15 @@ document.addEventListener("change", (e) => {
   let ascdesc = document.getElementById("ascdesc");
   if (e.target.id == "optSel" || e.target.id == "ascdesc") {
     renderCard(opt.value, ascdesc.value);
+    data.forEach((d) => {
+      console.log(d);
+    });
   }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   if (list == "rated") {
-    renderCard("rating", "desc");
+    renderCard("rated", "desc");
   } else {
     renderCard("regAt", "asc");
   }

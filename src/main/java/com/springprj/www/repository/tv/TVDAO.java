@@ -38,4 +38,8 @@ public interface TVDAO {
 	int updateTVRating(RatingVO rtvo);
 	int deleteTVRating( @Param("tvid") long tvid,@Param("email") String email);
 	
+	
+	//rank
+	List<TVVO> selectListLikeRankTV();
+	List<TVVO> selectListRatingRankTV();
 }

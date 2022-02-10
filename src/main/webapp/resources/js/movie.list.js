@@ -268,7 +268,7 @@ const renderMovies = async (json, page = 1) => {
         src="https://www.themoviedb.org/t/p/w440_and_h660_face${movie.poster_path}"
         alt=""
         />
-        <div class="rating">${movie.vote_average * 10}%</div>
+        
         <div class="dropdown menu">
           <a class="moreBtn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             ···

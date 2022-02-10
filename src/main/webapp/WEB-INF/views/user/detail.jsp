@@ -23,7 +23,16 @@
         </div>
         <div id="scoreDiv">
           <div class="scoreBlock">
-            <div class="score"><fmt:formatNumber type="number" pattern="0" value="${movieAvg*10 }" />%</div>
+            <div class="score">
+            <c:choose>
+            	<c:when test="${movieAvg > 0 }">
+            		<fmt:formatNumber type="number" pattern="0" value="${movieAvg }" />점
+            	</c:when>
+            	<c:otherwise>
+            		<span style="font-size: 11px;">평점없음</span>
+            	</c:otherwise>
+            </c:choose>
+            		</div>
             <span class="scoreText">
             평균
             <br />
@@ -31,7 +40,16 @@
             </span>
           </div>
           <div class="scoreBlock">
-            <div class="score"><fmt:formatNumber type="number" pattern="0" value="${tvAvg*10 }" />%</div>
+            <div class="score">
+            <c:choose>
+            	<c:when test="${tvAvg > 0 }">
+           			<fmt:formatNumber type="number" pattern="0" value="${tvAvg }" />점
+            	</c:when>
+            	<c:otherwise>
+            		<span style="font-size: 11px;">평점없음</span>
+            	</c:otherwise>
+            </c:choose>
+            </div>
             <span class="scoreText">
             평균
             <br />
@@ -57,7 +75,8 @@
         <ul class="dropdown-menu">
           <li><a class="dropdown-item" href="/user/${uvo.email }">메인</a></li>
           <sec:authorize access="isAuthenticated()">
-			<sec:authentication property="principal.uvo.email" var="authEmail"/>   
+			<sec:authentication property="principal.uvo.email" var="authEmail"/>  
+			<c:set value="${authEmail }" var="authEmail" /> 
 			<c:if test="${authEmail eq uvo.email }">
           <li><a class="dropdown-item" href="/user/${authEmail }/modify">프로필 수정</a></li>
 			</c:if>
@@ -67,51 +86,55 @@
       <div class="btn-group">
         <a class="menuBtn" style="display: flex;align-items:center;" type="button" href="#">포스터</a> <!-- 디테일 메인페이지에서 보여줄	건지? -->
       </div>
-      <div class="btn-group">
-        <button
-          class="menuBtn dropdown dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          평가
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/user/${uvo.email }/ratedList">영화</a></li>
-          <li><a class="dropdown-item" href="/user/${uvo.email }/ratedList/tv">tv 프로그램</a></li>
-        </ul>
-      </div>
-
-      <div class="btn-group">
-        <button
-          class="menuBtn dropdown dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          즐겨찾기
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/user/${uvo.email }/likedList">영화</a></li>
-          <li><a class="dropdown-item" href="/user/${uvo.email }/likedList/tv">tv 프로그램</a></li>
-        </ul>
-      </div>
-      <div class="btn-group">
-        <button
-          class="menuBtn dropdown dropdown-toggle"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          리뷰
-        </button>
-        <ul class="dropdown-menu">
-          <li><a class="dropdown-item" href="/user/${uvo.email }/reviewedList">영화</a></li>
-          <li><a class="dropdown-item" href="/user/${uvo.email }/reviewedList/tv">tv 프로그램</a></li>
-        </ul>
-      </div>
+      <sec:authorize access="isAuthenticated()">
+			<sec:authentication property="principal.uvo.email" var="authEmail"/>  
+			<c:if test="${uvo.email eq authEmail }">
+		      <div class="btn-group">
+		        <button
+		          class="menuBtn dropdown dropdown-toggle"
+		          type="button"
+		          data-bs-toggle="dropdown"
+		          aria-expanded="false"
+		        >
+		          평가
+		        </button>
+		        <ul class="dropdown-menu">
+		          <li><a class="dropdown-item" href="/user/${uvo.email }/ratedList">영화</a></li>
+		          <li><a class="dropdown-item" href="/user/${uvo.email }/ratedList/tv">tv 프로그램</a></li>
+		        </ul>
+		      </div>
+		
+		      <div class="btn-group">
+		        <button
+		          class="menuBtn dropdown dropdown-toggle"
+		          type="button"
+		          data-bs-toggle="dropdown"
+		          aria-expanded="false"
+		        >
+		          즐겨찾기
+		        </button>
+		        <ul class="dropdown-menu">
+		          <li><a class="dropdown-item" href="/user/${uvo.email }/likedList">영화</a></li>
+		          <li><a class="dropdown-item" href="/user/${uvo.email }/likedList/tv">tv 프로그램</a></li>
+		        </ul>
+		      </div>
+		      <div class="btn-group">
+		        <button
+		          class="menuBtn dropdown dropdown-toggle"
+		          type="button"
+		          data-bs-toggle="dropdown"
+		          aria-expanded="false"
+		        >
+		          리뷰
+		        </button>
+		        <ul class="dropdown-menu">
+		          <li><a class="dropdown-item" href="/user/${uvo.email }/reviewedList">영화</a></li>
+		          <li><a class="dropdown-item" href="/user/${uvo.email }/reviewedList/tv">tv 프로그램</a></li>
+		        </ul>
+		      </div>
+			</c:if>
+    </sec:authorize>
     </div>
-    
     <script>
     	let email = `<c:out value="${email}" />`;
     	let platform = `<c:out value="${platform}" />`;
@@ -173,5 +196,10 @@
     </div>
   </div>
 </div>
-    
+<script>
+	let msg = `<c:out value="${msg}" />`;
+	if(msg != null && msg != ""){
+		alert(msg);
+	}
+</script>
 <script src="/resources/js/user.detail.js"></script>

@@ -3,6 +3,7 @@ package com.springprj.www.controller.user;
 import java.io.File;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -77,6 +78,17 @@ public class UserController {
 		return "redirect:/user/login";
 	}
 
+	@PostMapping(value = "/email", consumes = "application/json",produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> availableEmailCheck(@RequestBody Map<String, String> data){
+		
+		return new ResponseEntity<String>(usv.getUserDetail(data.get("email")) == null ? "1" : "0", HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/nickName", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> availableNickNameCheck(@RequestBody Map<String, String> data){
+		return new ResponseEntity<String>(usv.checkValidNickName(data.get("nickName"))  ? "1" : "0", HttpStatus.OK);
+	}
+	
 	@GetMapping("/findId")
 	public void findId() {
 	}
@@ -120,15 +132,15 @@ public class UserController {
 	@PostMapping("/logout")
 	public String logout(String email, HttpSession session) {
 		session.invalidate();
+		
 		return "redirect:/user/login";
 	}
 
 	@GetMapping("/{email}")
-	public String detail(HttpSession session, Model model, @PathVariable("email") String email) {
+	public String detail(HttpSession session, Model model, @PathVariable("email") String email, RedirectAttributes reAttr) {
 		log.debug("{}'s main detail page", email);
 		if(usv.getUserDetail(email) == null) {
-			// 존재하지 않는 회원 페이지 추가.
-//			return "redirect:/???"
+			return "error/noUser";
 		}
 		model.addAttribute("list", "main");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
@@ -148,6 +160,9 @@ public class UserController {
 	@GetMapping(value = {"/{email}/likedList", "/{email}/likedList/{tv}"})
 	public String likedList(@PathVariable(name = "email") String email, @PathVariable(name = "tv", required = false) String tv, Model model) {
 		ObjectMapper mapper = new ObjectMapper();
+		if(usv.getUserDetail(email) == null) {
+			return "error/noUser";
+		}
 		model.addAttribute("platform" , tv != null ? "tv" : "movie");
 		model.addAttribute("list", "liked");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
@@ -167,6 +182,9 @@ public class UserController {
 	@GetMapping(value = {"/{email}/ratedList", "/{email}/ratedList/{tv}"})
 	public String ratedList(@PathVariable(name = "email") String email,@PathVariable(name = "tv", required = false) String tv , Model model) {
 		ObjectMapper mapper = new ObjectMapper();
+		if(usv.getUserDetail(email) == null) {
+			return "error/noUser";
+		}
 		model.addAttribute("platform" , tv != null ? "tv" : "movie");
 		model.addAttribute("list", "rated");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
@@ -188,6 +206,9 @@ public class UserController {
 	@GetMapping(value = {"/{email}/reviewedList", "/{email}/reviewedList/{tv}"})
 	public String reviewedList(@PathVariable(name = "email") String email, @PathVariable(name = "tv", required = false) String tv, Model model) {
 		ObjectMapper mapper = new  ObjectMapper();
+		if(usv.getUserDetail(email) == null) {
+			return "error/noUser";
+		}
 		model.addAttribute("platform" , tv != null ? "tv" : "movie");
 		model.addAttribute("list", "reviewed");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
@@ -207,6 +228,7 @@ public class UserController {
 	
 	@GetMapping("/{email}/modify")
 	public String modify(@PathVariable("email") String email, Model model) { 
+		
 		model.addAttribute("uvo", usv.getUserDetail(email));
 		model.addAttribute("purchased",ssv.getList());
 		return "user/modify";
@@ -314,9 +336,6 @@ public class UserController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-//	@PostMapping("/modGrade")
-//	public String modifyGrade(String email ) {
-//		
-//	}
+ 
 	
 }

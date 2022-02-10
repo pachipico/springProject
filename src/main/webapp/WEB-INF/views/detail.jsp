@@ -23,7 +23,7 @@
           <div class="headerTitle" id="movieTitle">영화 제목</div>
           <div class="headerRatingDiv">
           	<div class="headerRating">
-          	00
+          	평균점수: <span id="rt">NoData</span>&nbsp;|&nbsp; tmdb 점수: <span id="dbRating"></span>
           	</div>
 <!--           	// 좋아요시 색변 -->
 			<sec:authorize access="isAuthenticated()">

@@ -102,4 +102,22 @@
 	<delete id="deleteTVRating" >
 		delete from tv_rating where tvid = #{tvid} and email = #{email}
 	</delete>
+	
+	<!-- rank -->
+	
+	<select id="selectListLikeRankTV" resultType="tvvo">
+		select t.tvid , t.title , t.poster , count(t.tvid) 'isLiked'
+		from tv t left join tv_like tl on t.tvid = tl.tvid 
+		group by t.tvid, t.title, t.poster
+		ORDER BY count(t.tvid) desc
+		limit 0, 10
+	</select>
+	
+	<select id="selectListRatingRankTV" resultType="tvvo">
+		SELECT t.tvid , t.title , t.poster , avg(tr.rating) 'rating'
+		from tv t left join tv_rating tr on t.tvid = tr.tvid 
+		GROUP BY t.tvid, t.title , t.poster
+		ORDER BY AVG(tr.rating) DESC 
+		limit 0, 10
+	</select>
 </mapper>

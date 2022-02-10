@@ -126,4 +126,16 @@ public class MovieServiceImpl implements MovieService {
 		return mdao.selectMovieAvgRating(mid);
 	}
 
+	@Override
+	public List<MovieVO> getLikeRankList() {
+		
+		return mdao.selectListLikeRankMovie();
+	}
+
+	@Override
+	public List<MovieVO> getRatingRankList() {
+		
+		return mdao.selectListRatingRankMovie();
+	}
+
 }

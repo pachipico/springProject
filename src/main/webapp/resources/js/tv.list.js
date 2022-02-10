@@ -267,7 +267,6 @@ const renderTVs = async (json, page = 1) => {
         alt=""
         />
     
-        <div class="rating">${tv.vote_average * 10}%</div>
         <div class="dropdown menu">
           <a class="moreBtn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
             ···
