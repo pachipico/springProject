@@ -13,5 +13,6 @@ public interface TvBoardService {
 	List<TvBoardVO> getLikeList(PagingVO pgvo);
 	List<TvBoardVO> getHateList(PagingVO pgvo);
 	TvBoardDTO getDetail(long tvbId, String authEmail);
-	int getTotalCount(PagingVO pgvo);
+	int getLikeTotalCount(PagingVO pgvo);
+	int getHateTotalCount(PagingVO pgvo);
 }

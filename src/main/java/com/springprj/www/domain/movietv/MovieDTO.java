@@ -17,13 +17,14 @@ public class MovieDTO {
 	private MovieVO mvvo;
 	// 유저의 즐겨찾기, 평점, 리뷰 정보
 	private ReviewVO rvvo;
+	private ReviewDTO rvdto;
 	private LikeVO lvo;
 	private RatingVO rtvo;
 	private int isLiked;
 	private Double rating;
 
 	// 영화의 리뷰, 즐겨찾기 수, 평균 평점
-	private List<ReviewVO> rvList;
+	private List<ReviewDTO> rvList;
 	private Integer likeCount;
 	private Double avgRating;
 

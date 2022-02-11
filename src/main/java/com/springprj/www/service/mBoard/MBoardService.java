@@ -13,5 +13,7 @@ public interface MBoardService {
 	List<MBoardVO> getLikeList(PagingVO pgvo);
 	List<MBoardVO> getHateList(PagingVO pgvo);
 	MBoardDTO getDetail(long mbId, String authEmail);
-	int getTotalCount(PagingVO pgvo);
+	int getLikeTotalCount(PagingVO pgvo);
+	int getHateTotalCount(PagingVO pgvo);
+	List<MBoardVO> getRealtedMovieList(PagingVO pgvo);
 }

@@ -9,6 +9,7 @@ import com.springprj.www.domain.mBoard.MCommentVO;
 import com.springprj.www.handler.PagingHandler;
 import com.springprj.www.repository.mBoard.MBoardDAO;
 import com.springprj.www.repository.mBoard.MCommentDAO;
+import com.springprj.www.repository.user.UserDAO;
 
 @Service
 public class MCommentServiceImpl implements MCommentService {
@@ -17,6 +18,9 @@ public class MCommentServiceImpl implements MCommentService {
 	
 	@Inject
 	private MBoardDAO mbdao;
+	
+	@Inject
+	private UserDAO udao;
 	
 	
 	@Override

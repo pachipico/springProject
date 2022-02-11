@@ -69,7 +69,7 @@
        		<div class="menu">
        			<form action="/user/logout" method="post">
        				<input type="hidden" value="${authEmail }">
-       				<button class="nav-btn" type="submit">Log Out</button>
+       				<button class="nav-btn btn" id="logOutBtn" type="submit">Log Out</button>
        			</form>
        			
        		</div>

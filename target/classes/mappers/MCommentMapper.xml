@@ -8,8 +8,14 @@
 		values (#{mbId}, #{writer}, #{content})
 	</insert>
 	<select id="selectListMComment" resultType="mcvo">
-		select mc_id, writer, content, mod_at
-		from m_comment
+		select b.mc_id, mb_id, writer, content, mod_at
+		from (
+			select mc_id from m_comment
+			where mb_id = #{mbId}
+			order by mc_id
+			limit #{pgvo.pageStart}, #{pgvo.qty}
+		)a inner join m_comment b
+		on a.mc_id = b.mc_id
 	</select>
 	<select id="selectOneMCommentTotalCount" parameterType="long" resultType="int">
 		select count(mc_id) from m_comment where mb_id = #{mbId}
@@ -26,6 +32,6 @@
 		delete from m_comment where mb_id = #{mbId}
 	</delete>
 	<select id="selectOneMComment" parameterType="long" resultType="long">
-		select mb_id from comment where mc_id = #{mcId}
+		select mb_id from m_comment where mc_id = #{mcId}
 	</select>
 </mapper>

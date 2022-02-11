@@ -1,6 +1,6 @@
 async function deleteHeart(heartData){
     try {
-        const url = '/tvHeart/' + tvbId + '/' + authEmail;
+        const url = '/tvHeart/' + heartData.mbId + '/' + heartData.email;
         const config = {
             method: 'delete',
             headers: {
@@ -48,28 +48,26 @@ document.addEventListener("click", (e) => {
     if(e.target.id == 'delBtn') {
         e.preventDefault();
         document.querySelector("#delForm").submit();
-    }else if(e.target.class == 'heartBtn'){
+    }else if(e.target.id == 'heartBtn'){
         e.preventDefault();
         let heartData = {
             tvbId: tvbIdVal,
             email: authEmail,  
             check: heartCheck
         }
-        if(heartData.check == 1){
-            deleteHeart(heartData).then(result =>{
-                const heartBtn = document.querySelector('.heartBtn');
-                heartBtn.innerText = '♡';
-            });
-        }else if(heartData.check == 0){
-            insertHeart(heartData).then(result =>{
-                const heartBtn = document.querySelector('.heartBtn');
-                heartBtn.innerText = '♥';
-            });
+        const heartBtn = document.getElementById('heartBtn');
+        if(heartBtn.innerHTML == '♥'){
+            const newHeartBtn = '♡';
+            heartBtn.innerHTML = newHeartBtn;
+            deleteHeart(heartData);
+        }else if(heartBtn.innerHTML == '♡'){
+            const newHeartBtn = '♥';
+            heartBtn.innerHTML = newHeartBtn;
+            insertHeart(heartData);
         }
+    }else if(e.target.id == heartList){
+        // printHeartList(mbIdVal, page=1).then(result =>{
+            document.getElementById('heartListArea').innerHTML = 'continue';
+        // });
     }
-    // else if(e.target.id == heartList){
-    //     printHeartList(tvbIdVal, page=1).then(result =>{
-    //         // 이메일 > 프로필이미지, 닉네임 받아오기
-    //     });
-    // }
 });

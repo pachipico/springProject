@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.springprj.www.domain.movietv.LikeVO;
 import com.springprj.www.domain.movietv.MovieVO;
 import com.springprj.www.domain.movietv.RatingVO;
+import com.springprj.www.domain.movietv.ReviewDTO;
 import com.springprj.www.domain.movietv.ReviewVO;
 
 public interface MovieDAO {
@@ -20,8 +21,8 @@ public interface MovieDAO {
 
 	
 	// review 
-	List<ReviewVO> seleListMovieReview(long mid);
-	ReviewVO selectOneMovieReview( @Param("mid") long mid,@Param("writer") String wrier); // 중복 리뷰 작성 방지용
+	List<ReviewDTO> seleListMovieReview(long mid);
+	ReviewDTO selectOneMovieReview( @Param("mid") long mid,@Param("writer") String wrier); // 중복 리뷰 작성 방지용
 	int insertMovieReview(ReviewVO rvvo );
 	int updateMovieReview(ReviewVO rvvo);
 	int deleteMovieReview( @Param("mid") long mid,@Param("writer") String writer);

@@ -39,7 +39,7 @@ public class MovieServiceImpl implements MovieService {
 		MovieDTO dto = new MovieDTO();
 
 		if (loggedInUser != null && !loggedInUser.equals("")) {
-			dto.setRvvo(mdao.selectOneMovieReview(mid, loggedInUser));
+			dto.setRvdto(mdao.selectOneMovieReview(mid, loggedInUser));
 			dto.setIsLiked(mdao.selectOneMovieLike(mid, loggedInUser));
 			dto.setRating(mdao.selectOneMovieRating(mid, loggedInUser));
 		}
@@ -72,7 +72,7 @@ public class MovieServiceImpl implements MovieService {
 		if (mdao.selectOneMovieReview(rvvo.getMid(), rvvo.getWriter()) == null) {
 			return mdao.insertMovieReview(rvvo);
 		} else {
-			return 0;
+			return -1;
 		}
 	}
 

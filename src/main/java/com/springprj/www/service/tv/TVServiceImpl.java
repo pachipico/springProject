@@ -37,11 +37,8 @@ public class TVServiceImpl implements TVService {
 	@Override
 	public TVDTO getTVData(long tvid, String loggedInUser) {
 		TVDTO dto = new TVDTO();
-		log.debug("TVServiceImpl >>> loggedInUser : {}", loggedInUser);
 		if (loggedInUser != null && !loggedInUser.equals("")) {
-			ReviewVO rvvo = tdao.selectOneTVReview(tvid, loggedInUser);
-			dto.setRvvo(rvvo);
-			log.debug("TVServiceImpl >>> rvvo : {}", rvvo);
+			dto.setRvdto(tdao.selectOneTVReview(tvid, loggedInUser));
 			dto.setIsLiked(tdao.selectOneTVLike(tvid, loggedInUser));
 			dto.setRating(tdao.selectOneTVRating(tvid, loggedInUser));
 		}
@@ -77,8 +74,10 @@ public class TVServiceImpl implements TVService {
 	public int registerReview(ReviewVO rvvo) {
 		if (tdao.selectOneTVReview(rvvo.getTvid(), rvvo.getWriter()) == null) {
 			return tdao.insertTVReview(rvvo);
+		} else {
+			return -1;
 		}
-		return 0;
+		
 	}
 
 	@Override

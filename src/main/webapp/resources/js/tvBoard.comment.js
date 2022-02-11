@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', ()=>{
+    getCmtList(tvbIdVal);
+});
+
 async function postCmtToServ(cmtData) {
     try {
         const url = '/tvComment/post';
@@ -25,7 +29,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
     }else{
         let cmtData = {
             tvbId: tvbIdVal,
-            writer: document.getElementById('cmtWriter').innerText,
+            writer: document.getElementById('cmtWriter').value,
             content: cmtText.value
         };
         postCmtToServ(cmtData).then(result =>{
@@ -41,7 +45,6 @@ async function printCmtFromServ(tvbId, page){
     try {
         const resp = await fetch('/tvComment/' + tvbId + '/' + page);
         const pageHandler = await resp.json();
-        console.log(pageHandler);
         return await pageHandler;
     } catch (error) {
         console.log(error);
@@ -51,42 +54,58 @@ async function printCmtFromServ(tvbId, page){
 function printPage(prev, startPage, pgvo, endPage, next){
     let pgn = document.getElementById('cmtPaging');
     pgn.innerHTML = '';
-    let ul = `<ul>`;
+    let ul = `<ul class="pagination justify-content-center">`;
     if(prev){
-        ul += `<li><a href="${startPage-1}">이전</a></li>`;
+        ul += `<li class="page-item"><a class="page-link" href="${startPage-1}">이전</a></li>`;
     }
     for (let i = startPage; i <= endPage; i++) {
-        ul += `<li class="${pgvo.pageNo == i ? 'active' : ''}">
-            <a href="${i}>${i}</a></li>`;
+        ul += `<li class="page-item ${pgvo.pageNo == i ? 'active' : ''}" aria-current="page">`;
+        ul += `<a class="page-link" href="${i}>${i}</a></li>`;
     }
     if(next){
-        ul += `<li><a href="${endPage + 1}">다음</a></li>`;
+        ul += `<li class="page-item"><a class="page-link" href="${endPage + 1}">다음</a></li>`;
     }
     ul += `</ul>`;
     pgn.innerHTML = ul;
 }
 
+async function printProfileImg(email){
+    try {
+        const resp = await fetch('/user/profileImg/' + email);
+        const result = await resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function getCmtList(tvbId, page=1){
     printCmtFromServ(tvbId, page).then(result =>{
-        console.log(result);
-        const ul = document.getElementById('cmtListArea');
+        const div = document.getElementById('cmtListArea');
         if(result.cmtListTv.length){
-            ul.innerHTML = "";
-
+            div.innerHTML = "";
             for (let tvcvo of result.cmtListTv) {
-                let li = `<li data-mCid="${tvcvo.tvcId}">`;
-                    li += `<div><div class="profileImg"><img src="유저프로필이미지"></div>${tvcvo.content}</div>`;
-                    li += `<span>${tvcvo.writer}</span><span>${tvcvo.heart}</span><span>${tvcvo.modAt}</span>`;
-               // if(tvcvo.writer == ses.email){
-                    li += `<button type="button" class="mod">e</button><button type="button" class="del">x</button>`;
-                // }
-                li += `</li>`;
-                ul.innerHTML += li;
+                printProfileImg(tvcvo.writer).then(result =>{
+                    let li = `<div data-tvcid="${tvcvo.tvcId}" class="cmtBox">`;
+                        li += `<div class="d-flex p-2">
+                                <div class="flex-shrink-0 bg-light"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"></div>`;
+                        li += `<div class="ms-3 cmtContBox">
+                                <div class="fw-bold cmtWir">${tvcvo.writer}</div>
+                                <div class="cmtDate">${tvcvo.modAt}</div>
+                                <div class="cmtCont">${tvcvo.content}</div></div>`;
+                    if(tvcvo.writer == authEmail){
+                        li += `<div style="width: 70px; float: right"><button type="button" class="mod bg-light" data-bs-toggle="modal" data-bs-target="#myModal">
+                                <i class="fas fa-pencil-alt"></i></button>
+                                <button type="button" class="del bg-light"><i class="far fa-trash-alt"></i></button></div>`;
+                    }
+                    li += `</div></div>`;
+                    div.innerHTML += li;
+                });
             }
             printPage(result.prev, result.startPage, result.pgvo, result.endPage, result.next);
         }else{
-            let li = `<li>댓글 없음</li>`;
-            ul.innerHTML += li;
+            let li = `<div>댓글 없음</div>`;
+            div.innerHTML += li;
         }
     });
 }
@@ -125,22 +144,24 @@ async function editCmtToServ(cmtDataMod){
 
 document.addEventListener('click', (e) =>{
     if(e.target.classList.contains('del')){
-        let li = e.target.closest('li');
-        let tvcIdVal = li.dataset.tvcId;
+        let cmtBox = e.target.closest('.cmtBox');
+        let tvcIdVal = cmtBox.dataset.tvcid;
         eraseCmtAtServ(tvcIdVal).then(result => {
             alert('댓글 삭제 성공');
             getCmtList(tvcIdVal);
         });
     }else if(e.target.classList.contains('mod')){
-        let li = e.target.closest('li');
-        let cmtText = li.querySelector('.profileImg').nextSibling;
-        document.getElementById('cmtTextMod').value = cmtText.nodeValue;
-        document.getElementById('cmtModBtn').setAttribute('data-mCid', li.dataset.tvcId);
+        let cmtBox = e.target.closest('.cmtBox');
+        let cmtCont = cmtBox.querySelector('.cmtCont').innerText;
+        console.log(cmtCont);
+        document.getElementById('cmtTextMod').value = cmtCont;
+        document.getElementById('cmtModBtn').setAttribute('data-tvcid', cmtBox.dataset.tvcid);
     }else if(e.target.id == 'cmtModBtn'){
         let cmtDataMod = {
-            tvcId: e.target.dataset.tvcId,
+            tvcId: e.target.dataset.tvcid,
             content: document.getElementById('cmtTextMod').value
         };
+        console.log(cmtDataMod);
         editCmtToServ(cmtDataMod).then(result =>{
             if(parseInt(result)){
                 document.querySelector('.btn-close').click();

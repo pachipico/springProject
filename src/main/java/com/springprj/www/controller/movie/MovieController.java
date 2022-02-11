@@ -108,9 +108,9 @@ public class MovieController {
 		if(dto.getMvvo() != null) {
 			msv.registerMovieIfNotExists(dto.getMvvo());
 		}
-
-		return msv.registerReview(dto.getRvvo()) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
-				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		int isUp = msv.registerReview(dto.getRvvo());
+		return  new ResponseEntity<String>(isUp < 0 ? "-1" : isUp == 0 ?  "0" : "1", HttpStatus.OK);
+			
 	}
 
 	@PatchMapping(value = "/review/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })

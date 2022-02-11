@@ -4,40 +4,52 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
+<script src="https://kit.fontawesome.com/58e52d7ffb.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="/resources/css/board.list.css" />
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.uvo.email" var="authEmail"/>
+</sec:authorize>
+		
+<div class="container">
+	<div class="title">영화 감상평
+		<c:if test="${authEmail != null }">
+			<a href="/mBoard/registerMovie" class="btn btn-outline-primary">등록</a>
+		</c:if>
+	</div>
+	<div class="searchBar">
+		<form action="/mBoard/hateList" method="get">
+			<div class="input-group">
+				<c:set value="${pgn.pgvo.type }" var="typed" />
+				<div class="form-outline">
+					<select name="type" class="form-select form-select-sm searchSelc">
+						<option ${typed == null ? 'selected':'' }>선택</option>
+						<option value="t" ${typed eq 't' ? 'selected':'' }>제목</option>
+						<option value="m" ${typed eq 'm' ? 'selected':'' }>영화제목</option>
+						<option value="w" ${typed eq 'w' ? 'selected':'' }>작성자</option>
+						<option value="tm" ${typed eq 'tm' ? 'selected':'' }>제목 또는 영화제목</option>
+						<option value="tw" ${typed eq 'tw' ? 'selected':'' }>제목 또는 작성자</option>
+						<option value="mw" ${typed eq 'mw' ? 'selected':'' }>영화제목 또는 작성자</option>
+					</select>
+				</div>
+				<div class="form-outline">
+					<input type="text" name="keyword" class="form-control searchInpt" placeholder="검색어를 입력하세요." value="${pgn.pgvo.keyword }">
+					<input type="hidden" name="pageNo" value="1">
+					<input type="hidden" name="qty" value="${pgn.pgvo.qty }">
+				</div>
+				<button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+			</div>
+		</form>
+	</div>
 
-<h2>영화 감상평</h2>
-<a href="/mBoard/register">등록</a>
+	<div class="likeHateText">
+		<a href="/mBoard/likeList">재밌어요</a>
+		/
+		<a href="/mBoard/hateList" style="color: blue; text-decoration: underline; font-weight: bold;">재미없어요</a>
+	</div>
 
-<div>
-	<a href="/mBoard/likeList">재밌어요</a>
-	/
-	<a href="/mBoard/hateList">재미없어요</a>
-</div>
-	<form action="/mBoard/hateList" method="get">
-		<div>
-			<c:set value="${pgn.pgvo.type }" var="typed" />
-			<select name="type">
-				<option ${typed == null ? 'selected':'' }>선택</option>
-				<option value="t" ${typed eq 't' ? 'selected':'' }>제목</option>
-				<option value="m" ${typed eq 'm' ? 'selected':'' }>영화제목</option>
-				<option value="w" ${typed eq 'w' ? 'selected':'' }>작성자</option>
-				<option value="tm" ${typed eq 'tm' ? 'selected':'' }>제목 또는
-					영화제목</option>
-				<option value="tw" ${typed eq 'tw' ? 'selected':'' }>제목 또는
-					작성자</option>
-				<option value="mw" ${typed eq 'mw' ? 'selected':'' }>영화제목
-					또는 작성자</option>
-			</select> <input type="text" name="keyword" placeholder="검색어를 입력하세요."
-				value="${pgn.pgvo.keyword }"> <input type="hidden"
-				name="pageNo" value="1"> <input type="hidden" name="qty"
-				value="${pgn.pgvo.qty }">
-			<button type="submit">검색</button>
-		</div>
-	</form>
-
-	<table>
+	<table class="table table-hover text-center fs-5 align-middle">
 		<thead>
-			<tr>
+			<tr class="bg-light">
 				<th scope="col">포스터</th>
 				<th scope="col">제목</th>
 				<th scope="col">좋아요</th>
@@ -47,38 +59,46 @@
 			</tr>
 		</thead>
 		<tbody>
-		<sec:authorize access="isAuthenticated()">
-			<sec:authentication property="principal.uvo.email" var="authEmail"/>
-		</sec:authorize>
 			<c:forEach items="${list }" var="mbvo">
-				<tr>
-					<th scope="row">${mbvo.mbId }</th>
-					<td><a
-						href="/mBoard/detail?mbId=${mbvo.mbId }&authEmail=${authEmail }&pageNo=${pgn.pgvo.pageNo}&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">
-							${mbvo.title } </a></td>		
-					<td>${mbvo.heart }</td>
-					<td><a href="">${mbvo.writer }</a></td>
+				<tr class="tableText">
+					<th scope="row"><img src="${mbvo.poster }" class="listPoster"></th>
+					<td>
+						<a href="/mBoard/detail?mbId=${mbvo.mbId }&authEmail=${authEmail }&pageNo=${pgn.pgvo.pageNo}&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">
+							${mbvo.title }
+						</a>
+					</td>
+					<td><span class="heartColor"><i class="far fa-heart"></i></span>${mbvo.heart }</td>
+					<td>
+						<div class="dropdown">
+						  <a href="" id="uDetail" data-bs-toggle="dropdown" aria-expanded="false">
+						    ${mbvo.writer }
+						  </a>
+						  <ul class="dropdown-menu" aria-labelledby="uDetail">
+						    <li><a href="/user/${mbvo.writer }" class="dropdown-item">정보 보기</a></li>
+						  </ul>
+						</div>
+					</td>
 					<td>${mbvo.readCount }</td>
 					<td>${mbvo.modAt }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-
-	<ul>
+</div>
+	<ul class="pagination justify-content-center">
 		<c:if test="${pgn.prev }">
-			<li class="page-item"><a
-				href="/mBoard/hateList?pageNo=${pgn.startPage - 1 }&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">이전</a>
+			<li class="page-item">
+				<a  class="page-link" href="/mBoard/hateList?pageNo=${pgn.startPage - 1 }&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">이전</a>
 			</li>
 		</c:if>
 		<c:forEach begin="${pgn.startPage }" end="${pgn.endPage }" var="i">
-			<li class="${pgn.pgvo.pageNo == i ? 'active':''}"><a
-				href="/mBoard/hateList?pageNo=${i }&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">${i }</a>
+			<li class="page-item ${pgn.pgvo.pageNo == i ? 'active':''}" aria-current="page">
+				<a class="page-link" href="/mBoard/hateList?pageNo=${i }&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">${i }</a>
 			</li>
 		</c:forEach>
 		<c:if test="${pgn.next }">
-			<li><a
-				href="/mBoard/hateList?pageNo=${pgn.endPage + 1 }&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">다음</a>
+			<li class="page-item">
+				<a class="page-link" href="/mBoard/hateList?pageNo=${pgn.endPage + 1 }&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">다음</a>
 			</li>
 		</c:if>
 	</ul>

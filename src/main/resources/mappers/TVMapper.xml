@@ -45,12 +45,17 @@
 	</insert>
 	
 		<!-- review -->
-	<select id="selectListTVReview" parameterType="long" resultType="rvvo">
-		select * from tv_review where tvid = #{tvid}
+	<select id="selectListTVReview" parameterType="long" resultType="rvdto">
+		select tr.tvid , tr.writer , tr.reg_at , tr.mod_at , tr.content , u.profile_img , u.font_color 
+		from tv_review tr left join `user` u on tr.writer = u.email 
+		where tvid = #{tvid}
 	</select>
 	
-	<select id="selectOneTVReview"  resultType="rvvo">
-		select * from tv_review where tvid = #{tvid} and writer = #{writer}
+	<select id="selectOneTVReview"  resultType="rvdto">
+		select tr.tvid , tr.writer , tr.reg_at , tr.mod_at , tr.content , u.profile_img , u.font_color 
+		from tv_review tr left join `user` u on tr.writer = u.email 
+		where tvid = #{tvid} and writer = #{writer} 
+		
 	</select>
 	
 	<insert id="insertTVReview" parameterType="rvvo">
@@ -62,7 +67,7 @@
 	</update>
 	
 	<delete id="deleteTVReview">
-		delete from tv_review where tvid = #{tvid} and email = #{email}
+		delete from tv_review where tvid = #{tvid} and writer = #{writer}
 	</delete>
 	
 	<!-- like -->

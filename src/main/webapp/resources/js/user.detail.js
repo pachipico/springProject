@@ -13,43 +13,10 @@ const getDetail = async (id, platform) => {
     console.log(e);
   }
 };
-// const getData = () => {
-//   tvsData.forEach((each) => {
-//     getDetail(each.tvid, platform).then((result) => {
-//       data.push(result);
-//     });
-//   });
-// };
 
-const renderCard = async (opt, ascdesc) => {
+const renderCard = async () => {
   cardContainer.innerHTML = "";
-  console.log(opt, ascdesc);
   if (platform == "tv") {
-    console.log("tv");
-    switch (opt) {
-      case "rating":
-        console.log("rating");
-        if (ascdesc == "desc") {
-          tvsData.sort((a, b) => b.rating - a.rating);
-          console.log("desc", tvsData);
-        } else {
-          tvsData.sort((a, b) => a.rating - b.rating);
-          console.log("asc", tvsData);
-        }
-        break;
-      case "regAt":
-        console.log("regAt");
-        if (ascdesc == "desc") {
-          tvsData.sort((a, b) => new Date(a.regAt) - new Date(b.regAt));
-          console.log("desc", tvsData);
-        } else {
-          tvsData.sort((a, b) => new Date(b.regAt) - new Date(a.regAt));
-          console.log("asc", tvsData);
-        }
-        break;
-      default:
-        break;
-    }
     console.log(tvsData);
 
     tvsData.forEach((each) => {
@@ -105,31 +72,6 @@ const renderCard = async (opt, ascdesc) => {
       });
     });
   } else {
-    console.log("movie");
-    switch (opt) {
-      case "rating":
-        console.log("rating");
-        if (ascdesc == "desc") {
-          moviesData.sort((a, b) => b.rating - a.rating);
-          console.log("desc", moviesData);
-        } else {
-          moviesData.sort((a, b) => a.rating - b.rating);
-          console.log("asc", moviesData);
-        }
-        break;
-      case "regAt":
-        console.log("regAt");
-        if (ascdesc == "desc") {
-          moviesData.sort((a, b) => new Date(a.regAt) - new Date(b.regAt));
-          console.log("desc", moviesData);
-        } else {
-          moviesData.sort((a, b) => new Date(b.regAt) - new Date(a.regAt));
-          console.log("asc", moviesData);
-        }
-        break;
-      default:
-        break;
-    }
     console.log(moviesData);
 
     moviesData.forEach((each) => {
@@ -491,21 +433,10 @@ document.addEventListener("click", (e) => {
   }
 });
 
-document.addEventListener("change", (e) => {
-  let opt = document.getElementById("optSel");
-  let ascdesc = document.getElementById("ascdesc");
-  if (e.target.id == "optSel" || e.target.id == "ascdesc") {
-    renderCard(opt.value, ascdesc.value);
-    data.forEach((d) => {
-      console.log(d);
-    });
-  }
-});
-
 document.addEventListener("DOMContentLoaded", () => {
   if (list == "rated") {
-    renderCard("rated", "desc");
+    renderCard();
   } else {
-    renderCard("regAt", "asc");
+    renderCard();
   }
 });

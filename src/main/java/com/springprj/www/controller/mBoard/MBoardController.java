@@ -25,6 +25,18 @@ public class MBoardController {
 	@Inject
 	private MBoardService mbsv;
 	
+	@GetMapping("/registerMovie")
+	public void registerMovie() {}
+	
+	@PostMapping("/registerMovie")
+	public String resgisterMovie(RedirectAttributes reAttr, @RequestParam("mid")long mid, @RequestParam("poster")String poster, @RequestParam("regDate")String regDate, @RequestParam("movieTitle")String movieTitle ) {
+		reAttr.addFlashAttribute("mid", mid);
+		reAttr.addFlashAttribute("poster", poster);
+		reAttr.addFlashAttribute("regDate", regDate);
+		reAttr.addFlashAttribute("movieTitle", movieTitle);
+		return "redirect:/mBoard/register";
+	}
+	
 	@GetMapping("/register")
 	public void register() {}
 	
@@ -37,13 +49,13 @@ public class MBoardController {
 	@GetMapping("/likeList")
 	public void likeList(Model model, PagingVO pgvo) {	
 		model.addAttribute("list", mbsv.getLikeList(pgvo));
-		int totalCount = mbsv.getTotalCount(pgvo);
+		int totalCount = mbsv.getLikeTotalCount(pgvo);
 		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
 	}
 	@GetMapping("/hateList")
 	public void hateList(Model model, PagingVO pgvo) {	
 		model.addAttribute("list", mbsv.getHateList(pgvo));
-		int totalCount = mbsv.getTotalCount(pgvo);
+		int totalCount = mbsv.getHateTotalCount(pgvo);
 		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
 	}
 	

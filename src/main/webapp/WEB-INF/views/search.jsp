@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="/resources/css/search.css" />
     <div id="searchDiv">
-      <input type="text" id="searchInput" />
+      <input type="text" id="searchInput" placeholder="검색" />
     </div>
 <!--    	<div class="list-group" id="searchList">
 	  <a href="/search/movie?query=ddd" class="list-group-item list-group-item-action">A second link item</a>

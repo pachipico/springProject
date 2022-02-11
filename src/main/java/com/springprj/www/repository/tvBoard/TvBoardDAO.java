@@ -14,7 +14,8 @@ public interface TvBoardDAO {
 	int updateTvBoard(TvBoardVO tvbvo);
 	int deleteTvBoard(long tvbId);
 	TvBoardVO selectOneTvBoard(long tvbId);
-	int selectOneTotalCount(PagingVO pgvo);
+	int selectOneLikeTotalCount(PagingVO pgvo);
+	int selectOneHateTotalCount(PagingVO pgvo);
 	void updateTvBoardReadCount(@Param("tvbId")long tvbId, @Param("cnt")int cnt);
 	void updateTvBoardCmtQty(@Param("tvbId")long tvbId, @Param("cnt")int cnt);
 	int tvBoardHeartCount(long tvbId);

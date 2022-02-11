@@ -235,5 +235,31 @@
 	overflow: hidden;
 	pointer-events: none;
 }
+/*  */
 
+.content{
+	padding: 20px;
+}
 
+.stats{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.content h2 {
+	font-weight: bold;
+	margin-bottom: 30px;
+}
+
+.stats div {
+	
+	
+	
+}
+
+.stats div p {
+	font-size: 3rem;
+	font-weight: bolder;
+	color: #082546;
+}

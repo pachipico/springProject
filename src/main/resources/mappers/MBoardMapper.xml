@@ -4,8 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springprj.www.repository.mBoard.MBoardDAO">
 	<insert id="insertMBoard" parameterType="mbvo">
-		insert into m_board (writer, mid, title, like_hate, content, poster)
-		values (#{writer}, #{mid}, #{title}, #{likeHate}, #{content}, #{poster})
+		insert into m_board (writer, mid, title, like_hate, content, poster, movie_title, reg_date)
+		values (#{writer}, #{mid}, #{title}, #{likeHate}, #{content}, #{poster}, #{movieTitle}, #{regDate})
 	</insert>
 	<sql id="search">
 		<if test="type != null">
@@ -14,10 +14,10 @@
 					<trim prefix="OR">
 						<choose>
 							<when test="type == 't'.toString()">
-								c.title like concat('%',#{keyword},'%')
+								b.title like concat('%',#{keyword},'%')
 							</when>
 							<when test="type == 'm'.toString()">
-								m.title like concat('%',#{keyword},'%')
+								movie_title like concat('%',#{keyword},'%')
 							</when>
 							<when test="type == 'w'.toString()">
 								writer like concat('%',#{keyword},'%')
@@ -29,30 +29,28 @@
 		</if>
 	</sql>
 	<select id="selectLikeListMBoardPaging" parameterType="pgvo" resultType="mbvo">
-		select b.mb_id, b.title, writer, mod_at, read_count, 
+		select b.mb_id, b.title, writer, mod_at, read_count, poster, movie_title, reg_date, cmt_qty,
 		(select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
 		from (
 			select mb_id from m_board
-			where mb_id > 0
+			where like_hate = 1
 			<include refid="search"></include>
+			order by mb_id desc
 			limit #{pageStart}, #{qty}
 		) a left join m_board b
 		on a.mb_id = b.mb_id
-		where like_hate = 1
-		order by b.mb_id desc
 	</select>
 	<select id="selectHateListMBoardPaging" parameterType="pgvo" resultType="mbvo">
-		select b.mb_id, b.title, writer, mod_at, read_count, 
+		select b.mb_id, b.title, writer, mod_at, read_count, poster, movie_title, reg_date, cmt_qty,
 		(select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
 		from (
 			select mb_id from m_board
-			where mb_id > 0
+			where like_hate = 0
 			<include refid="search"></include>
+			order by mb_id desc
 			limit #{pageStart}, #{qty}
 		) a left join m_board b
 		on a.mb_id = b.mb_id
-		where like_hate = 0
-		order by b.mb_id desc
 	</select>
 	<update id="updateMBoard" parameterType="mbvo">
 		update m_board set
@@ -65,8 +63,12 @@
 	<delete id="deleteMBoard" parameterType="long">
 		delete from m_board where mb_id = #{mbId}
 	</delete>
-	<select id="selectOneTotalCount" parameterType="pgvo" resultType="int">
-		select count(mb_id) from m_board where mb_id > 0
+	<select id="selectOneLikeTotalCount" parameterType="pgvo" resultType="int">
+		select count(mb_id) from m_board where like_hate = 1
+		<include refid="search"></include>
+	</select>
+	<select id="selectOneHateTotalCount" parameterType="pgvo" resultType="int">
+		select count(mb_id) from m_board where like_hate = 0
 		<include refid="search"></include>
 	</select>
 	<update id="updateMBoardReadCount">
@@ -75,4 +77,15 @@
 	<update id="updateMBoardCmtQty">
 		update m_board set cmt_qty = cmt_qty + #{cnt} where mb_id = #{mbId}
 	</update>
+	<select id="realtedMovieList" parameterType="pgvo" resultType="mbvo">
+		select b.mb_id, b.title, writer, mod_at, read_count, mid, poster, movie_title, reg_date, cmt_qty,
+		(select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
+		from (
+			select mb_id from m_board
+			where mid = #{mid}
+			order by mb_id desc
+			limit #{pageStart}, #{qty}
+		) a left join m_board b
+		on a.mb_id = b.mb_id
+	</select>
 </mapper>

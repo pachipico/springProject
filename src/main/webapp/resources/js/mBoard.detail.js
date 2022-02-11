@@ -55,7 +55,6 @@ document.addEventListener("click", (e) => {
             email: authEmail,  
             check: heartCheck
         }
-        console.log(heartData);
         const heartBtn = document.getElementById('heartBtn');
         if(heartBtn.innerHTML == '♥'){
             const newHeartBtn = '♡';

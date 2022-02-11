@@ -84,6 +84,82 @@ const renderCredits = (json) => {
   });
 };
 
+const renderReview = (list, writtenReview) => {
+  let reviewWrapper = document.getElementById("reviewWrapper");
+  if (list.length > 0) {
+    reviewWrapper.innerHTML = "";
+  } else {
+    return;
+  }
+
+  list
+    .sort((a, b) => new Date(a.regAt) - new Date(b.regAt))
+    .forEach((review) => {
+      const date = new Date(review.regAt);
+      const li = `
+    <li class="list-group-item review"  >
+      <div class="reviewLeft">
+        <div class="reviewImgDiv">
+          <a href="/user/${review.writer}" ><img src="/fileUpload/${
+        review.profileImg
+      }" alt="" class="reviewProfileImg" /></a>
+        </div>
+        <span class="reviewContent">
+          ${review.content}
+        </span>
+      </div>
+      <div class="reviewRight">
+        <div class="reviewRegAt">
+          ${date.getMonth()}월 ${date.getDate()}, ${date.getFullYear()}
+        
+        </div>
+        <div class="reviewWriterDiv">작성자: <a href="/user/${review.writer}" class="reviewWriter">${
+        review.writer
+      }</a></div>
+      </div>
+    </li>
+    `;
+      if (loggedInEmail != review.writer) {
+        reviewWrapper.innerHTML = reviewWrapper.innerHTML + li;
+      }
+    });
+  if (writtenReview != null) {
+    addToList(writtenReview);
+  }
+};
+
+const addToList = (data) => {
+  let reviewWrapper = document.getElementById("reviewWrapper");
+  if (userData.rvList.length == 0) {
+    reviewWrapper.innerHTML = "";
+  }
+  const li = `
+    <li class="list-group-item review userReview" style="background-color:#e6e6e6;" >
+      <div class="reviewLeft">
+        <div class="reviewImgDiv">
+          <a href="/user/${data.writer}" ><img src="/fileUpload/${
+    data.profileImg
+  }" alt="" class="reviewProfileImg" /></a>
+        </div>
+        <span class="reviewContent">
+          ${data.content}
+        </span>
+      </div>
+      <div class="reviewRight">
+        <div class="reviewRegAt">
+          ${new Date(data.regAt).getMonth()}월 ${new Date(data.regAt).getDate()}, ${new Date(
+    data.regAt
+  ).getFullYear()}
+        <div class="revBtnDiv"> <button class="btn btn-sm revModBtn">mod</button><button class="btn btn-sm revDelBtn">del</button></div>
+        </div>
+        <div class="reviewWriterDiv">작성자: <a href="/user/${data.writer}" class="reviewWriter">${
+    data.writer
+  }</a></div>
+      </div>
+    </li>`;
+  reviewWrapper.innerHTML = li + reviewWrapper.innerHTML;
+};
+
 const getList = async (query) => {
   try {
     const url = `https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=ko-KR&query=${query}&page=1&include_adult=false&region=KR`;
@@ -115,6 +191,46 @@ const postReview = async (content, writer) => {
     return result;
   } catch (e) {
     console.log(e);
+  }
+};
+
+const modifyReview = async (content, writer) => {
+  try {
+    const data = {
+      content,
+      writer,
+      tvid: detailId,
+    };
+    const config = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const url = `/tv/review/${detailId}`;
+    const res = await fetch(url, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const removeReview = async (writer) => {
+  try {
+    const data = {
+      tvid: detailId,
+      writer,
+    };
+    const config = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/tv/review/${detailId}`, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log();
   }
 };
 
@@ -218,14 +334,17 @@ const removeRating = async (email) => {
 };
 
 document.addEventListener("click", (e) => {
-  if (e.target.id == "reviewBtn") {
-    const reviewDiv = document.getElementById("review");
-    const content = reviewDiv.querySelector("[name=content]").value;
-    const writer = reviewDiv.querySelector("[name=writer]").value;
+  if (e.target.classList.contains("reviewRegBtn")) {
+    const content = document.querySelector("[name=content]").value;
+    const writer = document.querySelector("[name=writer]").value;
+    console.log(writer, content, profileImg, Date.now());
     postReview(content, writer).then((result) => {
       console.log(result);
       if (parseInt(result) > 0) {
         alert("리뷰 작성 성공");
+        addToList({ writer, content, profileImg, regAt: Date.now() });
+        document.querySelector(".reviewRegBtn").disabled = true;
+        document.querySelector("[name=content]").value = "";
       } else {
         alert("리뷰 작성 실패..");
       }
@@ -263,6 +382,46 @@ document.addEventListener("click", (e) => {
         document.querySelector(`.star span`).style.width = 0;
       } else {
         alert("평점 삭제 실패..");
+      }
+    });
+  } else if (e.target.classList.contains("revModBtn")) {
+    console.log(e.target);
+    const review = e.target.closest("li");
+    const btn = document.querySelector(".reviewRegBtn");
+    document.getElementById("revInput").value = review.querySelector(".reviewContent").innerText;
+    btn.disabled = false;
+    btn.classList.add("reviewModBtn");
+    btn.classList.remove("reviewRegBtn");
+    btn.innerText = "mod";
+  } else if (e.target.classList.contains("revDelBtn")) {
+    removeReview(e.target.closest("li").querySelector(".reviewWriter").innerText).then((result) => {
+      if (result > 0) {
+        document.querySelector(".userReview").remove();
+        document.querySelector(".reviewRegBtn").disabled = false;
+        document.getElementById("revInput").placeholder = "리뷰를 남겨주세요!";
+        alert("리뷰를 삭제했습니다.");
+      }
+    });
+  } else if (e.target.classList.contains("reviewModBtn")) {
+    console.log("mod");
+    const inputDiv = e.target.closest("div");
+    console.log(inputDiv.querySelector("[name=content]").value);
+    console.log(inputDiv.querySelector("[name=writer]").value);
+    modifyReview(
+      inputDiv.querySelector("[name=content]").value,
+      inputDiv.querySelector("[name=writer]").value
+    ).then((result) => {
+      if (result.length > 0) {
+        document.querySelector(".userReview").remove();
+        addToList({
+          writer: inputDiv.querySelector("[name=writer]").value,
+          content: inputDiv.querySelector("[name=content]").value,
+          profileImg,
+          regAt: Date.now(),
+        });
+        inputDiv.querySelector("[name=content]").value = "";
+        e.target.disabled = true;
+        alert("리뷰가 수정되었습니다.");
       }
     });
   }
@@ -311,6 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getTVData().then((result) => {
     userData = result;
     console.log(userData);
+    renderReview(userData.rvList, userData.rvdto);
     if (userData.avgRating != null) {
       rating.innerText = parseFloat(userData.avgRating).toFixed(1);
     }
@@ -326,6 +486,10 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("ratingStar").value = userData.rating;
       document.querySelector(`.star span`).style.width = `${userData.rating * 10}%`;
       currentRating = userData.rating;
+    }
+    if (userData?.rvdto != null) {
+      document.querySelector(".reviewRegBtn").disabled = true;
+      document.getElementById("revInput").placeholder = "이미 리뷰를 작성하셨습니다.";
     }
   });
   getCredits().then((result) => renderCredits(result));

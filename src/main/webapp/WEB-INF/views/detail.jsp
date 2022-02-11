@@ -23,7 +23,7 @@
           <div class="headerTitle" id="movieTitle">영화 제목</div>
           <div class="headerRatingDiv">
           	<div class="headerRating">
-          	평균점수: <span id="rt">NoData</span>&nbsp;|&nbsp; tmdb 점수: <span id="dbRating"></span>
+          	평균점수: &nbsp;<i><span id="rt">NoData</span></i>&nbsp;|&nbsp; tmdb 점수: &nbsp; <i><span id="dbRating"></span></i>
           	</div>
 <!--           	// 좋아요시 색변 -->
 			<sec:authorize access="isAuthenticated()">
@@ -48,13 +48,40 @@
     	    	<sec:authentication property="principal.uvo.email" var="authEmail" />
 	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          <sec:authentication property="principal.uvo.authList" var="auths" />
-    	
+	          <sec:authentication property="principal.uvo.profileImg" var="profileImg"/>
+    			<c:set value="${profileImg }" var="profileImg"/>
+    			<c:set value="${authEmail}" var="loggedInEmail" />
+    		
     	</sec:authorize>
-    	<div id="mainTitle">시리즈 출연진</div>
+    	<script>
+    		let loggedInEmail = `<c:out value="${loggedInEmail}" />`;
+    		let profileImg = `<c:out value="${profileImg}" />`;
+    	</script>
+    	<div class="mainTitle">시리즈 출연진</div>
 		<div id="castDiv">
-			
 		</div>
+		<hr>
+		        <div id="reviewDiv">
+          <h4>사용자 리뷰</h4>
+
+          <ul class="list-group" id="reviewWrapper" style="padding: 20px">
+          <!--  -->
+          <h4>등록된 리뷰가 없습니다. 리뷰를 등록해보세요!</h4>
+            <!--  -->
+          </ul>
 		
+		<sec:authorize access="isAuthenticated()">
+    	    	<sec:authentication property="principal.uvo.email" var="authEmail" />
+	         	<sec:authentication property="principal.uvo.nickName" var="authNick" />
+	          	<sec:authentication property="principal.uvo.authList" var="auths" />
+          <div class="input-group mb-3">
+            <span class="input-group-text">${authEmail }</span>
+            <input type="hidden" name="writer" value="${authEmail }">
+            <input type="text" class="form-control" name="content" id="revInput" placeholder="리뷰를 남겨주세요!" />
+            <button class="btn btn-outline-secondary reviewRegBtn" type="button">add</button>
+          </div>
+          </sec:authorize>
+        </div>
     </main>
   </body>
   <!-- rating modal -->

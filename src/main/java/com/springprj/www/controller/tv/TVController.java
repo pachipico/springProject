@@ -70,7 +70,7 @@ public class TVController {
 		return "tv/list";
 	}
 
-	@GetMapping("/wavve")
+	@GetMapping("/waave")
 	public String wavveList(Model model, Principal principal) {
 		if(principal != null) {
 			UserVO uvo = usv.getUserDetail(principal.getName());
@@ -89,7 +89,8 @@ public class TVController {
 
 	@GetMapping(value = "/{tvid}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<TVDTO> getTVdata(@PathVariable("tvid") long tvid, Principal principal) {
-		String loggedInEmail = principal.getName() != null ? principal.getName() : "";
+		
+		String loggedInEmail = principal != null ? principal.getName() : "";
 		TVDTO dto = tsv.getTVData(tvid, loggedInEmail);
 		return new ResponseEntity<TVDTO>(dto, HttpStatus.OK);
 	}

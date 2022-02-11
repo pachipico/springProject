@@ -217,6 +217,7 @@ public class UserController {
 		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
 		model.addAttribute("tReviewedCnt", tsv.getUserReviewdList(email).size());
 		
+		
 		try {
 			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserReviewedList(email)));
 			model.addAttribute("tvsData", mapper.writeValueAsString(tsv.getUserReviewdList(email)));
@@ -337,5 +338,9 @@ public class UserController {
 	}
 
  
-	
+	// 프로필 가져오는 주소
+	@PostMapping(value = "/profileImg/{email}", consumes = "application/json", produces = {MediaType.APPLICATION_JSON_VALUE})
+	   public ResponseEntity<UserVO> profileImgAndNick(@PathVariable("email") String email){
+	      return new ResponseEntity<UserVO>(usv.getUserDetail(email), HttpStatus.OK);
+	   }
 }

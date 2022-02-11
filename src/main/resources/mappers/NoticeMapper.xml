@@ -7,10 +7,15 @@
 		insert into notice (email, title, content)
 		values (#{email}, #{title}, #{content})
 	</insert>
-	<!-- 검색필터, 페이징 -->
 	<select id="selectListNotice" resultType="nvo">
-		select nid, title, email, mod_at, read_count from notice
-		order by nid desc
+		select a.nid, title, email, mod_at, read_count
+		from (
+			select nid from notice
+			where nid > 0
+			order by nid desc
+			limit #{pageStart}, #{qty}
+		) a left join notice b
+		on a.nid = b.nid
 	</select>
 	<update id="updateNotice" parameterType="nvo">
 		update notice set
@@ -23,7 +28,6 @@
 	<delete id="deleteNotice" parameterType="long">
 		delete from notice where nid = #{nid}
 	</delete>
-	<!-- paging 해야 됨 -->
 	<select id="selectOneTotalCount" parameterType="pgvo" resultType="int">
 		select count(nid) from notice where nid > 0
 	</select>

@@ -67,7 +67,17 @@ public class MBoardServiceImpl implements MBoardService {
 	}
 
 	@Override
-	public int getTotalCount(PagingVO pgvo) {
-		return mbdao.selectOneTotalCount(pgvo);
+	public int getLikeTotalCount(PagingVO pgvo) {
+		return mbdao.selectOneLikeTotalCount(pgvo);
+	}
+	
+	@Override
+	public int getHateTotalCount(PagingVO pgvo) {
+		return mbdao.selectOneHateTotalCount(pgvo);
+	}
+
+	@Override
+	public List<MBoardVO> getRealtedMovieList(PagingVO pgvo) {
+		return mbdao.realtedMovieList(pgvo);
 	}
 }

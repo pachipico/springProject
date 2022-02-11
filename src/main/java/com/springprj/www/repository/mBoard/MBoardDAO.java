@@ -14,8 +14,10 @@ public interface MBoardDAO {
 	int updateMBoard(MBoardVO mbvo);
 	int deleteMBoard(long mbId);
 	MBoardVO selectOneMBoard(long mbId);
-	int selectOneTotalCount(PagingVO pgvo);
+	int selectOneLikeTotalCount(PagingVO pgvo);
+	int selectOneHateTotalCount(PagingVO pgvo);
 	void updateMBoardReadCount(@Param("mbId")long mbId, @Param("cnt")int cnt);
 	void updateMBoardCmtQty(@Param("mbId")long mbId, @Param("cnt")int cnt);
 	int mBoardHeartCount(long mbId);
+	List<MBoardVO> realtedMovieList(PagingVO pgvo);
 }

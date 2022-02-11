@@ -4,8 +4,8 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springprj.www.repository.tvBoard.TvBoardDAO">
 	<insert id="insertTvBoard" parameterType="tvbvo">
-		insert into tv_board (writer, tvid, title, like_hate, content, poster)
-		values (#{writer}, #{tvid}, #{title}, #{likeHate}, #{content}, #{poster})
+		insert into tv_board (writer, tvid, title, like_hate, content, poster, tv_title, reg_date)
+		values (#{writer}, #{tvid}, #{title}, #{likeHate}, #{content}, #{poster}, #{tvTitle}, #{regDate})
 	</insert>
 	<sql id="search">
 		<if test="type != null">
@@ -17,7 +17,7 @@
 								c.title like concat('%',#{keyword},'%')
 							</when>
 							<when test="type == 'v'.toString()">
-								t.title like concat('%',#{keyword},'%')
+								tv_title like concat('%',#{keyword},'%')
 							</when>
 							<when test="type == 'w'.toString()">
 								writer like concat('%',#{keyword},'%')
@@ -29,30 +29,28 @@
 		</if>
 	</sql>
 	<select id="selectLikeListTvBoardPaging" parameterType="pgvo" resultType="tvbvo">
-		select b.tvb_id, b.title, writer, mod_at, read_count, 
+		select b.tvb_id, b.title, writer, mod_at, read_count, poster, tv_title, reg_date, cmt_qty,
 		(select count(*) from tv_heart h where h.tvb_id = b.tvb_id) as heart
 		from (
 			select tvb_id from tv_board
-			where tvb_id > 0
+			where like_hate = 1
 			<include refid="search"></include>
+			order by tvb_id desc
 			limit #{pageStart}, #{qty}
 		) a left join tv_board b
 		on a.tvb_id = b.tvb_id
-		where like_hate = 1
-		order by b.tvb_id desc
 	</select>
 	<select id="selectHateListTvBoardPaging" parameterType="pgvo" resultType="tvbvo">
-		select b.tvb_id, b.title, writer, mod_at, read_count, 
+		select b.tvb_id, b.title, writer, mod_at, read_count, poster, tv_title, reg_date, cmt_qty,
 		(select count(*) from tv_heart h where h.tvb_id = b.tvb_id) as heart
 		from (
 			select tvb_id from tv_board
-			where tvb_id > 0
+			where like_hate = 0
 			<include refid="search"></include>
+			order by tvb_id desc
 			limit #{pageStart}, #{qty}
 		) a left join tv_board b
 		on a.tvb_id = b.tvb_id
-		where like_hate = 0
-		order by b.tvb_id desc
 	</select>
 	<update id="updateTvBoard" parameterType="tvbvo">
 		update tv_board set
@@ -65,14 +63,18 @@
 	<delete id="deleteTvBoard" parameterType="long">
 		delete from tv_board where tvb_id = #{tvbId}
 	</delete>
-	<select id="selectOneTotalCount" parameterType="pgvo" resultType="int">
-		select count(tvb_id) from tv_board where tvb_id > 0
+	<select id="selectOneLikeTotalCount" parameterType="pgvo" resultType="int">
+		select count(tvb_id) from tv_board where like_hate = 1
+		<include refid="search"></include>
+	</select>
+	<select id="selectOneHateTotalCount" parameterType="pgvo" resultType="int">
+		select count(tvb_id) from tv_board where like_hate = 0
 		<include refid="search"></include>
 	</select>
 	<update id="updateTvBoardReadCount">
 		update tv_board set read_count = read_count + #{cnt} where tvb_id = #{tvbId}
 	</update>
 	<update id="updateTvBoardCmtQty">
-		update tv_board set cmt_qty = cmt_qty + #{cnt} where tv_bid = #{tvbId}
+		update tv_board set cmt_qty = cmt_qty + #{cnt} where tvb_id = #{tvbId}
 	</update>
 </mapper>

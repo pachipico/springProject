@@ -8,8 +8,14 @@
 		values (#{tvbId}, #{writer}, #{content})
 	</insert>
 	<select id="selectListTvComment" resultType="tvcvo">
-		select tvc_id, writer, content, mod_at
-		from tv_comment
+		select b.tvc_id, tvb_id, writer, content, mod_at
+		from (
+			select tvc_id from tv_comment
+			where tvb_id = #{tvbId}
+			order by tvc_id
+			limit #{pgvo.pageStart}, #{pgvo.qty}
+		)a inner join tv_comment b
+		on a.tvc_id = b.tvc_id
 	</select>
 	<select id="selectOneTvCommentTotalCount" parameterType="long" resultType="int">
 		select count(tvc_id) from tv_comment where tvb_id = #{tvbId}
@@ -26,6 +32,6 @@
 		delete from tv_comment where tvb_id = #{tvbId}
 	</delete>
 	<select id="selectOneTvComment" parameterType="long" resultType="long">
-		select tvb_id from comment where tvc_id = #{tvcId}
+		select tvb_id from tv_comment where tvc_id = #{tvcId}
 	</select>
 </mapper>

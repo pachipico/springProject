@@ -35,23 +35,23 @@ public class TvCommentController {
 	}
 	
 	@GetMapping(value = "/{tvbId}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<PagingHandler> spread(@PathVariable("tvbId") long tvBid, @PathVariable("page") int page){
+	public ResponseEntity<PagingHandler> spread(@PathVariable("tvbId") long tvbId, @PathVariable("page") int page){
 		PagingVO pgvo = new PagingVO(page, 10);
-		return new ResponseEntity<PagingHandler>(tvcsv.getList(tvBid, pgvo), HttpStatus.OK);
+		return new ResponseEntity<PagingHandler>(tvcsv.getList(tvbId, pgvo), HttpStatus.OK);
 	}
 	
 	@PutMapping(value = "/{tvcId}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> edit(@PathVariable("tvcId") long tvid, @RequestBody TvCommentVO tvcvo){
+	public ResponseEntity<String> edit(@PathVariable("tvcId") long tvcId, @RequestBody TvCommentVO tvcvo){
 		return tvcsv.modify(tvcvo) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@DeleteMapping(value = "/{tvcId}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> eraseOne(@PathVariable("tvcId") long tvCid){
-		return tvcsv.removeOne(tvCid) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> eraseOne(@PathVariable("tvcId") long tvcId){
+		return tvcsv.removeOne(tvcId) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@DeleteMapping(value = "/all/{tvbId}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> eraseAll(@PathVariable("tvbId") long tvBid){
-		return tvcsv.removeAll(tvBid) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> eraseAll(@PathVariable("tvbId") long tvbId){
+		return tvcsv.removeAll(tvbId) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

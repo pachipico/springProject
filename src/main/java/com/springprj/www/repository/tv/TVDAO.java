@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.springprj.www.domain.movietv.LikeVO;
 import com.springprj.www.domain.movietv.RatingVO;
+import com.springprj.www.domain.movietv.ReviewDTO;
 import com.springprj.www.domain.movietv.ReviewVO;
 import com.springprj.www.domain.movietv.TVVO;
 
@@ -18,8 +19,8 @@ public interface TVDAO {
 	int insertTVData(TVVO tvvo);
 	
 	// review 
-	List<ReviewVO> selectListTVReview(long tvid);
-	ReviewVO selectOneTVReview( @Param("tvid") long tvid,@Param("writer") String email); // 중복 리뷰 작성 방지용
+	List<ReviewDTO> selectListTVReview(long tvid);
+	ReviewDTO selectOneTVReview( @Param("tvid") long tvid,@Param("writer") String email); // 중복 리뷰 작성 방지용
 	int insertTVReview(ReviewVO rvvo );
 	int updateTVReview(ReviewVO rvvo);
 	int deleteTVReview( @Param("tvid") long tvid,@Param("writer") String email);

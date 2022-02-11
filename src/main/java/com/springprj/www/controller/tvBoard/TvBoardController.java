@@ -25,6 +25,18 @@ public class TvBoardController {
 	@Inject
 	private TvBoardService tvbsv;
 	
+	@GetMapping("/registerTv")
+	public void registerTv() {}
+	
+	@PostMapping("/registerTv")
+	public String resgisterTv(RedirectAttributes reAttr, @RequestParam("tvid")long tvid, @RequestParam("poster")String poster, @RequestParam("regDate")String regDate, @RequestParam("tvTitle")String tvTitle ) {
+		reAttr.addFlashAttribute("tvid", tvid);
+		reAttr.addFlashAttribute("poster", poster);
+		reAttr.addFlashAttribute("regDate", regDate);
+		reAttr.addFlashAttribute("tvTitle", tvTitle);
+		return "redirect:/tvBoard/register";
+	}
+	
 	@GetMapping("/register")
 	public void register() {}
 	
@@ -37,14 +49,14 @@ public class TvBoardController {
 	@GetMapping("/likeList")
 	public void likeList(Model model, PagingVO pgvo) {
 		model.addAttribute("list", tvbsv.getLikeList(pgvo));
-		int totalCount = tvbsv.getTotalCount(pgvo);
+		int totalCount = tvbsv.getLikeTotalCount(pgvo);
 		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
 	}
 	
 	@GetMapping("/hateList")
 	public void hateList(Model model, PagingVO pgvo) {
 		model.addAttribute("list", tvbsv.getHateList(pgvo));
-		int totalCount = tvbsv.getTotalCount(pgvo);
+		int totalCount = tvbsv.getHateTotalCount(pgvo);
 		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
 	}
 	

@@ -20,6 +20,8 @@ nav {
   justify-content: space-between;
   background-color: #082546;
   align-items: center;
+  flex-wrap:wrap;
+  align-content: center;
 }
 
 a{
@@ -51,6 +53,7 @@ a{
   align-items: center;
   display: flex;
   flex-direction: row;
+  height: 100%;
 }
 #right {
   display: flex;

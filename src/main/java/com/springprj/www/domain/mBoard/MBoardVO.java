@@ -25,4 +25,7 @@ public class MBoardVO {
 	private int readCount;
 	private String heart;
 	private String poster;
+	private String movieTitle;
+	private String regDate;
+	private int cmt_qty;
 }

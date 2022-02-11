@@ -47,12 +47,18 @@
 	<!-- review -->
 	
 	
-	<select id="seleListMovieReview" parameterType="long" resultType="rvvo">
-		select * from m_review where mid = #{mid}
+	<select id="seleListMovieReview" parameterType="long" resultType="rvdto">
+		select mr.mid , mr.writer , mr.reg_at , mr.mod_at , mr.content , u.profile_img , u.font_color 
+		from m_review mr  left join `user` u on mr.writer = u.email 
+		where mid = #{mid}
+		
 	</select>
 	
-	<select id="selectOneMovieReview"  resultType="rvvo">
-		select * from m_review where mid = #{mid} and writer = #{writer}
+	<select id="selectOneMovieReview"  resultType="rvdto">
+		select mr.mid , mr.writer , mr.reg_at , mr.mod_at , mr.content , u.profile_img , u.font_color 
+		from m_review mr  left join `user` u on mr.writer = u.email 
+		where mid = #{mid} and writer = #{writer}
+		
 	</select>
 	
 	<insert id="insertMovieReview" parameterType="rvvo">

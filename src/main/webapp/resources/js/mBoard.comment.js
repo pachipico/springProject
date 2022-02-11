@@ -1,3 +1,7 @@
+document.addEventListener('DOMContentLoaded', ()=>{
+    getCmtList(mbIdVal);
+});
+
 async function postCmtToServ(cmtData) {
     try {
         const url = '/mComment/post';
@@ -25,7 +29,7 @@ document.getElementById('cmtPostBtn').addEventListener('click',()=>{
     }else{
         let cmtData = {
             mbId: mbIdVal,
-            writer: document.getElementById('cmtWriter').innerText,
+            writer: document.getElementById('cmtWriter').value,
             content: cmtText.value
         };
         postCmtToServ(cmtData).then(result =>{
@@ -50,41 +54,59 @@ async function printCmtFromServ(mbId, page){
 function printPage(prev, startPage, pgvo, endPage, next){
     let pgn = document.getElementById('cmtPaging');
     pgn.innerHTML = '';
-    let ul = `<ul>`;
+    let ul = `<ul class="pagination justify-content-center">`;
     if(prev){
-        ul += `<li><a href="${startPage-1}">이전</a></li>`;
+        ul += `<li class="page-item"><a class="page-link" href="${startPage-1}">이전</a></li>`;
     }
     for (let i = startPage; i <= endPage; i++) {
-        ul += `<li class="${pgvo.pageNo == i ? 'active' : ''}">
-            <a href="${i}>${i}</a></li>`;
+        ul += `<li class="page-item ${pgvo.pageNo == i ? 'active' : ''}" aria-current="page">`;
+        ul += `<a class="page-link" href="${i}>${i}</a></li>`;
     }
     if(next){
-        ul += `<li><a href="${endPage + 1}">다음</a></li>`;
+        ul += `<li class="page-item"><a class="page-link" href="${endPage + 1}">다음</a></li>`;
     }
     ul += `</ul>`;
     pgn.innerHTML = ul;
 }
 
+async function printProfileImg(email){
+    try {
+        const resp = await fetch('/user/profileImg/' + email);
+        const result = await resp.text();
+        return result;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 function getCmtList(mbId, page=1){
     printCmtFromServ(mbId, page).then(result =>{
-        const ul = document.getElementById('cmtListArea');
+        const div = document.getElementById('cmtListArea');
         if(result.cmtListM.length){
-            ul.innerHTML = "";
+            div.innerHTML = "";
 
             for (let mcvo of result.cmtListM) {
-                let li = `<li data-mCid="${mcvo.mcId}">`;
-                    li += `<div><div class="profileImg"><img src="유저프로필이미지"></div>${mcvo.content}</div>`;
-                    li += `<span>${mcvo.writer}</span><span>${mcvo.heart}</span><span>${mcvo.modAt}</span>`;
-                // if(mcvo.writer == ses.email){
-                    li += `<button type="button" class="mod">e</button><button type="button" class="del">x</button>`;
-                // }
-                li += `</li>`;
-                ul.innerHTML += li;
+                printProfileImg(mcvo.writer).then(result =>{
+                    let li = `<div data-mcid="${mcvo.mcId}" class="cmtBox">`;
+                    li += `<div class="d-flex p-2">
+                    <div class="flex-shrink-0 bg-light"><img class="rounded-circle" src="${result}"></div>`;
+                    li += `<div class="ms-3 cmtContBox">
+                    <div class="fw-bold cmtWir">${mcvo.writer}</div>
+                    <div class="cmtDate">${mcvo.modAt}</div>
+                    <div class="cmtCont">${mcvo.content}</div></div>`;
+                    if(mcvo.writer == authEmail){
+                        li += `<div style="width: 70px; float: right"><button type="button" class="mod bg-light" data-bs-toggle="modal" data-bs-target="#myModal">
+                        <i class="fas fa-pencil-alt"></i></button>
+                        <button type="button" class="del bg-light"><i class="far fa-trash-alt"></i></button></div>`;
+                    }
+                    li += `</div></div>`;
+                    div.innerHTML += li;
+                });
             }
             printPage(result.prev, result.startPage, result.pgvo, result.endPage, result.next);
         }else{
-            let li = `<li>댓글 없음</li>`;
-            ul.innerHTML += li;
+            let li = `<div>댓글 없음</div>`;
+            div.innerHTML += li;
         }
     });
 }
@@ -123,20 +145,20 @@ async function editCmtToServ(cmtDataMod){
 
 document.addEventListener('click', (e) =>{
     if(e.target.classList.contains('del')){
-        let li = e.target.closest('li');
-        let mcIdVal = li.dataset.mcId;
+        let cmtBox = e.target.closest('.cmtBox');
+        let mcIdVal = cmtBox.dataset.mcid;
         eraseCmtAtServ(mcIdVal).then(result => {
             alert('댓글 삭제 성공');
             getCmtList(mcIdVal);
         });
     }else if(e.target.classList.contains('mod')){
-        let li = e.target.closest('li');
-        let cmtText = li.querySelector('.profileImg').nextSibling;
-        document.getElementById('cmtTextMod').value = cmtText.nodeValue;
-        document.getElementById('cmtModBtn').setAttribute('data-mcId', li.dataset.mcId);
+        let cmtBox = e.target.closest('.cmtBox');
+        let cmtCont = cmtBox.querySelector('.cmtCont').innerText;
+        document.getElementById('cmtTextMod').value = cmtCont;
+        document.getElementById('cmtModBtn').setAttribute('data-mcid', cmtBox.dataset.mcid);
     }else if(e.target.id == 'cmtModBtn'){
         let cmtDataMod = {
-            mCid: e.target.dataset.mCid,
+            mcId: e.target.dataset.mcid,
             content: document.getElementById('cmtTextMod').value
         };
         editCmtToServ(cmtDataMod).then(result =>{

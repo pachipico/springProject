@@ -25,4 +25,7 @@ public class TvBoardVO {
 	private int readCount;
 	private String heart;
 	private String poster;
+	private String tvTitle;
+	private String regDate;
+	private int cmt_qty;
 }

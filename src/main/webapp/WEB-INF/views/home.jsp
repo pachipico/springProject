@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="/resources/css/home.css"/>
   <div class="searchDiv">
       <form action="/search/movie" method="get" id="searchForm">
-        <input type="text" name="searchInput" id="searchInput" placeholder="Search..." />
-        <input type="submit" name="searchBtn" id="searchBtn" />
+        <input type="text" name="query" id="searchInput" placeholder="Search..." />
+        <button type="submit"  id="searchBtn">검색</button>
       </form>
     </div>
     <div id="homeContainer">
@@ -27,6 +27,27 @@
             </a>
             <div class="cardDesc">
               <div class="cardTitle"><a href="/movie/detail/${ratingmovie.mid }">${ratingmovie.title }</a></div>
+            </div>
+          </div>          
+        </c:forEach>
+        </div>
+      </div>
+      <!--  -->
+      <div class="trending">
+        <div class="listName">
+          <span>즐겨찾기 순 영화</span>
+        </div>
+        <div  class="cardContainer">
+        <c:forEach items="${likeRank }" var="likedmovie">
+          <div class="movieCard">
+            <a href="/movie/detail/${likedmovie.mid}">
+           <img
+                src="https://themoviedb.org/t/p/w220_and_h330_face${likedmovie.poster }"
+                alt=""
+              /> 
+            </a>
+            <div class="cardDesc">
+              <div class="cardTitle"><a href="/movie/detail/${likedmovie.mid }">${likedmovie.title }</a></div>
             </div>
           </div>          
         </c:forEach>
