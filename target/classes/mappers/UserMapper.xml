@@ -124,6 +124,28 @@
 		order by email, rating
 	</select>
 	
+	<!-- 시청한 장르 가져오기 -->
+	
+	<select id="selectUserMovieWatchedList" parameterType="string" resultType="mvvo">
+		SELECT m.title , m.genres 
+		from m_rating mr left join movie m on mr.mid = m.mid 
+		where mr.email = #{email}
+		union
+		select m.title, m.genres 
+		from m_review mr left join movie m on mr.mid = m.mid 
+		where mr.writer = #{email}
+	</select>
+	
+	<select id="selectUserTVWatchedList" parameterType="string" resultType="tvvo">
+		select t.title , t.genres 
+		from tv_rating tr left join tv t on tr.tvid = t.tvid 
+		where tr.email = #{email}
+		union
+		select t.title, t.genres 
+		from tv_review tr left join tv t on tr.tvid = t.tvid 
+		where tr.writer = #{email}
+	</select>
+	
 	<update id="updatePwd">
 		update user set pwd = #{pwd} where email = #{email}
 	</update>

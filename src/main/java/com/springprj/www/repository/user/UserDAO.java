@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.springprj.www.domain.movietv.MovieVO;
+import com.springprj.www.domain.movietv.TVVO;
 import com.springprj.www.domain.user.UserRateData;
 import com.springprj.www.security.AuthVO;
 import com.springprj.www.security.UserVO;
@@ -22,6 +24,9 @@ public interface UserDAO {
 	Double selectUserTVAvgRating(String email);
 	List<UserRateData> selectUserMovieRateData(String email); // 유저 평점 분포
 	List<UserRateData> selectUserTVRateData(String email);
+	List<MovieVO> selectUserMovieWatchedList(String email);
+	List<TVVO> selectUserTVWatchedList(String email);
+	
 	
 	List<UserVO> selectUserList(String sortBy);
 	List<AuthVO> selectAuths(String email);

@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.springprj.www.domain.user.UserRateData;
 import com.springprj.www.handler.RateDataHandler;
+import com.springprj.www.handler.WatchedMovieDataHandler;
+import com.springprj.www.handler.WatchedTVDataHandler;
 import com.springprj.www.security.AuthVO;
 import com.springprj.www.security.UserVO;
 
@@ -23,6 +25,8 @@ public interface UserService {
 	Double getUsersAvgMovieRating(String email);
 	RateDataHandler getUsersMovieRateData(String email); // 유저 평점 분포 	
 	RateDataHandler getUsersTVRateData(String email); // 유저 평점 분포 	
+	WatchedMovieDataHandler getUsersWatchedMovieGenres(String email);
+	WatchedTVDataHandler getUsersWatchedTVGenres(String email);
 	
 //	int updateUser(UserVO uvo); // 한꺼번에 묶을수 있으면 묶는쪽으로..
 	

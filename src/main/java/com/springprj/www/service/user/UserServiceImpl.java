@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springprj.www.domain.user.UserRateData;
 import com.springprj.www.handler.RateDataHandler;
+import com.springprj.www.handler.WatchedMovieDataHandler;
+import com.springprj.www.handler.WatchedTVDataHandler;
 import com.springprj.www.repository.user.UserDAO;
 import com.springprj.www.security.AuthVO;
 import com.springprj.www.security.UserVO;
@@ -123,6 +125,19 @@ public class UserServiceImpl implements UserService {
 		return new RateDataHandler(udao.selectUserTVRateData(email));
 	}
 
+	// 유저가 본 영화 장르들
+	
+	@Override
+	public WatchedMovieDataHandler getUsersWatchedMovieGenres(String email) {
+		
+		return new WatchedMovieDataHandler(udao.selectUserMovieWatchedList(email));
+	}
+
+	@Override
+	public WatchedTVDataHandler getUsersWatchedTVGenres(String email) {
+		
+		return new WatchedTVDataHandler(udao.selectUserTVWatchedList(email));
+	}
 	
 	@Override
 	public int updateUserNickName(String email,  String nickName) {
@@ -132,6 +147,8 @@ public class UserServiceImpl implements UserService {
 			return 0;
 		}
 	}
+
+
 
 	@Override
 	public int updateUserPwd(String email, String pwd) {

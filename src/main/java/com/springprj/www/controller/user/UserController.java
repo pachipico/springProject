@@ -156,11 +156,15 @@ public class UserController {
 		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
 		model.addAttribute("tReviewCnt", tsv.getUserReviewdList(email).size());
 
-		log.debug("{}'s 영화 평점분포: {}", email, usv.getUsersMovieRateData(email));
-		log.debug("{}'s TV 평점분포: {}", email, usv.getUsersTVRateData(email));
-
-			model.addAttribute("mRateData", usv.getUsersMovieRateData(email));
-			model.addAttribute("tRateData", usv.getUsersTVRateData(email));
+		
+		try {
+			model.addAttribute("movieGenres", mapper.writeValueAsString(usv.getUsersWatchedMovieGenres(email)));
+			model.addAttribute("tvGenres", mapper.writeValueAsString(usv.getUsersWatchedTVGenres(email)));
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		model.addAttribute("mRateData", usv.getUsersMovieRateData(email));
+		model.addAttribute("tRateData", usv.getUsersTVRateData(email));
 
 		return "user/detail";
 	}

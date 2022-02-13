@@ -148,6 +148,17 @@
 		let mReviewedCnt = `<c:out value="${mReviewedCnt}" />` 
 		let tReviewedCnt = `<c:out value="${tReviewedCnt}" />` 
     </script>
+    <c:if test="${!empty movieGenres }">
+    	<script>
+		let movieGenres = ${movieGenres};
+    	</script>
+    </c:if>
+   	<c:if test="${!empty tvGenres  }">
+   		<script>
+   		
+		let tvGenres = ${tvGenres};
+   		</script>
+   	</c:if>
       <c:choose>
       	<c:when test="${list eq 'liked' }">
       		 <jsp:include page="list/likedList.jsp" />
