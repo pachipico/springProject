@@ -106,6 +106,7 @@ public class MovieController {
 	@PostMapping(value = "/review/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> postReview(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
 		if(dto.getMvvo() != null) {
+			log.debug("=========== register movie :{}", dto.getMvvo());
 			msv.registerMovieIfNotExists(dto.getMvvo());
 		}
 		int isUp = msv.registerReview(dto.getRvvo());
@@ -132,6 +133,7 @@ public class MovieController {
 	@PostMapping(value = "/like/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> postLike(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
 		if(dto.getMvvo() != null) {
+			log.debug("=========== register movie :{}", dto.getMvvo());
 			msv.registerMovieIfNotExists(dto.getMvvo());
 		}
 
@@ -149,6 +151,7 @@ public class MovieController {
 	@PostMapping(value = "/rating/{mid}", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> postRating(@PathVariable("mid") long mid, @RequestBody MovieDTO dto) {
 		if(dto.getMvvo() != null) {
+			log.debug("=========== register movie :{}", dto.getMvvo());
 			msv.registerMovieIfNotExists(dto.getMvvo());
 		}
 

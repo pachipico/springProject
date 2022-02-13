@@ -76,10 +76,10 @@ const drawStar = (target) => {
   document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
 };
 
-const addLike = async (mid, title, poster) => {
+const addLike = async (mid, title, poster, genres) => {
   try {
     const data = {
-      mvvo: { mid, title, poster },
+      mvvo: { mid, title, poster, genres },
       lvo: { mid, email },
     };
     const config = {
@@ -104,7 +104,7 @@ const addLike = async (mid, title, poster) => {
   }
 };
 
-const removeLike = async (mid, title, poster) => {
+const removeLike = async (mid, title, poster, genres) => {
   try {
     const data = {
       mid,
@@ -122,7 +122,7 @@ const removeLike = async (mid, title, poster) => {
       likedList = likedList.filter((each) => each.mid == mid);
       // 즐겨찾기 추가 -> 삭제 구현
       let likeBtn = document.querySelector(`a[data-likeId="${mid}"]`);
-      likeBtn.outerHTML = `<a onclick="addLike('${mid}','${title}','${poster}')" data-likeId="${mid}" class="dropdown-item" href="#">즐겨찾기 추가</a>`;
+      likeBtn.outerHTML = `<a onclick="addLike('${mid}','${title}','${poster}', ${genres})" data-likeId="${mid}" class="dropdown-item" href="#">즐겨찾기 추가</a>`;
     } else {
       alert("즐겨찾기 제거 실패..");
     }
@@ -131,7 +131,7 @@ const removeLike = async (mid, title, poster) => {
   }
 };
 
-const setData = (rating, mid, title, poster) => {
+const setData = (rating, mid, title, poster, genres) => {
   let ratingStar = document.getElementById("ratingStar");
   if (rating != null) {
     ratingStar.value = rating;
@@ -142,7 +142,7 @@ const setData = (rating, mid, title, poster) => {
     document.querySelector(`.star span`).style.width = `${0}%`;
     ratingStar.dataset.status = "reg";
   }
-  movieData = { mid, title, poster };
+  movieData = { mid, title, poster, genres };
   ratingStar.dataset.mid = mid;
 };
 
@@ -192,7 +192,13 @@ const modifyRating = async (mid, email, rating) => {
     const result = await res.text();
     if (result != null || result != "NoData") {
       let rateBtn = document.querySelector(`a[data-ratingId="${mid}"]`);
-      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${movieData.mid}', '${movieData.title}', '${movieData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movieData.mid}" data-status="mod" href="#">평점 수정하기</a>`;
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${movieData.mid}', '${
+        movieData.title
+      }', '${movieData.poster}','${movieData.genres
+        .map((each) => each.id)
+        .join(",")}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+        movieData.mid
+      }" data-status="mod" href="#">평점 수정하기</a>`;
       document.getElementById("modalCloseBtn").click();
       alert("평점 수정 성공");
     } else {
@@ -221,7 +227,9 @@ const removeRating = async (mid, email) => {
       let rateBtn = document.querySelector(`a[data-ratingId="${mid}"]`);
       rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${null}, '${movieData.id}', '${
         movieData.title
-      }', '${movieData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+      }', '${movieData.poster}','${movieData.genres
+        .map((each) => each.id)
+        .join(",")}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
         movieData.id
       }" data-status="reg" href="#">평점 남기기</a>`;
       alert("평점 삭제 성공");
@@ -278,16 +286,36 @@ const renderMovies = async (json, page = 1) => {
             <li>
             ${
               isLiked
-                ? `<a onclick="removeLike('${movie.id}','${movie.title}','${movie.poster_path}')" class="dropdown-item" href="#" data-likeId="${movie.id}">즐겨찾기 해제</a>`
-                : `<a onclick="addLike('${movie.id}','${movie.title}','${movie.poster_path}')" data-likeId="${movie.id}" class="dropdown-item" href="#">즐겨찾기 추가</a>`
+                ? `<a onclick="removeLike('${movie.id}','${movie.title}','${
+                    movie.poster_path
+                  }','${movie.genre_ids.join(",")}')" class="dropdown-item" href="#" data-likeId="${
+                    movie.id
+                  }">즐겨찾기 해제</a>`
+                : `<a onclick="addLike('${movie.id}','${movie.title}','${
+                    movie.poster_path
+                  }','${movie.genre_ids.join(",")}')" data-likeId="${
+                    movie.id
+                  }" class="dropdown-item" href="#">즐겨찾기 추가</a>`
             }
             
             </li>
             <li>
             ${
               isRated != null
-                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${movie.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movie.id}" data-status="mod" href="#">평점 수정하기</a>`
-                : `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${movie.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movie.id}" data-status="reg" href="#">평점 남기기</a>`
+                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${
+                    movie.poster_path
+                  }','${movie.genre_ids.join(
+                    ","
+                  )}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+                    movie.id
+                  }" data-status="mod" href="#">평점 수정하기</a>`
+                : `<a class="dropdown-item" onclick="setData(${isRated}, '${movie.id}', '${movie.title}', '${
+                    movie.poster_path
+                  }','${movie.genre_ids.join(
+                    ","
+                  )}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+                    movie.id
+                  }" data-status="reg" href="#">평점 남기기</a>`
             }
             
             </li>

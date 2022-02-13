@@ -463,8 +463,18 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   getTVDetail().then((result) => {
-    tvData = { tvid: result.id, title: result.name, poster: result.poster_path };
-    movieData = { mid: result.id, title: result.title, poster: result.poster_path }; // 평점, 즐겨찾기, 리뷰 남길때 같이 보내줄 데이터
+    tvData = {
+      tvid: result.id,
+      title: result.name,
+      poster: result.poster_path,
+      genres: result.genres.map((each) => each.id).join(","),
+    };
+    movieData = {
+      mid: result.id,
+      title: result.title,
+      poster: result.poster_path,
+      genres: result.genres.map((each) => each.id).join(","),
+    }; // 평점, 즐겨찾기, 리뷰 남길때 같이 보내줄 데이터
     renderDetail(result);
   });
   getTVData().then((result) => {

@@ -47,7 +47,7 @@ public class MBoardController {
 	}
 	
 	@GetMapping("/likeList")
-	public void likeList(Model model, PagingVO pgvo) {	
+	public void likeList(Model model, PagingVO pgvo) {
 		model.addAttribute("list", mbsv.getLikeList(pgvo));
 		int totalCount = mbsv.getLikeTotalCount(pgvo);
 		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
@@ -56,6 +56,13 @@ public class MBoardController {
 	public void hateList(Model model, PagingVO pgvo) {	
 		model.addAttribute("list", mbsv.getHateList(pgvo));
 		int totalCount = mbsv.getHateTotalCount(pgvo);
+		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
+	}
+	
+	@GetMapping("/relatedMovie")
+	public void relatedMovie(Model model, @RequestParam("tvid")int tvid, PagingVO pgvo) {
+		model.addAttribute("list", mbsv.getRelatedMovieList(pgvo));
+		int totalCount = mbsv.getRelatedTotalCount(tvid, pgvo);
 		model.addAttribute("pgn", new PagingHandler(pgvo, totalCount));
 	}
 	

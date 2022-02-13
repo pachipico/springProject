@@ -28,4 +28,5 @@ public class TvBoardVO {
 	private String tvTitle;
 	private String regDate;
 	private int cmt_qty;
+	private String nickName;
 }

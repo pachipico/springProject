@@ -13,6 +13,9 @@
 		<typeAlias type="com.springprj.www.security.AuthVO"
 			alias="authVO" />
 		<typeAlias type="com.springprj.www.domain.PagingVO" alias="pgvo"/>
+		<!-- 유저 평점 분포 vo -->
+		<typeAlias type="com.springprj.www.domain.user.UserRateData" alias="urd"/>
+		
 
 		<!-- 영화 tv관련 -->
 		<typeAlias type="com.springprj.www.domain.movietv.ReviewVO"	alias="rvvo" />

@@ -75,5 +75,15 @@ public class TvBoardServiceImpl implements TvBoardService {
 	public int getHateTotalCount(PagingVO pgvo) {
 		return tvbdao.selectOneHateTotalCount(pgvo);
 	}
+	
+	@Override
+	public List<TvBoardVO> getRelatedTvList(PagingVO pgvo) {
+		return tvbdao.relatedTvList(pgvo);
+	}
+
+	@Override
+	public int getRelatedTotalCount(int tvid, PagingVO pgvo) {
+		return tvbdao.selectOneRelatedTotalCount(tvid, pgvo);
+	}
 
 }

@@ -18,7 +18,7 @@
 						</li>
 						<li class="list-group-item">
 							<label for="writer">&nbsp작성자</label>
-							<input type="email" id="email" class="witAlign" name="email" value="${nvo.email }" readOnly>
+							<input type="email" id="email" class="witAlign" name="email" value="${nvo.nickName }" readOnly>
 						</li>
 						<li class="list-group-item">
 							<label for="regAt">등록일자</label>
@@ -42,7 +42,7 @@
 						<textarea name="content" id="content">${nvo.content }</textarea>
 					</li>
 					<li class="list-group-item text-end">
-							<button type="submit" class="btn btn-outline-primary" id="delBtn">수정</button>
+							<button type="submit" class="btn btn-outline-info" id="delBtn">수정</button>
 							<a href="/notice/list" class="btn btn-outline-warning" id="delBtn">취소</a>
 					</li>
 				</ul>

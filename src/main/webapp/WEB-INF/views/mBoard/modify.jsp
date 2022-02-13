@@ -32,7 +32,7 @@
 								</li>
 								<li class="list-group-item">
 									<label for="writer">&nbsp작성자</label>
-									<input type="email" id="writer" class="witAlign" name="writer" value="${mbvo.writer }" readOnly>
+									<input type="email" id="writer" class="witAlign" name="writer" value="${mbvo.nickName }" readOnly>
 								</li>
 								<li class="list-group-item">
 									<label for="modAt">등록일자</label>
@@ -54,7 +54,7 @@
 						<textarea name="content" id="content">${mbvo.content }</textarea>
 					</li>
 					<li class="list-group-item text-end">
-						<button type="submit" class="btn btn-outline-primary">수정</button>
+						<button type="submit" class="btn btn-outline-info">수정</button>
 						<a href="/mBoard/detail?mbId=${mbvo.mbId }&authEmail=${authEmail }&pageNo=${pgvo.pageNo}&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}" class="btn btn-outline-warning">취소</a>
 					</li>
 				</ul>

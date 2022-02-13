@@ -36,10 +36,16 @@
 		<if test="poster != null">
 		 , poster
 		</if>
+		<if test="genres != null">
+		,genres
+		</if>
 		 )
 		values(#{tvid}, #{title}
 		<if test="poster != null">
 		 , #{poster}
+		</if>
+		<if test="genres != null">
+		,#{genres}
 		</if>
 		 )
 	</insert>

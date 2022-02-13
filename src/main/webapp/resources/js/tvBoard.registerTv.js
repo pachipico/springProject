@@ -34,7 +34,7 @@ function showTvs(result){
             <div class="card-body">
             <div class="card-title cTitle">${name}</div>
             <div class="card-text rDate">평점 <span class="vote${rateColor(vote_average)}">${vote_average}</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${first_air_date}</div>
-            <div class="btnAlign"><button type="submit" class="btn btn-outline-primary" id="tvSelctBtn">선택</button></div>
+            <div class="btnAlign"><button type="submit" class="btn btn-outline-info" id="tvSelctBtn">선택</button></div>
             </div>
             </div>
             </form>`;

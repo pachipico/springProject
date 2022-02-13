@@ -14,7 +14,7 @@
 				<div class="form-outline">
 					<input type="text" class="form-control" placeholder="search" id="search">
 				</div>
-				<button type="button" class="btn btn-secondary" id="searchBtn">검색</button>
+				<button type="button" class="btn btn-info" id="searchBtn">검색</button>
 			</div>
 		</div>
 	</div>

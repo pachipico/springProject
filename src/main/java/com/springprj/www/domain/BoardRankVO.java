@@ -12,7 +12,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BoardRankVO {
-	private String email;
+	private String profileImg;
 	private String nickName;
 	private int readCount;
+	private String regAt;
 }

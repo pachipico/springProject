@@ -28,4 +28,5 @@ public class MBoardVO {
 	private String movieTitle;
 	private String regDate;
 	private int cmt_qty;
+	private String nickName;
 }

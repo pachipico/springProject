@@ -14,7 +14,7 @@
 	<div class="wrapper">
 		<div class="title">영화 감상평
 			<c:if test="${authEmail != null }">
-				<a href="/mBoard/registerMovie" class="btn btn-outline-primary">등록</a>
+				<a href="/mBoard/registerMovie" class="btn btn-outline-info">등록</a>
 			</c:if>
 		</div>
 		<div class="searchBar">
@@ -37,20 +37,20 @@
 						<input type="hidden" name="pageNo" value="1">
 						<input type="hidden" name="qty" value="${pgn.pgvo.qty }">
 					</div>
-					<button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+					<button type="submit" class="btn btn-info"><i class="fas fa-search"></i></button>
 				</div>
 			</form>
 		</div>
 	
 		<div class="likeHateText">
-			<a href="/mBoard/likeList" style="color: blue; text-decoration: underline; font-weight: bold;">재밌어요</a>
+			<a href="/mBoard/likeList" style="color: rgb(91, 189, 250); text-decoration: underline; font-weight: bold;">재밌어요</a>
 			/
 			<a href="/mBoard/hateList">재미없어요</a>
 		</div>
 	
 		<table class="table table-hover text-center fs-5 align-middle">
 			<thead>
-				<tr class="bg-light">
+				<tr class="boardTr">
 					<th scope="col">포스터</th>
 					<th scope="col">제목</th>
 					<th scope="col">좋아요</th>
@@ -72,7 +72,7 @@
 						<td>
 							<div class="dropdown">
 							  <a href="" id="uDetail" data-bs-toggle="dropdown" aria-expanded="false">
-							    ${mbvo.writer }
+							    ${mbvo.nickName }
 							  </a>
 							  <ul class="dropdown-menu" aria-labelledby="uDetail">
 							    <li><a href="/user/${mbvo.writer }" class="dropdown-item">정보 보기</a></li>

@@ -58,7 +58,7 @@
 						<textarea name="content" id="content" placeholder="내용을 적으세요." required></textarea>
 					</li>
 					<li class="list-group-item text-end">
-						<button id="regBtn" type="submit" class="btn btn-outline-primary" disabled>등록</button>
+						<button id="regBtn" type="submit" class="btn btn-outline-info" disabled>등록</button>
 					</li>
 				</ul>
 			</div>

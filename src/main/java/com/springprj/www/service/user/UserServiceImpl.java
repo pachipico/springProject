@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.springprj.www.domain.user.UserRateData;
+import com.springprj.www.handler.RateDataHandler;
 import com.springprj.www.repository.user.UserDAO;
 import com.springprj.www.security.AuthVO;
 import com.springprj.www.security.UserVO;
@@ -107,7 +109,21 @@ public class UserServiceImpl implements UserService {
 
 		return udao.selectPoint(email);
 	}
+	
+	
+	// 유저 평점 분포
+	@Override
+	public RateDataHandler getUsersMovieRateData(String email) {
+		
+		return new RateDataHandler(udao.selectUserMovieRateData(email));
+	}
+	@Override
+	public RateDataHandler getUsersTVRateData(String email) {
+		
+		return new RateDataHandler(udao.selectUserTVRateData(email));
+	}
 
+	
 	@Override
 	public int updateUserNickName(String email,  String nickName) {
 		if (udao.selectOneUserByEmail(email) != null) {

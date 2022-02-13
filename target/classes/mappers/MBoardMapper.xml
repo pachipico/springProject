@@ -29,7 +29,7 @@
 		</if>
 	</sql>
 	<select id="selectLikeListMBoardPaging" parameterType="pgvo" resultType="mbvo">
-		select b.mb_id, b.title, writer, mod_at, read_count, poster, movie_title, reg_date, cmt_qty,
+		select b.mb_id, b.title, writer, mod_at, read_count, poster, movie_title, reg_date, cmt_qty, u.nick_name,
 		(select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
 		from (
 			select mb_id from m_board
@@ -39,18 +39,22 @@
 			limit #{pageStart}, #{qty}
 		) a left join m_board b
 		on a.mb_id = b.mb_id
+		left join user u
+		on b.writer = u.email
 	</select>
 	<select id="selectHateListMBoardPaging" parameterType="pgvo" resultType="mbvo">
-		select b.mb_id, b.title, writer, mod_at, read_count, poster, movie_title, reg_date, cmt_qty,
-		(select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
-		from (
-			select mb_id from m_board
-			where like_hate = 0
-			<include refid="search"></include>
-			order by mb_id desc
-			limit #{pageStart}, #{qty}
-		) a left join m_board b
-		on a.mb_id = b.mb_id
+		select b.mb_id, b.title, writer, mod_at, read_count, poster, movie_title, reg_date, cmt_qty, u.nick_name,
+      (select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
+      from (
+         select mb_id from m_board
+         where like_hate = 0
+         <include refid="search"></include>
+         order by mb_id desc
+         limit #{pageStart}, #{qty}
+      ) a left join m_board b
+      on a.mb_id = b.mb_id
+      left join user u
+      on b.writer = u.email
 	</select>
 	<update id="updateMBoard" parameterType="mbvo">
 		update m_board set
@@ -58,7 +62,10 @@
 		where mb_id = #{mbId}
 	</update>
 	<select id="selectOneMBoard" parameterType="long" resultType="mbvo">
-		select * from m_board where mb_id = #{mbId}
+		select mb_id, title, writer, mod_at, content, poster, movie_title, reg_date, mid, u.nick_name 
+		from m_board m left join user u
+		on m.writer = u.email
+		where mb_id = #{mbId}
 	</select>
 	<delete id="deleteMBoard" parameterType="long">
 		delete from m_board where mb_id = #{mbId}
@@ -77,8 +84,8 @@
 	<update id="updateMBoardCmtQty">
 		update m_board set cmt_qty = cmt_qty + #{cnt} where mb_id = #{mbId}
 	</update>
-	<select id="realtedMovieList" parameterType="pgvo" resultType="mbvo">
-		select b.mb_id, b.title, writer, mod_at, read_count, mid, poster, movie_title, reg_date, cmt_qty,
+	<select id="relatedMovieList" parameterType="pgvo" resultType="mbvo">
+		select b.mb_id, b.title, writer, mod_at, read_count, mid, poster, movie_title, reg_date, cmt_qty, u.nick_name,
 		(select count(*) from m_heart h where h.mb_id = b.mb_id) as heart
 		from (
 			select mb_id from m_board
@@ -87,5 +94,11 @@
 			limit #{pageStart}, #{qty}
 		) a left join m_board b
 		on a.mb_id = b.mb_id
+		left join user u
+		b.writer = u.email
+	</select>
+	<select id="selectOneRelatedTotalCount" resultType="int">
+		select count(mb_id) from m_board where mid = #{mid}
+		<include refid="search"></include>
 	</select>
 </mapper>

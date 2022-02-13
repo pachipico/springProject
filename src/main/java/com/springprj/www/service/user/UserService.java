@@ -2,6 +2,8 @@ package com.springprj.www.service.user;
 
 import java.util.List;
 
+import com.springprj.www.domain.user.UserRateData;
+import com.springprj.www.handler.RateDataHandler;
 import com.springprj.www.security.AuthVO;
 import com.springprj.www.security.UserVO;
 
@@ -19,6 +21,8 @@ public interface UserService {
 	int getUsersCurrPoints(String email); //현존 포인트 반환
 	Double getUsersAvgTVRating(String email);
 	Double getUsersAvgMovieRating(String email);
+	RateDataHandler getUsersMovieRateData(String email); // 유저 평점 분포 	
+	RateDataHandler getUsersTVRateData(String email); // 유저 평점 분포 	
 	
 //	int updateUser(UserVO uvo); // 한꺼번에 묶을수 있으면 묶는쪽으로..
 	

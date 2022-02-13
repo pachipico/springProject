@@ -36,6 +36,10 @@
 	if(email != null && email != ""){
 		alert(`회원님의 이메일은 ${email} 입니다.`);
 	}
+  let errMsg = `<c:out value="${errMsg}" />`;
+	if(errMsg != null && errMsg != ''){
+		alert(errMsg);
+	}
   </script>
 </html>
 

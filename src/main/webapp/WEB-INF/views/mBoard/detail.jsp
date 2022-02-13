@@ -30,7 +30,7 @@
 							</li>
 							<li class="list-group-item">
 								<label for="writer">&nbsp작성자</label>
-								<input type="email" id="writer" class="witAlign" name="writer" value="${mbvo.writer }" readOnly>
+								<input type="email" id="writer" class="witAlign" name="writer" value="${mbvo.nickName }" readOnly>
 							</li>
 							<li class="list-group-item">
 								<label for="modAt">등록일자</label>
@@ -57,7 +57,7 @@
 				<input type="hidden" name="heartCheck" id="heartCheck" value="${mbdto.check }">
 				<input type="hidden" name="authEmail" id="authEmail" value="${authEmail }">
 					<c:choose>
-						<c:when test="${authEmail == mbvo.writer }">
+						<c:when test="${authEmail == mbvo.nickName }">
 							<button type="button" class="hBtn" id="heartList">♡</button>
 						</c:when>
 						<c:when test="${authEmail != null && mbdto.check == 1 }">
@@ -76,7 +76,7 @@
 			</ul>
 		</div>
 		<div class="btnBox mb-3">
-			<a class="btn btn-outline-primary" href="/mBoard/${mbvo.likeHate == 1 ? 'like' : 'hate' }List?pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">목록</a>
+			<a class="btn btn-outline-info" href="/mBoard/${mbvo.likeHate == 1 ? 'like' : 'hate' }List?pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">목록</a>
 			<c:if test="${mbvo.writer eq authEmail }">
 				<div class="editBox">
 					<a class="btn btn-outline-warning" href="/mBoard/modify?mbId=${mbvo.mbId }&authEmail=${authEmail }&pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">수정</a>
@@ -93,7 +93,7 @@
 						<div class="form-outline">
 							<input type="text" class="form-control" id="cmtText" placeholder="댓글을 입력해주세요.">
 						</div>
-							<button type="button" class="btn btn-primary" id="cmtPostBtn">게시</button>
+							<button type="button" class="btn btn-info" id="cmtPostBtn">게시</button>
 					</div>
 				</c:when>
 				<c:otherwise>

@@ -21,4 +21,5 @@ public class NoticeVO {
 	private String regAt;
 	private String modAt;
 	private int readCount;
+	private String nickName;
 }

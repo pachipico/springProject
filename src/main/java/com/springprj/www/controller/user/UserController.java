@@ -56,7 +56,7 @@ public class UserController {
 
 	@Inject
 	private TVService tsv;
-	
+
 	@Inject
 	private BCryptPasswordEncoder bcpEncoder;
 
@@ -65,7 +65,7 @@ public class UserController {
 
 	@Inject
 	private ProfileImgHandler phd;
-	
+
 	@GetMapping("/register")
 	public void register() {
 	}
@@ -78,17 +78,17 @@ public class UserController {
 		return "redirect:/user/login";
 	}
 
-	@PostMapping(value = "/email", consumes = "application/json",produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> availableEmailCheck(@RequestBody Map<String, String> data){
-		
+	@PostMapping(value = "/email", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> availableEmailCheck(@RequestBody Map<String, String> data) {
+
 		return new ResponseEntity<String>(usv.getUserDetail(data.get("email")) == null ? "1" : "0", HttpStatus.OK);
 	}
-	
-	@PostMapping(value = "/nickName", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> availableNickNameCheck(@RequestBody Map<String, String> data){
-		return new ResponseEntity<String>(usv.checkValidNickName(data.get("nickName"))  ? "1" : "0", HttpStatus.OK);
+
+	@PostMapping(value = "/nickName", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> availableNickNameCheck(@RequestBody Map<String, String> data) {
+		return new ResponseEntity<String>(usv.checkValidNickName(data.get("nickName")) ? "1" : "0", HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/findId")
 	public void findId() {
 	}
@@ -104,13 +104,13 @@ public class UserController {
 	}
 
 	@PostMapping("findPwd")
-	public String findPwd(String email, String name, String nickName,String pwd, RedirectAttributes reAttr) {
+	public String findPwd(String email, String name, String nickName, String pwd, RedirectAttributes reAttr) {
 		UserVO uvo = usv.getUserDetail(email);
 		int isMatch = 1;
 		isMatch *= uvo.getEmail().equals(email) ? 1 : 0;
 		isMatch *= uvo.getName().equals(name) ? 1 : 0;
 		isMatch *= uvo.getNickName().equals(nickName) ? 1 : 0;
-		if(isMatch > 0) {
+		if (isMatch > 0) {
 			isMatch *= usv.updateUserPwd(email, bcpEncoder.encode(pwd));
 		}
 		reAttr.addFlashAttribute("isUp", isMatch);
@@ -120,10 +120,10 @@ public class UserController {
 	@GetMapping("/login")
 	public void login() {
 	}
-	
+
 	@PostMapping("/login")
 	public String login(HttpServletRequest request, RedirectAttributes reAttr) {
-		
+
 		reAttr.addFlashAttribute("email", request.getAttribute("email"));
 		reAttr.addFlashAttribute("errMsg", request.getAttribute("errMsg"));
 		return "redirect:/user/login";
@@ -132,38 +132,47 @@ public class UserController {
 	@PostMapping("/logout")
 	public String logout(String email, HttpSession session) {
 		session.invalidate();
-		
+
 		return "redirect:/user/login";
 	}
 
 	@GetMapping("/{email}")
-	public String detail(HttpSession session, Model model, @PathVariable("email") String email, RedirectAttributes reAttr) {
+	public String detail(HttpSession session, Model model, @PathVariable("email") String email,
+			RedirectAttributes reAttr) {
+		ObjectMapper mapper = new ObjectMapper();
 		log.debug("{}'s main detail page", email);
-		if(usv.getUserDetail(email) == null) {
+		if (usv.getUserDetail(email) == null) {
 			return "error/noUser";
 		}
 		model.addAttribute("list", "main");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
-		
+
 		model.addAttribute("mLikedCnt", msv.getUserLikedList(email).size());
 		model.addAttribute("tLikedCnt", tsv.getUserLikedList(email).size());
 		model.addAttribute("mRatedCnt", msv.getUserRatedList(email).size());
 		model.addAttribute("tRatedCnt", tsv.getUserRatedList(email).size());
 		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
 		model.addAttribute("tReviewCnt", tsv.getUserReviewdList(email).size());
-		
+
+		log.debug("{}'s 영화 평점분포: {}", email, usv.getUsersMovieRateData(email));
+		log.debug("{}'s TV 평점분포: {}", email, usv.getUsersTVRateData(email));
+
+			model.addAttribute("mRateData", usv.getUsersMovieRateData(email));
+			model.addAttribute("tRateData", usv.getUsersTVRateData(email));
+
 		return "user/detail";
 	}
 
-	@GetMapping(value = {"/{email}/likedList", "/{email}/likedList/{tv}"})
-	public String likedList(@PathVariable(name = "email") String email, @PathVariable(name = "tv", required = false) String tv, Model model) {
+	@GetMapping(value = { "/{email}/likedList", "/{email}/likedList/{tv}" })
+	public String likedList(@PathVariable(name = "email") String email,
+			@PathVariable(name = "tv", required = false) String tv, Model model) {
 		ObjectMapper mapper = new ObjectMapper();
-		if(usv.getUserDetail(email) == null) {
+		if (usv.getUserDetail(email) == null) {
 			return "error/noUser";
 		}
-		model.addAttribute("platform" , tv != null ? "tv" : "movie");
+		model.addAttribute("platform", tv != null ? "tv" : "movie");
 		model.addAttribute("list", "liked");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
@@ -178,22 +187,23 @@ public class UserController {
 		}
 		return "user/detail";
 	}
-	
-	@GetMapping(value = {"/{email}/ratedList", "/{email}/ratedList/{tv}"})
-	public String ratedList(@PathVariable(name = "email") String email,@PathVariable(name = "tv", required = false) String tv , Model model) {
+
+	@GetMapping(value = { "/{email}/ratedList", "/{email}/ratedList/{tv}" })
+	public String ratedList(@PathVariable(name = "email") String email,
+			@PathVariable(name = "tv", required = false) String tv, Model model) {
 		ObjectMapper mapper = new ObjectMapper();
-		if(usv.getUserDetail(email) == null) {
+		if (usv.getUserDetail(email) == null) {
 			return "error/noUser";
 		}
-		model.addAttribute("platform" , tv != null ? "tv" : "movie");
+		model.addAttribute("platform", tv != null ? "tv" : "movie");
 		model.addAttribute("list", "rated");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
 		model.addAttribute("mRatedCnt", msv.getUserRatedList(email).size());
 		model.addAttribute("tRatedCnt", tsv.getUserRatedList(email).size());
-		
-		//영화 id 리스트를 자바스크립트로 주면, 자바스크립트에서 각각 getDetail로 정보 받아오기..?
+
+		// 영화 id 리스트를 자바스크립트로 주면, 자바스크립트에서 각각 getDetail로 정보 받아오기..?
 		// 받아온 영화 리스트에 좋아요여부를 어떻게 넣을지..?
 		try {
 			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserRatedList(email)));
@@ -203,21 +213,22 @@ public class UserController {
 		}
 		return "user/detail";
 	}
-	@GetMapping(value = {"/{email}/reviewedList", "/{email}/reviewedList/{tv}"})
-	public String reviewedList(@PathVariable(name = "email") String email, @PathVariable(name = "tv", required = false) String tv, Model model) {
-		ObjectMapper mapper = new  ObjectMapper();
-		if(usv.getUserDetail(email) == null) {
+
+	@GetMapping(value = { "/{email}/reviewedList", "/{email}/reviewedList/{tv}" })
+	public String reviewedList(@PathVariable(name = "email") String email,
+			@PathVariable(name = "tv", required = false) String tv, Model model) {
+		ObjectMapper mapper = new ObjectMapper();
+		if (usv.getUserDetail(email) == null) {
 			return "error/noUser";
 		}
-		model.addAttribute("platform" , tv != null ? "tv" : "movie");
+		model.addAttribute("platform", tv != null ? "tv" : "movie");
 		model.addAttribute("list", "reviewed");
 		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
 		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
 		model.addAttribute("uvo", usv.getUserDetail(email));
 		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
 		model.addAttribute("tReviewedCnt", tsv.getUserReviewdList(email).size());
-		
-		
+
 		try {
 			model.addAttribute("moviesData", mapper.writeValueAsString(msv.getUserReviewedList(email)));
 			model.addAttribute("tvsData", mapper.writeValueAsString(tsv.getUserReviewdList(email)));
@@ -226,47 +237,48 @@ public class UserController {
 		}
 		return "user/detail";
 	}
-	
+
 	@GetMapping("/{email}/modify")
-	public String modify(@PathVariable("email") String email, Model model) { 
-		
+	public String modify(@PathVariable("email") String email, Model model) {
+
 		model.addAttribute("uvo", usv.getUserDetail(email));
-		model.addAttribute("purchased",ssv.getList());
+		model.addAttribute("purchased", ssv.getList());
 		return "user/modify";
 	}
-	
+
 	@GetMapping("/modify/nickName")
 	public String modifyNickName(Principal principal, Model model) {
-		model.addAttribute("uvo",usv.getUserDetail(principal.getName()));
+		model.addAttribute("uvo", usv.getUserDetail(principal.getName()));
 		return "user/changeNickName";
 	}
 
 	@PostMapping("/modify/nickName")
-	public String modifyEmail (String email, String nickName,String pwd, RedirectAttributes reAttr) {
+	public String modifyEmail(String email, String nickName, String pwd, RedirectAttributes reAttr) {
 		int isUp = 0;
-		if(bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
+		if (bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
 			isUp = usv.updateUserNickName(email, nickName);
 		}
 		reAttr.addFlashAttribute("isUp", isUp);
-		return "redirect:/user/"+ email+"/modify";
+		return "redirect:/user/" + email + "/modify";
 	}
 
 	@GetMapping("/modify/pwd")
 	public String modifyPwd(Principal principal, Model model) {
-		if(principal != null) {
+		if (principal != null) {
 			String email = principal.getName();
-			model.addAttribute("email",email);			
+			model.addAttribute("email", email);
 		}
-		
+
 		return "user/changePassword";
 	}
 
 	@PostMapping("/modify/pwd")
-	public String modifyPwd(HttpServletRequest request, HttpServletResponse response, Authentication authentication, String email, String pwd, String newPwd, RedirectAttributes reAttr) {
+	public String modifyPwd(HttpServletRequest request, HttpServletResponse response, Authentication authentication,
+			String email, String pwd, String newPwd, RedirectAttributes reAttr) {
 		int isUp = 0;
-		if(bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
+		if (bcpEncoder.matches(pwd, usv.getUserDetail(email).getPwd())) {
 			isUp = usv.updateUserPwd(email, bcpEncoder.encode(newPwd));
-			if(isUp > 0) {
+			if (isUp > 0) {
 				reAttr.addFlashAttribute("isUp", isUp);
 				new SecurityContextLogoutHandler().logout(request, response, authentication);
 				return "redirect:/user/login";
@@ -275,26 +287,27 @@ public class UserController {
 			reAttr.addFlashAttribute("wrongPwd", "1");
 		}
 		reAttr.addFlashAttribute("isUp", isUp);
-		return "redirect:/user/"+ email + "/modify";
+		return "redirect:/user/" + email + "/modify";
 	}
-	
+
 	@PostMapping("/modify/profileImg")
-	public String modifyProfileImg (String email, String url,@RequestParam("file") MultipartFile file , RedirectAttributes reAttr) {
+	public String modifyProfileImg(String email, String url, @RequestParam("file") MultipartFile file,
+			RedirectAttributes reAttr) {
 		String fileName = phd.uploadFile(file);
 		phd.removeFile(usv.getUserDetail(email).getProfileImg());
 		int isUp = usv.updateUserProfileImg(email, fileName);
 		reAttr.addFlashAttribute("isUp", isUp);
-		return "redirect:/user/"+ email + "/modify"; 
+		return "redirect:/user/" + email + "/modify";
 	}
-	
+
 	@PostMapping("/modify/fontColor")
 	public String modiftFontColor(String email, String color, RedirectAttributes reAttr) {
 		reAttr.addFlashAttribute("isUp", usv.updateUserFontColor(email, color));
 		return "redirect:/user/detail/" + email;
 	}
-	
+
 	@GetMapping("/{email}/setting")
-	public String setting(Model model,@PathVariable("email") String email) {
+	public String setting(Model model, @PathVariable("email") String email) {
 		UserVO uvo = usv.getUserDetail(email);
 		model.addAttribute("uvo", uvo);
 		model.addAttribute("adult", uvo.isAdult());
@@ -303,11 +316,12 @@ public class UserController {
 	}
 
 	@PostMapping("/{email}/setting")
-	public String setting(@PathVariable("email") String email, boolean slang, boolean adult, RedirectAttributes reAttr) {
-		log.debug("{}'s adult setting: {}",email, adult);
+	public String setting(@PathVariable("email") String email, boolean slang, boolean adult,
+			RedirectAttributes reAttr) {
+		log.debug("{}'s adult setting: {}", email, adult);
 		int isSuccess = usv.updateUserSetting(email, slang, adult);
 		reAttr.addFlashAttribute("isSuccess", isSuccess);
-		return "redirect:/user/"+ email + "/setting";
+		return "redirect:/user/" + email + "/setting";
 	}
 
 	@PostMapping(value = "/remove", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
@@ -328,7 +342,7 @@ public class UserController {
 		List<UserVO> list = usv.getUsersList("grade");
 		log.info("userList: {}", list);
 		model.addAttribute("list", list);
-		
+
 	}
 
 	@PostMapping(value = "/modGrade", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
@@ -337,10 +351,10 @@ public class UserController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
- 
 	// 프로필 가져오는 주소
-	@PostMapping(value = "/profileImg/{email}", consumes = "application/json", produces = {MediaType.APPLICATION_JSON_VALUE})
-	   public ResponseEntity<UserVO> profileImgAndNick(@PathVariable("email") String email){
-	      return new ResponseEntity<UserVO>(usv.getUserDetail(email), HttpStatus.OK);
-	   }
+	@PostMapping(value = "/profileImg/{email}", consumes = "application/json", produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<UserVO> profileImgAndNick(@PathVariable("email") String email) {
+		return new ResponseEntity<UserVO>(usv.getUserDetail(email), HttpStatus.OK);
+	}
 }

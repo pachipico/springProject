@@ -8,14 +8,16 @@
 		values (#{email}, #{title}, #{content})
 	</insert>
 	<select id="selectListNotice" resultType="nvo">
-		select a.nid, title, email, mod_at, read_count
-		from (
-			select nid from notice
-			where nid > 0
-			order by nid desc
-			limit #{pageStart}, #{qty}
-		) a left join notice b
-		on a.nid = b.nid
+		select b.nid, title, b.email, mod_at, read_count, u.nick_name
+      from (
+         select nid from notice
+         where nid > 0
+         order by nid desc
+         limit #{pageStart}, #{qty}
+      ) a left join notice b
+      on a.nid = b.nid
+      left join user u
+      on b.email = u.email
 	</select>
 	<update id="updateNotice" parameterType="nvo">
 		update notice set
@@ -23,7 +25,10 @@
 		where nid = #{nid}
 	</update>
 	<select id="selectOneNotice" parameterType="long" resultType="nvo">
-		select * from notice where nid = #{nid}
+		select nid, title, n.email, mod_at, read_count, u.nick_name 
+		from notice n left join user u
+		on n.email = u.email
+		where nid = #{nid}
 	</select>
 	<delete id="deleteNotice" parameterType="long">
 		delete from notice where nid = #{nid}

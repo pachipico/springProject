@@ -12,13 +12,13 @@
 			<sec:authorize access="isAuthenticated()">
 				<sec:authentication property="principal.uvo.authList" var="auths"/>
 				<c:if test="${auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get() }">
-					<a href="/notice/register" class="btn btn-outline-primary">등록</a>
+					<a href="/notice/register" class="btn btn-outline-info">등록</a>
 				</c:if>
 			</sec:authorize>
 		</div>
 		<table class="table table-hover text-center fs-5 align-middle">
 		  <thead>
-		    <tr class="bg-light">
+		    <tr class="boardTr">
 		      <th scope="col">#</th>
 		      <th scope="col">제목</th>
 		      <th scope="col">작성자</th>
@@ -31,7 +31,7 @@
 		    <tr class="tableText">
 		      <th scope="row">${nvo.nid }</th>
 		      <td><a href="/notice/detail?nid=${nvo.nid }&pageNo=${pgn.pgvo.pageNo}&qty=${pgn.pgvo.qty}&type=${pgn.pgvo.type}&keyword=${pgn.pgvo.keyword}">${nvo.title }</a></td>
-		      <td>${nvo.email }</td>
+		      <td>${nvo.nickName }</td>
 		      <td>${nvo.readCount }</td>
 		      <td>${nvo.modAt }</td>
 		    </tr>

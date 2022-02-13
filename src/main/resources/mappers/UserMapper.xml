@@ -78,6 +78,18 @@
 		
 	</select>
 	
+	<resultMap type="com.springprj.www.domain.user.UserRateData" id="userRateData">
+		<result column="rate" property="rate" />
+		
+		
+		
+		
+		
+		
+		
+	</resultMap>
+	
+	
 	<select id="selectAuths" parameterType="string" resultType="authVO">
 		select * from auth_user where email = #{email}
 	</select>
@@ -92,6 +104,24 @@
 	
 	<select id="selectUserMovieAvgRating" parameterType="string" resultType="double">
 		select round(avg(rating), 1) from m_rating where email = #{email}
+	</select>
+	
+	<!-- 평점 분포 -->
+	
+	<select  id="selectUserMovieRateData" parameterType="string" resultType="urd">
+	SELECT rating rate, count(mid) cnt
+	from m_rating mr 
+	where email = #{email}
+	group by rating, email
+	order by email, rating
+	</select>
+	
+	<select id="selectUserTVRateData" parameterType="string" resultType="urd">
+		SELECT rating rate, count(tvid) cnt
+		from tv_rating
+		where email = #{email}
+		group by rating, email
+		order by email, rating
 	</select>
 	
 	<update id="updatePwd">

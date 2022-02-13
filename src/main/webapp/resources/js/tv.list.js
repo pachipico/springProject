@@ -74,10 +74,10 @@ const drawStar = (target) => {
   document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
 };
 
-const addLike = async (tvid, title, poster) => {
+const addLike = async (tvid, title, poster, genres) => {
   try {
     const data = {
-      tvvo: { tvid, title, poster },
+      tvvo: { tvid, title, poster, genres },
       lvo: { tvid, email },
     };
     const config = {
@@ -102,7 +102,7 @@ const addLike = async (tvid, title, poster) => {
   }
 };
 
-const removeLike = async (tvid, name, poster) => {
+const removeLike = async (tvid, name, poster, genres) => {
   try {
     const data = {
       tvid,
@@ -120,7 +120,7 @@ const removeLike = async (tvid, name, poster) => {
       likedList = likedList.filter((each) => each.tvid == tvid);
       // 즐겨찾기 추가 -> 삭제 구현
       let likeBtn = document.querySelector(`a[data-likeId="${tvid}"]`);
-      likeBtn.outerHTML = `<a onclick="addLike('${tvid}','${name}','${poster}')" data-likeId="${tvid}" class="dropdown-item" href="#">즐겨찾기 추가</a>`;
+      likeBtn.outerHTML = `<a onclick="addLike('${tvid}','${name}','${poster}', '${genres}')" data-likeId="${tvid}" class="dropdown-item" href="#">즐겨찾기 추가</a>`;
     } else {
       alert("즐겨찾기 제거 실패..");
     }
@@ -129,7 +129,7 @@ const removeLike = async (tvid, name, poster) => {
   }
 };
 
-const setData = (rating, tvid, title, poster) => {
+const setData = (rating, tvid, title, poster, genres) => {
   let ratingStar = document.getElementById("ratingStar");
   if (rating != null) {
     ratingStar.value = rating;
@@ -140,11 +140,11 @@ const setData = (rating, tvid, title, poster) => {
     document.querySelector(`.star span`).style.width = `${0}%`;
     ratingStar.dataset.status = "reg";
   }
-  tvData = { tvid, title, poster };
+  tvData = { tvid, title, poster, genres };
   ratingStar.dataset.tvid = tvid;
 };
 
-const addRating = async (tvid, email, rating) => {
+const addRating = async (tvid, email, rating, genres) => {
   try {
     const data = {
       tvvo: tvData,
@@ -190,7 +190,13 @@ const modifyRating = async (tvid, email, rating) => {
     const result = await res.text();
     if (result != null || result != "NoData") {
       let rateBtn = document.querySelector(`a[data-ratingId="${tvid}"]`);
-      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${tvData.title}', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tvData.tvid}" data-status="mod" href="#">평점 수정하기</a>`;
+      rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${
+        tvData.title
+      }', '${tvData.poster}', '${tvData.genres
+        .map((each) => each.id)
+        .join(",")}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+        tvData.tvid
+      }" data-status="mod" href="#">평점 수정하기</a>`;
       document.getElementById("modalCloseBtn").click();
       alert("평점 수정 성공");
     } else {
@@ -219,7 +225,9 @@ const removeRating = async (tvid, email) => {
       let rateBtn = document.querySelector(`a[data-ratingId="${tvid}"]`);
       rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${null}, '${tvData.id}', '${
         tvData.title
-      }', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+      }', '${tvData.poster}', '${tvData.genres
+        .map((each) => each.id)
+        .join(",")}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
         tvData.id
       }" data-status="reg" href="#">평점 남기기</a>`;
       alert("평점 삭제 성공");
@@ -276,16 +284,32 @@ const renderTVs = async (json, page = 1) => {
             <li>
             ${
               isLiked
-                ? `<a onclick="removeLike('${tv.id}','${tv.name}','${tv.poster_path}')" class="dropdown-item" href="#" data-likeId="${tv.id}">즐겨찾기 해제</a>`
-                : `<a onclick="addLike('${tv.id}','${tv.name}','${tv.poster_path}')" data-likeId="${tv.id}" class="dropdown-item" href="#">즐겨찾기 추가</a>`
+                ? `<a onclick="removeLike('${tv.id}','${tv.name}','${tv.poster_path}', '${tv.genre_ids.join(
+                    ","
+                  )}')" class="dropdown-item" href="#" data-likeId="${tv.id}">즐겨찾기 해제</a>`
+                : `<a onclick="addLike('${tv.id}','${tv.name}','${tv.poster_path}', '${tv.genre_ids.join(
+                    ","
+                  )}')" data-likeId="${tv.id}" class="dropdown-item" href="#">즐겨찾기 추가</a>`
             }
             
             </li>
             <li>
             ${
               isRated != null
-                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${tv.id}', '${tv.name}', '${tv.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tv.id}" data-status="mod" href="#">평점 수정하기</a>`
-                : `<a class="dropdown-item" onclick="setData(${isRated}, '${tv.id}', '${tv.name}', '${tv.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tv.id}" data-status="reg" href="#">평점 남기기</a>`
+                ? `<a class="dropdown-item" onclick="setData(${isRated}, '${tv.id}', '${tv.name}', '${
+                    tv.poster_path
+                  }', '${tv.genre_ids.join(
+                    ","
+                  )}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+                    tv.id
+                  }" data-status="mod" href="#">평점 수정하기</a>`
+                : `<a class="dropdown-item" onclick="setData(${isRated}, '${tv.id}', '${tv.name}', '${
+                    tv.poster_path
+                  }', '${tv.genre_ids.join(
+                    ","
+                  )}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${
+                    tv.id
+                  }" data-status="reg" href="#">평점 남기기</a>`
             }
             
             </li>

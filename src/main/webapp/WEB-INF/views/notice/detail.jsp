@@ -18,7 +18,7 @@
 					</li>
 					<li class="list-group-item">
 						<label for="writer">&nbsp작성자</label>
-						<input type="email" id="email" class="witAlign" name="email" value="${nvo.email }" readOnly>
+						<input type="email" id="email" class="witAlign" name="email" value="${nvo.nickName }" readOnly>
 					</li>
 					<li class="list-group-item">
 						<label for="regAt">등록일자</label>
@@ -44,7 +44,7 @@
 			</ul>
 		</div>
 		<div class="btnBox mb-3">
-			<a class="btn btn-outline-primary" href="/notice/list?pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">목록</a>
+			<a class="btn btn-outline-info" href="/notice/list?pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">목록</a>
 			<sec:authorize access="isAuthenticated()">
 				<sec:authentication property="principal.uvo.authList" var="auths"/>
 				<c:if test="${auths.stream().anyMatch(authVO -> authVO.auth.equals('ROLE_ADMIN')).get() }">

@@ -36,10 +36,16 @@
 		<if test="poster != null">
 		 , poster
 		</if>
+		<if test="genres != null">
+		,genres
+		</if>
 		 )
 		values(#{mid}, #{title}
 		<if test="poster != null">
 		 , #{poster}
+		</if>
+		<if test="genres != null">
+		,#{genres}
 		</if>
 		 )
 	</insert>

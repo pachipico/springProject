@@ -34,7 +34,7 @@ function showMovies(result){
             <div class="card-body">
             <div class="card-title cTitle">${title}</div>
             <div class="card-text rDate">평점 <span class="vote${rateColor(vote_average)}">${vote_average}</span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${release_date}</div>
-            <div class="btnAlign"><button type="submit" class="btn btn-outline-primary" id="movieSelctBtn">선택</button></div>
+            <div class="btnAlign"><button type="submit" class="btn btn-outline-info" id="movieSelctBtn">선택</button></div>
             </div>
             </div>
             </form>`;

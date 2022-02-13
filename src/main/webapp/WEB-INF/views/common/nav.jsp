@@ -22,7 +22,7 @@
     			TV
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				    <li><a class="dropdown-item" href="/tv/netflix">넷플릭</a></li>
+				    <li><a class="dropdown-item" href="/tv/netflix">넷플릭스</a></li>
 				    <li><a class="dropdown-item" href="/tv/amazon">아마존</a></li>
 				    <li><a class="dropdown-item" href="/tv/watcha">왓챠</a></li>
 				    <li><a class="dropdown-item" href="/tv/waave">웨이브</a></li>
@@ -47,6 +47,9 @@
 				    <li><a class="dropdown-item" href="/tvBoard/hateList">싫어요</a></li>
   				</ul>
 			</div>
+        </div>
+        <div class="menu">
+        	<a class="btn" style="color: #fff;" href="/notice/list">공지사항</a>
         </div>
         <div class="menu">
         	<a class="btn" style="color: #fff;" href="/rank/pointlist">랭킹</a>

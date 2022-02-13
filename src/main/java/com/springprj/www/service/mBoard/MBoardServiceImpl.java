@@ -77,7 +77,12 @@ public class MBoardServiceImpl implements MBoardService {
 	}
 
 	@Override
-	public List<MBoardVO> getRealtedMovieList(PagingVO pgvo) {
-		return mbdao.realtedMovieList(pgvo);
+	public List<MBoardVO> getRelatedMovieList(PagingVO pgvo) {
+		return mbdao.relatedMovieList(pgvo);
+	}
+
+	@Override
+	public int getRelatedTotalCount(int mid, PagingVO pgvo) {
+		return mbdao.selectOneRelatedTotalCount(mid, pgvo);
 	}
 }

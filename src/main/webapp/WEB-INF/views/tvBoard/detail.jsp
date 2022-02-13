@@ -30,7 +30,7 @@
 							</li>
 							<li class="list-group-item">
 								<label for="writer">&nbsp작성자</label>
-								<input type="email" id="writer" class="witAlign" name="writer" value="${tvbvo.writer }" readOnly>
+								<input type="email" id="writer" class="witAlign" name="writer" value="${tvbvo.nickName }" readOnly>
 							</li>
 							<li class="list-group-item">
 								<label for="modAt">등록일자</label>
@@ -76,7 +76,7 @@
 			</ul>
 		</div>
 		<div class="btnBox mb-3">
-			<a class="btn btn-outline-primary" href="/tvBoard/${tvbvo.likeHate == 1 ? 'like' : 'hate' }List?pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">목록</a>
+			<a class="btn btn-outline-info" href="/tvBoard/${tvbvo.likeHate == 1 ? 'like' : 'hate' }List?pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">목록</a>
 			<c:if test="${tvbvo.writer eq authEmail }">
 				<div class="editBox">
 					<a class="btn btn-outline-warning" href="/tvBoard/modify?tvbId=${tvbvo.tvbId }&authEmail=${authEmail }&pageNo=${pgvo.pageNo }&qty=${pgvo.qty}&type=${pgvo.type}&keyword=${pgvo.keyword}">수정</a>

@@ -1,104 +1,144 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <style>
 .content_wrap {
-	   width: 80%;
-	   float:left;
+	   margin: auto;
+	   width: 85%;
 	   min-height:700px;
+	   border:1px solid black;
+	 
 }
 .content_subject {
 	   font-size: 40px;
 	   font-weight: bolder;
 	   padding-left: 15px;
-	   background-color: gray;
+	   background-color: rgb(91, 189, 250);
 	   height: 80px;
 	   line-height: 80px;
 	   color: white;	
 }
-.table_wrap {
-    	padding: 20px 35px;
+span.content a img {        
+             width: 45px;
+             height: 45px;
+             border-radius: 50%;
+             border: none;
+             margin: 0;
+             padding: 0;
+             
+  }
+td { 
+	   color: #000; 
+             font : 16px "source Sans Pro", Arial, sans-serif;
 }
-.table {
-	width: 100%;
-   	border: 1px solid #d3d8e1;
-    	text-align: center;
-    	border-collapse: collapse;
+.detail {
+	   position: absolute;
+	   margin-left:4px;
 }
-.table td {
-	padding: 10px 5px;
-	border : 1px solid #e9ebf0;
+.detail h3 {
+	font-weight: 900;
 }
-.table thead {
-	background-color: #f8f9fd;	
-	font-weight: 600;
-}
-.th_column_1{
-	width:140px;
-}
-.th_column_2{
-	width:140px;
-}
-.th_column_3{
-	width:110px;
-}
-.th_column_5{
-	width:140px;
-}
-.th_column_6{
-	width:50px;
-}
-a {
+p {
+	font: 13px "source Sans Pro", Arial, sans-serif;
+}	
+.leaderboard td h3 a {
+	font: 19.2px "source Sans Pro", Arial, sans-serif;
+	color: #000;
 	text-decoration: none;
+	font-weight: 600px;
+	cursor: pointer;
 }
 ul {
 	list-style: none;
 	text-align: center;
 }
+.table_wrap {
+	text-align: center;
+	margin-bottom: 40px;
+}
+h4 {
+	margin-right: 20px;
+	margin-bottom: 20px;
+	font-weight: bold;
+	color: #082546;
+}
+.leaderboard {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 40px;
+}
+.title {
+	color: #fff;
+}
+.con1 {
+	padding-right: 20px;
+	font-size: 16px;
+}
+.comment {
+	font: 24px "source Sans Pro", Arial, sans-serif;
+	color: #000;
+	margin: 50px 0px 30px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
 </style>
+<jsp:include page="../common/header.jsp" />
+<jsp:include page="../common/nav.jsp" />
 <div class="content_wrap">
-    <div class="content_subject"><h4>Æ÷ÀÎÆ®¿Õ</h4></div>
+    <div class="content_subject"> 
+    <h4 class="title">í¬ì¸íŠ¸ì™•</h4></div>
+<select name="list" onchange="location.href=this.value">
+<option>ì„ íƒ</option>
+<option value="/rank/pointlist">í¬ì¸íŠ¸ì™•</option>
+<option value="/rank/boardlist">ê²Œì‹œíŒì™•</option>
+<option value="/rank/commentlist">ëŒ“ê¸€ì™•</option>
+</select>
+    <div class="comment">ê°€ì¥ ë§ì€ í¬ì¸íŠ¸ë¥¼ ëª¨ì€ ì‚¬ìš©ì</div>
     <div class="table_wrap">
     <h4>best</h4>
-         <table class="table">
-	   <thead>
-	       <tr>
-	            <td class="th_column_1">ÀÌ¸ŞÀÏ</td>
-	            <td class="th_column_2">´Ğ³×ÀÓ</td>
-	            <td class="th_column_3">ÃÖ°íÆ÷ÀÎÆ®</td>
-	       </tr>	   
-	   </thead>
-	   <tbody>
+    <table class="leaderboard">
+      <tbody>
 	   <c:forEach items="${list }" var="prvo">
-	       <tr>
-	           <td>${prvo.email}</td>
-	           <td>${prvo.nickName}</td>
-	           <td>${prvo.totalPoints}</td>
-	       </tr>
-	   </c:forEach>    
-	   </tbody>      
-         </table>
+	   <tr>
+	           <td class="con1">${prvo.totalPoints}</td>
+	           <td>
+	             <span class="content">
+	              <a href="/user/detail.jsp"><img src="/fileUpload/${prvo.profileImg}"></a>
+	             </span>
+	             <span class="detail">
+	              <h3><a href="/user/detail.jsp">${prvo.nickName}</a></h3>
+	              <p>ê°€ì… : ${prvo.regAt}</p>
+	             </span> 
+	             <div style="clear:both; padding-top: 10px;"></div>
+	           </td>   
+	     </tr> 
+	   </c:forEach>  
+	</tbody>   
+       </table>	     
        </div>
          
        <div class="table_wrap"> 
        <h4>worst</h4>
-         <table class="table">
-	   <thead>
-	       <tr>
-	            <td class="th_column_1">ÀÌ¸ŞÀÏ</td>
-	            <td class="th_column_2">´Ğ³×ÀÓ</td>
-	            <td class="th_column_3">ÃÖÀúÆ÷ÀÎÆ®</td>
-	       </tr>	   
-	   </thead>
-	   <tbody>
+       <table class="leaderboard">
+         <tbody>
 	   <c:forEach items="${lowlist }" var="prvo">
-	       <tr>
-	           <td>${prvo.email}</td>
-	           <td>${prvo.nickName}</td>
-	           <td>${prvo.totalPoints}</td>
-	       </tr>
-	   </c:forEach>    
-	   </tbody>      
-         </table>
+	      <tr>
+	           <td class="con1">${prvo.totalPoints}</td>
+	           <td>
+	             <span class="content">
+	              <a href="detail.jsp"><img src="/fileUpload/${prvo.profileImg}"></a>
+	             </span>
+	             <span class="detail">
+	              <h3><a href="detail.jsp">${prvo.nickName}</a></h3>
+	              <p>ê°€ì… : ${prvo.regAt}</p>
+	             </span> 
+	             <div style="clear:both; padding-top:10px"></div>
+	           </td>   
+	     </tr> 
+	   </c:forEach> 
+	 </tbody>  
+        </table>
         </div>
 </div>  
+<jsp:include page="../common/footer.jsp" />

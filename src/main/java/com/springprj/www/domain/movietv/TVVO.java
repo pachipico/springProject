@@ -14,6 +14,7 @@ public class TVVO {
 	private long tvid;
 	private String title;
 	private String poster;
+	private String genres;
 	
 	private String regAt;
 	private Double rating;

@@ -14,6 +14,7 @@ public class MovieVO {
 	private long mid;
 	private String title;
 	private String poster;
+	private String genres;
 	// 즐겨찾기 & 리뷰 작성일 가져올때 
 	private String regAt;
 	private Double rating;
