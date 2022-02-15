@@ -1,82 +1,83 @@
-
 #header {
-  height: 240px;
-  background-image: linear-gradient(45deg, #082546,#243B55);
-  display: flex;
-  flex-direction: row;
-  padding: 40px;
-  align-items: center;
+	height: 240px;
+	background-image: linear-gradient(45deg, #082546, #243B55);
+	display: flex;
+	flex-direction: row;
+	padding: 40px;
+	align-items: center;
 }
 
 #profileImg {
-  background-color: #fff;
-  width: 130px;
-  height: 130px;
-  border-radius: 65px;
-}
-#headerInfo{
-	padding-left: 40px;
-}
-#profileEmailDiv {
-  color: blue;
-}
-#profileEmailDiv,
-#scoreDiv {
-  margin: 10px;
-}
-#profileEmailDiv span:nth-child(2){
-	color: #e6e6e6;
-}
-#profileEmail {
-  color: #fff;
-  font-size: 2rem;
-  font-weight: bold;
-}
-#scoreDiv {
-  display: flex;
-}
-.scoreBlock {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  
+	background-color: #fff;
+	width: 130px;
+	height: 130px;
+	border-radius: 65px;
 }
 
-.scoreText{
+#headerInfo {
+	padding-left: 40px;
+}
+
+#profileEmailDiv {
+	color: blue;
+}
+
+#profileEmailDiv, #scoreDiv {
+	margin: 10px;
+}
+
+#profileEmailDiv span:nth-child(2) {
+	color: #e6e6e6;
+}
+
+#profileEmail {
+	color: #fff;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+#scoreDiv {
+	display: flex;
+}
+
+.scoreBlock {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.scoreText {
 	color: #fff;
 	margin-left: 10px;
 }
 
 .score {
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 25px;
-  
-  background-color: #fff;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 25px;
+	background-color: #fff;
 }
 
-.scoreBlock:nth-child(2){
+.scoreBlock:nth-child(2) {
 	margin-left: 40px;
 }
 
 .detailMenu {
-  height: 50px;
-  display: flex;
- justify-content: center;
-  border-bottom: 1px solid #e7e7e7;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid #e7e7e7;
 }
 
 .menuBtn {
-  background-color: #fff;
-  color: black;
-  border: none;
-  font-size: 16px;
-  padding: 0px 10px;
-
-  
+	background-color: #fff;
+	color: black;
+	border: none;
+	font-size: 16px;
+	padding: 0px 10px;
 }
 
 .menuBtn:hover {
@@ -92,16 +93,18 @@
 #movieContainer {
 	padding: 0 50px;
 }
+
 #listTitleText {
-  font-size: 1.5rem;
-  font-weight: bold;
+	font-size: 1.5rem;
+	font-weight: bold;
 }
+
 .listTitle {
-  padding: 15px 0px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+	padding: 15px 0px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
 }
 
 .left a {
@@ -121,94 +124,98 @@
 }
 
 .movie {
-  display: flex;
-  flex-direction: row;
-  border: 1px solid #e6e6e6;
-  border-radius: 8px;
-  -webkit-box-shadow: 1px 1px 9px -1px rgba(0, 0, 0, 0.35);
-  box-shadow: 1px 1px 9px -1px rgba(0, 0, 0, 0.35);
-  margin-bottom: 25px;
+	display: flex;
+	flex-direction: row;
+	border: 1px solid #e6e6e6;
+	border-radius: 8px;
+	-webkit-box-shadow: 1px 1px 9px -1px rgba(0, 0, 0, 0.35);
+	box-shadow: 1px 1px 9px -1px rgba(0, 0, 0, 0.35);
+	margin-bottom: 25px;
 }
+
 .contentDiv {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+	padding: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }
+
 .imageDiv img {
-  border-top-left-radius: 8px;
-  border-bottom-left-radius: 8px;
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
 }
 
 .titleDiv {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .rating {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #e6e6e6;
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: 1px solid #e6e6e6;
+	width: 40px;
+	height: 40px;
+	border-radius: 20px;
 }
 
 .titleText a {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: #000;
-  font-weight: 600;
-  font-size: 1.2rem;
+	display: flex;
+	flex-direction: column;
+	text-decoration: none;
+	color: #000;
+	font-weight: 600;
+	font-size: 1.2rem;
 }
+
 .titleText a:hover {
-  color: rgb(4, 199, 199);
+	color: rgb(4, 199, 199);
 }
+
 .titleText {
-  color: #9c9a9a;
-  font-size: 0.8rem;
-  margin-left: 10px;
+	color: #9c9a9a;
+	font-size: 0.8rem;
+	margin-left: 10px;
 }
 
 .descDiv {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 3; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap: break-word;
 }
 
 .btnDiv ul {
-  display: flex;
-  flex-direction: row;
-  margin-top: 1rem;
-  margin-bottom: 0;
+	display: flex;
+	flex-direction: row;
+	margin-top: 1rem;
+	margin-bottom: 0;
 }
 
 .btnDiv li {
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-  color: #9c9a9a;
+	display: flex;
+	align-items: center;
+	margin-right: 20px;
+	color: #9c9a9a;
 }
 
 .btnDiv .btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-  color: #9c9a9a;
-  border: 1px solid #9c9a9a;
-  margin-right: 10px;
+	width: 30px;
+	height: 30px;
+	border-radius: 15px;
+	color: #9c9a9a;
+	border: 1px solid #9c9a9a;
+	margin-right: 10px;
 }
 
 .btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 /* star */
@@ -236,12 +243,11 @@
 	pointer-events: none;
 }
 /*  */
-
-.content{
+.content {
 	padding: 20px;
 }
 
-.stats{
+.stats {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
@@ -252,14 +258,41 @@
 	margin-bottom: 30px;
 }
 
-.stats div {
-	
-	
-	
+.statCnt {
+	margin: 0;
 }
 
-.stats div p {
+.statCnt {
 	font-size: 3rem;
 	font-weight: bolder;
 	color: #082546;
+}
+
+.rateDist{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+#params, #graph {
+	display: flex;
+	flex-direction: row;
+}
+
+.rateDist div {
+	display:flex;
+	flex-direction: column;
+	
+}
+
+#graph {
+	align-items: flex-end;
+}
+
+#graph .colorDiv {
+	width: 20px;
+}
+
+#params p {
+	width: 20px;
 }

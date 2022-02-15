@@ -93,6 +93,8 @@
 .movieCard a img {
   width: 150px;
   border-radius: 10px;
+  -webkit-box-shadow: 1px 4px 18px -6px rgba(0,0,0,0.68); 
+box-shadow: 1px 4px 18px -6px rgba(0,0,0,0.68);
 }
 
 .movieCard a {

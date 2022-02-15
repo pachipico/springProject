@@ -6,6 +6,7 @@ let rating = document.getElementById("rt");
 let overview = document.querySelector(".overviewSub");
 let header = document.querySelector("header");
 let currentRating = null; // 좋아요 기록 유무 임시 저장
+let reviewCnt = 0;
 let tvData = {};
 let userData = {
   userReview: null,
@@ -337,14 +338,20 @@ document.addEventListener("click", (e) => {
   if (e.target.classList.contains("reviewRegBtn")) {
     const content = document.querySelector("[name=content]").value;
     const writer = document.querySelector("[name=writer]").value;
+    if (content.trim().length == 0) {
+      alert("내용을 입력하세요.");
+      return;
+    }
     console.log(writer, content, profileImg, Date.now());
     postReview(content, writer).then((result) => {
       console.log(result);
       if (parseInt(result) > 0) {
         alert("리뷰 작성 성공");
+        reviewCnt++;
         addToList({ writer, content, profileImg, regAt: Date.now() });
         document.querySelector(".reviewRegBtn").disabled = true;
-        document.querySelector("[name=content]").value = "";
+        document.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
+        document.querySelector("[name=content]").readOnly = true;
       } else {
         alert("리뷰 작성 실패..");
       }
@@ -387,18 +394,30 @@ document.addEventListener("click", (e) => {
   } else if (e.target.classList.contains("revModBtn")) {
     console.log(e.target);
     const review = e.target.closest("li");
-    const btn = document.querySelector(".reviewRegBtn");
+    const btn = document.querySelector(".input-group").querySelector("button");
     document.getElementById("revInput").value = review.querySelector(".reviewContent").innerText;
     btn.disabled = false;
     btn.classList.add("reviewModBtn");
     btn.classList.remove("reviewRegBtn");
     btn.innerText = "mod";
+    document.getElementById("revInput").readOnly = false;
   } else if (e.target.classList.contains("revDelBtn")) {
     removeReview(e.target.closest("li").querySelector(".reviewWriter").innerText).then((result) => {
       if (result > 0) {
         document.querySelector(".userReview").remove();
-        document.querySelector(".reviewRegBtn").disabled = false;
+        const btn = document.querySelector(".input-group").querySelector("button");
+        btn.disabled = false;
+        btn.innerText = "add";
+        btn.classList.add("reviewRegBtn");
+        btn.classList.remove("reviewModBtn");
+        document.getElementById("revInput").value = "";
         document.getElementById("revInput").placeholder = "리뷰를 남겨주세요!";
+        btn.disabled = false;
+        if (--reviewCnt == 0) {
+          document.getElementById("reviewWrapper").innerHTML =
+            "<h4>등록된 리뷰가 없습니다. 리뷰를 등록해보세요!</h4>";
+        }
+        document.getElementById("revInput").readOnly = false;
         alert("리뷰를 삭제했습니다.");
       }
     });
@@ -419,8 +438,9 @@ document.addEventListener("click", (e) => {
           profileImg,
           regAt: Date.now(),
         });
-        inputDiv.querySelector("[name=content]").value = "";
+        inputDiv.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
         e.target.disabled = true;
+        inputDiv.querySelector("[name=content]").readOnly = true;
         alert("리뷰가 수정되었습니다.");
       }
     });
@@ -480,6 +500,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getTVData().then((result) => {
     userData = result;
     console.log(userData);
+    reviewCnt = userData.rvList.length;
     renderReview(userData.rvList, userData.rvdto);
     if (userData.avgRating != null) {
       rating.innerText = parseFloat(userData.avgRating).toFixed(1);

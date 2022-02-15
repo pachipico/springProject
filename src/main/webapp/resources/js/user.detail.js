@@ -424,7 +424,7 @@ document.addEventListener("click", (e) => {
         });
 
         // 평점 항이면 삭제
-        if (list == "rated") {
+        if (list != null && list == "rated") {
           document.querySelector(`div[data-id="${id}"]`).remove();
         }
       }
