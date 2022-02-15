@@ -158,8 +158,8 @@ public class UserController {
 
 		
 		try {
-			model.addAttribute("movieGenres", mapper.writeValueAsString(usv.getUsersWatchedMovieGenres(email)));
-			model.addAttribute("tvGenres", mapper.writeValueAsString(usv.getUsersWatchedTVGenres(email)));
+			model.addAttribute("movieGenres", mapper.writeValueAsString(usv.getUsersWatchedMovieGenres(email).getGenres()));
+			model.addAttribute("tvGenres", mapper.writeValueAsString(usv.getUsersWatchedTVGenres(email).getGenres()));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}

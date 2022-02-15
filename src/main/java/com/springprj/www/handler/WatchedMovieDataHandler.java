@@ -1,11 +1,15 @@
 package com.springprj.www.handler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.collections4.map.HashedMap;
 
 import com.springprj.www.domain.movietv.MovieVO;
-import com.springprj.www.domain.movietv.TVVO;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +38,39 @@ public class WatchedMovieDataHandler {
 	private int thriller = 0;
 	private int war = 0;
 	private int western = 0;
+	
+	
+	public List<Entry<String, Integer>> getGenres() {
+		Map<String, Integer> list = new HashedMap<String, Integer>(){{
+			put("action", action);
+			put("adventure", adventure);
+			put("animation", animation);
+			put("comedy", comedy);
+			put("crime", crime);
+			put("documentary", documentary);
+			put("drama", drama);
+			put("family", family);
+			put("fantasy", fantasy);
+			put("history", history);
+			put("horror", horror);
+			put("music", music);
+			put("mistery", mistery);
+			put("romance", romance);
+			put("sf", sf);
+			put("tvMovie", tvMovie);
+			put("thriller", thriller);
+			put("war", war);
+			put("western", western);
+		}};
+		
+		List<Entry<String, Integer>> entries = new ArrayList<Map.Entry<String,Integer>>(list.entrySet());
+		Collections.sort(entries, new Comparator<Entry<String, Integer>>() {
+			public int compare (Entry<String, Integer> obj1, Entry<String, Integer> obj2) {
+				return obj2.getValue().compareTo(obj1.getValue());
+			}
+		});
+		return entries;
+	}
 
 	public WatchedMovieDataHandler(List<MovieVO> list) {
 		for (MovieVO mvvo : list) {

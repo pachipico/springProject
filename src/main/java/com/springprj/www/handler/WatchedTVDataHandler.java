@@ -1,6 +1,13 @@
 package com.springprj.www.handler;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.apache.commons.collections4.map.HashedMap;
 
 import com.springprj.www.domain.movietv.TVVO;
 
@@ -26,6 +33,35 @@ public class WatchedTVDataHandler {
 	private int talk = 0;
 	private int warPolitics = 0;
 	private int western = 0;
+	
+	public List<Entry<String, Integer>> getGenres() {
+		Map<String, Integer> map = new HashedMap<String, Integer>(){{
+			put("actionAdventure" , actionAdventure);
+			put("animation", animation);
+			put("comedy" , comedy);
+			put("crime", crime);
+			put("documentary", documentary);
+			put("drama", drama);
+			put("family", family);
+			put("kids", kids);
+			put("mistery", mistery);
+			put("news", news);
+			put("reality", reality);
+			put("sf", sf);
+			put("soap", soap);
+			put("talk", talk);
+			put("warPolitics", warPolitics);
+			put("western", western);
+		}};
+		
+		List<Entry<String, Integer>> entries = new ArrayList<Map.Entry<String,Integer>>(map.entrySet());
+		Collections.sort(entries, new Comparator<Entry<String, Integer>>() {
+			public int compare (Entry<String, Integer> obj1, Entry<String, Integer> obj2) {
+				return obj2.getValue().compareTo(obj1.getValue());
+			}
+		});
+		return entries;
+	}
 
 	public WatchedTVDataHandler(List<TVVO> list) {
 		for (TVVO tvvo : list) {
