@@ -29,6 +29,7 @@
 		
 		<typeAlias type="com.springprj.www.domain.shop.ColorVO" alias="cvo"/>
 		<typeAlias type="com.springprj.www.domain.shop.ShopVO" alias="svo"/>
+		<typeAlias type="com.springprj.www.domain.shop.ProductVO" alias="pdvo"/>
 		
 		<typeAlias type="com.springprj.www.domain.PointRankVO" alias="prvo"/>
 		<typeAlias type="com.springprj.www.domain.CommentRankVO" alias="crvo"/>
