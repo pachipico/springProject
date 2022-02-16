@@ -180,15 +180,15 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	// 해당 이메일을 가진 유저가 포인트를 얻고, 그 유저의 포인트 반환.
+	// 해당 이메일을 가진 유저가 포인트를 얻음
 	@Override
 	@Transactional
 	public int gainPoint(String email, int point) {
 		udao.updatePointUp(email, point);
-		return udao.selectPoint(email);
+		return 1;
 	}
 
-	// 해당 이메일을 가진 유저가 포인트를 사용 , 그 유저의 포인트 반환.
+	// 해당 이메일을 가진 유저가 포인트를 사용 
 	@Override
 	@Transactional
 	public int spendPoint(String email, int point) {
@@ -197,7 +197,7 @@ public class UserServiceImpl implements UserService {
 			return -1;
 		} else {
 			udao.updatePointDown(email, point);
-			return udao.selectPoint(email);
+			return 1;
 		}
 	}
 

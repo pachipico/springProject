@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @ToString
 public class ProductVO {
-	private long pdid;
+	private long sid;
 	private int category; // 1 = font-color, 2 = poster
 	private String email;
 	private String sname; 

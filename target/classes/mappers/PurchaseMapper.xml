@@ -8,19 +8,19 @@
 		values(#{email}, #{category}, #{sname}, #{value}, #{price})
 	</insert>
 	
-	<select id="selectListPoster" parameterType="string">
+	<select id="selectListPoster" parameterType="string" resultType="pdvo">
 		select  sname, value, price, purch_date
 		from purchase
 		where category = 2 and email = #{email}
 	</select>
 	
-	<select id="selectListFontColor" parameterType="string">
+	<select id="selectListFontColor" parameterType="string" resultType="pdvo">
 		select sname, value, price, purch_date
 		from purchase
 		where category = 1 and email = #{email}
 	</select>
 	
-	<select id="selectListAllProduct" parameterType="string">
+	<select id="selectListAllProduct" parameterType="string" resultType="pdvo">
 		select * from purchase where email = #{email}
 	</select>
 	

@@ -13,11 +13,11 @@ import com.springprj.www.repository.purchase.PurchaseDAO;
 public class PurchaseServiceImpl implements PurchaseService {
 	
 	@Inject
-	PurchaseDAO pdao;
+	private PurchaseDAO pdao;
 	
 	@Override
 	public int buyProduct(ProductVO pdvo) {
-
+		
 		return pdao.insertProduct(pdvo);
 	}
 

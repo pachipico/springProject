@@ -164,7 +164,6 @@
 	<update id="updatePointDown">
 		update user set 
 		curr_points = curr_points - #{point} 
-		, total_points = total_points - #{point} 
 		where email = #{email}
 	</update>
 	
