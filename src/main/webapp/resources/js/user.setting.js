@@ -1,3 +1,6 @@
+const colors = document.querySelectorAll(".fontColor");
+
+let fontColorVal = document.querySelector("input[name=color]");
 document.addEventListener("click", (e) => {
   if (e.target.id == "profileImgSubmitBtn") {
     document.getElementById("profileImgForm").submit();
@@ -18,5 +21,21 @@ document.addEventListener("click", (e) => {
     if (newPwd == pwdChk) {
       document.getElementById("changePwdForm").submit();
     }
+  }
+});
+Array.from(colors).forEach((color) => {
+  if (color.classList.contains("buyAble")) {
+    color.addEventListener("click", (e) => {
+      console.log(e.target);
+      Array.from(colors).forEach((color) => {
+        if (color.classList.contains("buyAble")) {
+          color.innerText = "";
+        }
+      });
+      if (e.target.classList.contains("buyAble")) {
+        e.target.innerText = "selected";
+        fontColorVal.value = e.target.style.backgroundColor;
+      }
+    });
   }
 });

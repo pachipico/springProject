@@ -66,6 +66,11 @@ public class UserServiceImpl implements UserService {
 	public UserVO login(String email, String pwd) {
 		UserVO user = udao.selectOneUserByEmailAndPwd(email, pwd);
 		if (user != null) {
+			//@@@@@@@@@@@@@@@@@@@
+			// 여기서 출석체크 해야할듯?
+			//@@@@@@@@@@@@@@@@@@2
+			
+			
 			udao.updateLastLogin(email);
 			return user;
 		} else {

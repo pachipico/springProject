@@ -43,6 +43,7 @@ public class PurchaseController {
 			for (ProductVO pvo : list) {
 				csv += (pvo.getSname()+",");
 			}
+			model.addAttribute("list", list);
 			model.addAttribute("currPoints", usv.getUsersCurrPoints(principal.getName()));
 			model.addAttribute("fontCsv", csv);
 			model.addAttribute("email", principal.getName());
@@ -54,7 +55,7 @@ public class PurchaseController {
 		if(usv.spendPoint(pdvo.getEmail(), pdvo.getPrice()) > 0) {
 			return psv.buyProduct(pdvo) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK) : new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<String>("-1", HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping(value = "/{email}/poster", produces = {MediaType.APPLICATION_JSON_VALUE})

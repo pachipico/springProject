@@ -64,15 +64,13 @@ h4 {
 	font-size: 16px;
 }
 .leaderboard {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 40px;
+   width: 240px;
+   margin: 40 auto 0 auto;
 }
 .title {
 	color: #fff;
 }
 .con1 {
-	padding-right: 20px;
 	font-size: 16px;
 }
 .comment {
@@ -107,7 +105,7 @@ h4 {
 	              <a href="/user/detail.jsp"><img src="/fileUpload/${brvo.profileImg}"></a>
 	             </span>
 	             <span class="detail">
-	              <h3><a href="/user/detail.jsp">${brvo.nickName}</a></h3>
+	              <h3><a href="#">${brvo.nickName}</a></h3>
 	              <p>가입 : ${brvo.regAt}</p>
 	             </span> 
 	             <div style="clear:both; padding-top: 10px;"></div>
@@ -129,7 +127,7 @@ h4 {
 	              <a href="/user/detail.jsp"><img src="/fileUpload/${brvo.profileImg}"></a>
 	             </span>
 	             <span class="detail">
-	              <h3><a href="/user/detail.jsp">${brvo.nickName}</a></h3>
+	              <h3><a href="#">${brvo.nickName}</a></h3>
 	              <p>가입 : ${brvo.regAt}</p>
 	             </span> 
 	             <div style="clear:both; padding-top: 10px;"></div>

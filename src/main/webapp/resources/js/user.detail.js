@@ -196,6 +196,22 @@ const drawStar = (target) => {
   document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
 };
 
+const gainPoints = async (email, point) => {
+  try {
+    const data = { point };
+    const config = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/user/${email}/gainPoints`, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 document.getElementById("ratingStar").addEventListener("change", (e) => {
   let id = e.target.dataset.id;
   let email = e.target.dataset.email;
@@ -204,7 +220,8 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
   if (currentRating == null) {
     postRating(email, e.target.value, id).then((result) => {
       if (parseFloat(result) > 0) {
-        alert("평점 등록 성공");
+        alert("평점 등록 성공, 1포인트 획득!");
+        gainPoints(email, 1);
         moviesData.map((movie) => {
           if (movie.mid == id) {
             movie.rating = e.target.value;

@@ -105,7 +105,7 @@ const renderReview = (list, writtenReview) => {
         review.profileImg
       }" alt="" class="reviewProfileImg" /></a>
         </div>
-        <span class="reviewContent">
+        <span class="reviewContent" style="color: ${review.fontColor}">
           ${review.content}
         </span>
       </div>
@@ -142,7 +142,7 @@ const addToList = (data) => {
     data.profileImg
   }" alt="" class="reviewProfileImg" /></a>
         </div>
-        <span class="reviewContent">
+        <span class="reviewContent" style="color:${data.fontColor}">
           ${data.content}
         </span>
       </div>
@@ -334,6 +334,22 @@ const removeRating = async (email) => {
   }
 };
 
+const gainPoints = async (email, point) => {
+  try {
+    const data = { point };
+    const config = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/user/${email}/gainPoints`, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("reviewRegBtn")) {
     const content = document.querySelector("[name=content]").value;
@@ -346,7 +362,8 @@ document.addEventListener("click", (e) => {
     postReview(content, writer).then((result) => {
       console.log(result);
       if (parseInt(result) > 0) {
-        alert("리뷰 작성 성공");
+        alert("리뷰 작성 성공, 2포인트 획득!");
+        gainPoints(writer, 2);
         reviewCnt++;
         addToList({ writer, content, profileImg, regAt: Date.now() });
         document.querySelector(".reviewRegBtn").disabled = true;
@@ -457,8 +474,9 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
   if (currentRating == null) {
     postRating(email, e.target.value).then((result) => {
       if (parseFloat(result) > 0) {
-        alert("평점 등록 성공");
+        alert("평점 등록 성공, 1포인트 획득!");
         // 평균 평점 result로 변하게.
+        gainPoints(email, 1);
         document.querySelector(".headerRateBtn").style.color = "#ffc107";
         rating.innerText = result;
       } else {

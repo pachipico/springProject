@@ -44,6 +44,24 @@ async function printHeartList(mbIdVal, page) {
   }
 }
 
+async function printProfileImg(email) {
+  try {
+    const url = "/user/profileImg/" + email;
+    const config = {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(email),
+    };
+    const resp = await fetch(url, config);
+    const result = await resp.json();
+    return await result;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 document.addEventListener("click", (e) => {
   if (e.target.id == "delBtn") {
     e.preventDefault();
@@ -65,10 +83,28 @@ document.addEventListener("click", (e) => {
       heartBtn.innerHTML = newHeartBtn;
       insertHeart(heartData);
     }
+  } else if (e.target.id == "heartList") {
+    printHeartList(mbIdVal, (page = 1)).then((result) => {
+      const likeListArea = document.querySelector(".likeListArea");
+      if (result.cmtListMh.length) {
+        const likeTotalCnt = document.querySelector(".likeTotalCnt");
+        likeTotalCnt.innerHTML = "";
+        likeTotalCnt.innerHTML += `<span>${result.totalCount} 명</span>`;
+        likeListArea.innerHTML = "";
+
+        for (let mhvo of result.cmtListMh) {
+          printProfileImg(mhvo.email).then((result) => {
+            let li = `
+                        <div data-mhid="${result.email}" class="hListOne">
+                          <div class="flex-shrink-0 bg-light imgAlign"><img class="rounded-circle imgSize" src="/fileUpload/${result.profileImg}"></div>
+                          <div class="hListNick"><a href="/user/${result.email}">${result.nickName}<a></div>
+                        </div>
+              `;
+            likeListArea.innerHTML += li;
+          });
+        }
+        printPage(result.prev, result.startPage, result.pgvo, result.endPage, result.next);
+      }
+    });
   }
-  // else if(e.target.id == heartList){
-  //     // printHeartList(mbIdVal, page=1).then(result =>{
-  //         document.getElementById('heartListArea').innerHTML = 'continue';
-  //     // });
-  // }
 });

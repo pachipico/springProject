@@ -8,9 +8,9 @@
 
     <div id="emailDiv">
       <div >
-      	<img class="profileImg" src="/fileUpload/${uvo.profileImg }">
+      	<img class="profileImg" src="/fileUpload/og_${uvo.profileImg }">
       </div>
-      <span><c:out value="${uvo.nickName }"/></span>
+      <span style="color: ${uvo.fontColor}"><c:out value="${uvo.nickName }"/></span>
     </div>
     <div id="settingContainer">
       <div id="leftMenu">
@@ -30,7 +30,7 @@
         </div>
         <div class="setting">
           <label for="emailInput">이메일</label>
-          <input id="emailInput" type="text" class="form-control" readonly value="pachipico1@gmail.com" />
+          <input id="emailInput" type="text" class="form-control" readonly value="${uvo.email }" />
         </div>
         <div class="setting">
           <label for="imgUploadModalBtn">현재 아바타</label>
@@ -43,14 +43,30 @@
           >
           	</c:when>
           	<c:otherwise>
-          		<img class="profileImg" src="/fileUpload/${uvo.profileImg }">
+          		<img class="profileImg" src="/fileUpload/og_${uvo.profileImg }">
           		<a id="imgUploadModalBtn" data-bs-toggle="modal" data-bs-target="#exampleModal"
             >아바타를 변경하시겠습니까?</a
           >
           	</c:otherwise>
           </c:choose>
         </div>
-        <div class="setting">폰트 색 변경 <br />** 추후 추가예정 **</div>
+        <div class="setting">폰트 색 변경 <br />
+        	<div id="fontColorDiv">
+        		<div class="fontColor ${uvo.fontColor eq 'black' ? '' : 'buyAble'}" id="black" style="background-color: black">
+          	 	 ${uvo.fontColor eq 'black' ? 'applied' : ''}
+          	  	</div>
+          <c:forEach items="${fontList }" var="color">
+          	 	 <div class="fontColor ${uvo.fontColor eq color.value ? '' : 'buyAble'}" id="${color.sname }" style="background-color: ${color.value}">
+          	  		${uvo.fontColor eq color.value ? 'applied' : ''}
+          		 </div>
+          </c:forEach>
+          	</div>
+         	<form action="/user/modify/fontColor" method="post" id="fontForm" > 
+	            <input type="hidden" name="email" value="${uvo.email }" />
+	            <input type="hidden" name="color" value="" />
+	            <button class="btn" id="fontBtn" type="submit">설정</button>
+          	</form>
+        </div>
         
       </div>
     </div>

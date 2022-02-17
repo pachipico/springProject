@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +38,7 @@ import com.google.gson.GsonBuilder;
 import com.springprj.www.handler.ProfileImgHandler;
 import com.springprj.www.security.UserVO;
 import com.springprj.www.service.movie.MovieService;
+import com.springprj.www.service.shop.PurchaseService;
 import com.springprj.www.service.shop.ShopService;
 import com.springprj.www.service.tv.TVService;
 import com.springprj.www.service.user.UserService;
@@ -61,7 +63,7 @@ public class UserController {
 	private BCryptPasswordEncoder bcpEncoder;
 
 	@Inject
-	private ShopService ssv;
+	private PurchaseService psv;
 
 	@Inject
 	private ProfileImgHandler phd;
@@ -126,6 +128,7 @@ public class UserController {
 
 		reAttr.addFlashAttribute("email", request.getAttribute("email"));
 		reAttr.addFlashAttribute("errMsg", request.getAttribute("errMsg"));
+		log.debug(">>>>>>>>logged in");
 		return "redirect:/user/login";
 	}
 
@@ -156,16 +159,16 @@ public class UserController {
 		model.addAttribute("mReviewedCnt", msv.getUserReviewedList(email).size());
 		model.addAttribute("tReviewCnt", tsv.getUserReviewdList(email).size());
 
-		
 		try {
-			model.addAttribute("movieGenres", mapper.writeValueAsString(usv.getUsersWatchedMovieGenres(email).getGenres()));
+			model.addAttribute("movieGenres",
+					mapper.writeValueAsString(usv.getUsersWatchedMovieGenres(email).getGenres()));
 			model.addAttribute("tvGenres", mapper.writeValueAsString(usv.getUsersWatchedTVGenres(email).getGenres()));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
 		model.addAttribute("mRateData", usv.getUsersMovieRateData(email));
 		model.addAttribute("tRateData", usv.getUsersTVRateData(email));
-
+		model.addAttribute("fontList", psv.getUsersFontColorList(email));
 		return "user/detail";
 	}
 
@@ -242,11 +245,24 @@ public class UserController {
 		return "user/detail";
 	}
 
+	@GetMapping("/{email}/poster")
+	public String posterList(Model model, @PathVariable("email") String email) {
+		if (usv.getUserDetail(email) == null) {
+			return "error/noUser";
+		}
+		model.addAttribute("list", "poster");
+		model.addAttribute("tvAvg", usv.getUsersAvgTVRating(email));
+		model.addAttribute("movieAvg", usv.getUsersAvgMovieRating(email));
+		model.addAttribute("uvo", usv.getUserDetail(email));
+		model.addAttribute("posterList", psv.getUsersPosterList(email));
+		return "user/detail";
+	}
+
 	@GetMapping("/{email}/modify")
 	public String modify(@PathVariable("email") String email, Model model) {
 
 		model.addAttribute("uvo", usv.getUserDetail(email));
-		model.addAttribute("purchased", ssv.getList());
+		model.addAttribute("fontList", psv.getUsersFontColorList(email));
 		return "user/modify";
 	}
 
@@ -307,7 +323,7 @@ public class UserController {
 	@PostMapping("/modify/fontColor")
 	public String modiftFontColor(String email, String color, RedirectAttributes reAttr) {
 		reAttr.addFlashAttribute("isUp", usv.updateUserFontColor(email, color));
-		return "redirect:/user/detail/" + email;
+		return "redirect:/user/" + email + "/modify";
 	}
 
 	@GetMapping("/{email}/setting")
@@ -334,6 +350,16 @@ public class UserController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
+	@PostMapping(value = "/{email}/gainPoints", consumes = "application/json", produces = {
+			MediaType.TEXT_PLAIN_VALUE })
+	public ResponseEntity<String> gainPoints(@RequestBody Map<String, Integer> map, @PathVariable("email") String email) {
+
+		return usv.gainPoint(email,map.get("point")) > 0
+				? new ResponseEntity<String>("1", HttpStatus.OK)
+				: new ResponseEntity<String>("0", HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+
+	
 	// ====================== admin =======================
 
 	@GetMapping("/userList")

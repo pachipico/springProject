@@ -15,6 +15,22 @@ let likedList = null;
 let ratedList = null;
 let reviewedList = null;
 
+const gainPoints = async (email, point) => {
+  try {
+    const data = { point };
+    const config = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/user/${email}/gainPoints`, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const changeUrl = () => {
   url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=ko-KR&region=KR&sort_by=${sortQuery}&include_adult=false&include_video=false&include_adult=${isAdult}&with_genres=${genreQuery.join(
     ","
@@ -165,7 +181,8 @@ const addRating = async (mid, email, rating) => {
       // 평점 남기기 -> 평점 수정 구현
       rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${movieData.mid}', '${movieData.title}', '${movieData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${movieData.id}" data-status="mod" href="#">평점 수정하기</a>`;
       document.getElementById("modalCloseBtn").click();
-      alert("평점 등록 성공");
+      alert("평점 등록 성공, 1포인트 획득!");
+      gainPoints(email, 1);
     } else {
       alert("평점 등록 실패..");
     }

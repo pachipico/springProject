@@ -30,7 +30,7 @@
 			</div>
           
           <div class="dropdown dropdownNav menu">
-  				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+  				<button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			영화 게시판
   				</button>
   				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -53,6 +53,9 @@
         </div>
         <div class="menu">
         	<a class="btn" style="color: #fff;" href="/rank/pointlist">랭킹</a>
+        </div>
+        <div class="menu">
+        	<a class="btn" style="color: #fff;" href="/purchase/font">shop</a>
         </div>
        </div>
         

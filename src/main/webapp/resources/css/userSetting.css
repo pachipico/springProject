@@ -27,7 +27,6 @@
 #emailDiv span {
   font-size: 1.7rem;
   font-weight: 700;
-  color: #fff;
 }
 
 #settingContainer {
@@ -90,6 +89,31 @@
   color: black;
 }
 
+#fontColorDiv {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.fontColor {
+	width: 60px;
+	height: 60px;
+	border-radius: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 12px;
+	font-weight: bold;
+	color: #fff;
+}
+.buyAble:hover {
+	cursor: pointer;
+	border: 3px solid #fff;
+}
+
+
 input {
   width: 100%;
   padding: 8px;
@@ -147,4 +171,20 @@ input {
 #changePwdSubmitBtn:hover{
 	background-color: black;
 	
+}
+
+#fontForm {
+	text-align: end;
+	margin: 40px;
+}
+
+#fontBtn {
+	background-color: rgb(91, 189, 250);
+	color: #fff;
+	border-radius: 8px;
+	margin-right: 10px;
+}
+
+#fontBtn:hover {
+	background-color: black;
 }

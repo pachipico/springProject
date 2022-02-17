@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
 	<div class="wrapper">
-		<div class="title">영화 감상평 디테일</div>
+		<div class="title">영화 게시판 디테일</div>
 		<c:set var="mbvo" value="${mbdto.mbvo }" />
 		<div class="card" style="max-width: 740px;">
 			<div class="row g-0">
@@ -57,8 +57,8 @@
 				<input type="hidden" name="heartCheck" id="heartCheck" value="${mbdto.check }">
 				<input type="hidden" name="authEmail" id="authEmail" value="${authEmail }">
 					<c:choose>
-						<c:when test="${authEmail == mbvo.nickName }">
-							<button type="button" class="hBtn" id="heartList">♡</button>
+						<c:when test="${authEmail == mbvo.writer }">
+							<button type="button" class="hBtn" id="heartList" data-bs-toggle="modal" data-bs-target="#myModalHeart">♡</button>
 						</c:when>
 						<c:when test="${authEmail != null && mbdto.check == 1 }">
 							<button type="button" class="hBtn" id="heartBtn">♥</button>
@@ -144,6 +144,31 @@
 				</div>
 	    	</div>
 	  	</div>
+	  	<div class="modal" id="myModalHeart">
+	  		<div class="modal-dialog">
+			    <div class="modal-content">
+				    <div class="modal-header">
+				        <h4 class="modal-title">좋아요한 사람</h4>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				    </div>
+				
+				    <div class="modal-body">
+				        <div class="input-group my-3">
+							<div class="likeListArea">
+							
+							</div>
+							<div class="likeTotalCnt">
+							
+							</div>
+						</div>
+				    </div>
+				
+				    <div class="modal-footer">
+				        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+				    </div>
+				</div>
+	    	</div>
+	  	</div>
   	</div>
 </div>
 
@@ -161,6 +186,6 @@
 	const heartCheck = document.querySelector("input[name=heartCheck]").value;
 	const authEmail = document.querySelector("input[name=authEmail]").value;
 </script>
-<script src="/resources/js/mBoard.detail.js"></script>
 <script src="/resources/js/mBoard.comment.js"></script>
+<script src="/resources/js/mBoard.detail.js"></script>
 <jsp:include page="../common/footer.jsp" />

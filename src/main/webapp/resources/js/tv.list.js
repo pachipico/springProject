@@ -19,6 +19,22 @@ const changeUrl = () => {
   )}&with_keywords=&with_networks=&with_origin_country=&with_original_language=&with_ott_monetization_types=&with_ott_providers=${platform}&with_release_type=&with_runtime.gte=0&with_runtime.lte=400&language=ko&page=`;
 };
 
+const gainPoints = async (email, point) => {
+  try {
+    const data = { point };
+    const config = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    };
+    const res = await fetch(`/user/${email}/gainPoints`, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const getJson = async (page = 1) => {
   try {
     const res = await fetch(url + page);
@@ -163,7 +179,8 @@ const addRating = async (tvid, email, rating, genres) => {
       // 평점 남기기 -> 평점 수정 구현
       rateBtn.outerHTML = `<a class="dropdown-item" onclick="setData(${rating}, '${tvData.tvid}', '${tvData.title}', '${tvData.poster}')" data-bs-toggle="modal" data-bs-target="#ratingModal" data-ratingId="${tvData.id}" data-status="mod" href="#">평점 수정하기</a>`;
       document.getElementById("modalCloseBtn").click();
-      alert("평점 등록 성공");
+      alert("평점 등록 성공, 1포인트 획득!");
+      gainPoints(email, 1);
     } else {
       alert("평점 등록 실패..");
     }

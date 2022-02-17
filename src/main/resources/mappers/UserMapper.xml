@@ -78,17 +78,8 @@
 		
 	</select>
 	
-	<resultMap type="com.springprj.www.domain.user.UserRateData" id="userRateData">
-		<result column="rate" property="rate" />
-		
-		
-		
-		
-		
-		
-		
-	</resultMap>
 	
+
 	
 	<select id="selectAuths" parameterType="string" resultType="authVO">
 		select * from auth_user where email = #{email}

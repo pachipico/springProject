@@ -110,6 +110,7 @@ public class MovieController {
 			msv.registerMovieIfNotExists(dto.getMvvo());
 		}
 		int isUp = msv.registerReview(dto.getRvvo());
+		
 		return  new ResponseEntity<String>(isUp < 0 ? "-1" : isUp == 0 ?  "0" : "1", HttpStatus.OK);
 			
 	}
@@ -136,8 +137,8 @@ public class MovieController {
 			log.debug("=========== register movie :{}", dto.getMvvo());
 			msv.registerMovieIfNotExists(dto.getMvvo());
 		}
-
-		return msv.registerLike(dto.getLvo()) > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
+		int isUp = msv.registerLike(dto.getLvo());
+		return  isUp > 0 ? new ResponseEntity<String>("1", HttpStatus.OK)
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

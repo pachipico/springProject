@@ -10,7 +10,7 @@
 
 <div class="container-fluid">
 	<div class="wrapper">
-		<div class="title">TV 감상평 디테일</div>
+		<div class="title">TV 게시판 디테일</div>
 		<c:set var="tvbvo" value="${tvbdto.tvbvo }" />
 		<div class="card" style="max-width: 740px;">
 			<div class="row g-0">
@@ -58,7 +58,7 @@
 				<input type="hidden" name="authEmail" id="authEmail" value="${authEmail }">
 					<c:choose>
 						<c:when test="${authEmail == tvbvo.writer }">
-							<button type="button" class="hBtn" id="heartList">♡</button>
+							<button type="button" class="hBtn" id="heartList" data-bs-toggle="modal" data-bs-target="#myModalHeart">♡</button>
 						</c:when>
 						<c:when test="${authEmail != null && tvbdto.check == 1 }">
 							<button type="button" class="hBtn" id="heartBtn">♥</button>
@@ -135,6 +135,31 @@
 				        <div class="input-group my-3">
 							<input type="text" class="form-control" id="cmtTextMod">
 							<button class="btn btn-success" id="cmtModBtn" type="button">수정</button>
+						</div>
+				    </div>
+				
+				    <div class="modal-footer">
+				        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+				    </div>
+				</div>
+	    	</div>
+	  	</div>
+	  	<div class="modal" id="myModalHeart">
+	  		<div class="modal-dialog">
+			    <div class="modal-content">
+				    <div class="modal-header">
+				        <h4 class="modal-title">좋아요한 사람</h4>
+				        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				    </div>
+				
+				    <div class="modal-body">
+				        <div class="input-group my-3">
+							<div class="likeListArea">
+							
+							</div>
+							<div class="likeTotalCnt">
+							
+							</div>
 						</div>
 				    </div>
 				

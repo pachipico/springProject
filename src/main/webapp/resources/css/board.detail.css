@@ -118,3 +118,27 @@
     border: 0;
     color: red;
 }
+.likeListArea{
+    width:466px;
+    height:100px;
+    white-space:nowrap;
+    overflow-x:scroll;
+}
+.likeTotalCnt{
+    width:466px;
+    text-align: right;
+}
+.hListOne{
+    text-align: center;
+    display: inline-block;
+    width:80px;
+    height:74px;
+    white-space:nowrap;
+}
+.imgAlign{
+    text-align: center;
+}
+.hListNick > a{
+    text-decoration: none;
+    color: black;
+}

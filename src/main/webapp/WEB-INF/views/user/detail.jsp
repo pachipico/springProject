@@ -84,7 +84,7 @@
         </ul>
       </div>
       <div class="btn-group">
-        <a class="menuBtn" style="display: flex;align-items:center;" type="button" href="#">포스터</a> <!-- 디테일 메인페이지에서 보여줄	건지? -->
+        <a class="menuBtn" style="display: flex;align-items:center;" type="button" href="/user/${uvo.email }/poster">포스터</a> <!-- 디테일 메인페이지에서 보여줄	건지? -->
       </div>
       <sec:authorize access="isAuthenticated()">
 			<sec:authentication property="principal.uvo.email" var="authEmail"/>  
@@ -171,6 +171,9 @@
       	</c:when>
       	<c:when test="${list eq 'main'}">
       		 <jsp:include page="list/main.jsp" /> 
+      	</c:when>
+      	<c:when test="${list eq 'poster' }">
+      		<jsp:include page="list/posterList.jsp" />
       	</c:when>
       	<c:otherwise>
       		??

@@ -53,6 +53,10 @@ document.getElementById("buyBtn").addEventListener("click", (e) => {
       if (result > 0) {
         alert(`구매 완료!`);
         location.reload();
+      } else if (result == 0) {
+        alert(`구매 실패. 다시 시도해주세요.`);
+      } else {
+        alert(`포인트가 부족합니다!`);
       }
     });
   } else {
