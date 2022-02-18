@@ -12,7 +12,7 @@
           <a href="" id="currMenu"> 폰트 컬러 구매 </a>
         </div>
         <div class="settingMenu">
-          <a href=""> 영화 포스터 구매 </a>
+          <a href="/purchase/poster"> 영화 포스터 구매 </a>
         </div>
         
       </div>

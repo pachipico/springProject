@@ -15,6 +15,7 @@ import com.springprj.www.domain.PagingVO;
 import com.springprj.www.domain.mBoard.MBoardVO;
 import com.springprj.www.handler.PagingHandler;
 import com.springprj.www.service.mBoard.MBoardService;
+import com.springprj.www.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class MBoardController {
 	@Inject
 	private MBoardService mbsv;
+	
+	@Inject
+	private UserService usv;
 	
 	@GetMapping("/registerMovie")
 	public void registerMovie() {}
@@ -43,6 +47,7 @@ public class MBoardController {
 	@PostMapping("/register")
 	public String register(MBoardVO mbvo, RedirectAttributes reAttr) {
 		reAttr.addFlashAttribute("isUp", mbsv.register(mbvo) > 0 ? "1" : "0");
+		usv.gainPoint(mbvo.getWriter(), 5);
 		return "redirect:/mBoard/" + (mbvo.getLikeHate() == 1 ? "like" : "hate") + "List";
 	}
 	

@@ -15,6 +15,7 @@ import com.springprj.www.domain.PagingVO;
 import com.springprj.www.domain.tvBoard.TvBoardVO;
 import com.springprj.www.handler.PagingHandler;
 import com.springprj.www.service.tvBoard.TvBoardService;
+import com.springprj.www.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class TvBoardController {
 	@Inject
 	private TvBoardService tvbsv;
+	
+	@Inject
+	private UserService usv;
 	
 	@GetMapping("/registerTv")
 	public void registerTv() {}
@@ -43,6 +47,7 @@ public class TvBoardController {
 	@PostMapping("/register")
 	public String register(TvBoardVO tvbvo, RedirectAttributes reAttr) {
 		reAttr.addFlashAttribute("isUp", tvbsv.register(tvbvo) > 0 ? "1" : "0");
+		usv.gainPoint(tvbvo.getWriter(), 5);
 		return "redirect:/tvBoard/" + (tvbvo.getLikeHate() == 1 ? "like" : "hate") + "List";
 	}
 	

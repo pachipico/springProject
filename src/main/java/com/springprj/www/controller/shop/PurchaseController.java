@@ -50,6 +50,12 @@ public class PurchaseController {
 		}
 	}
 	
+	@GetMapping("/poster")
+	public void poster(Model model, String email) {
+		List<ProductVO> list =  psv.getUsersPosterList(email);
+		
+	}
+	
 	@PostMapping(value = "/register", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> register(@RequestBody ProductVO pdvo) {
 		if(usv.spendPoint(pdvo.getEmail(), pdvo.getPrice()) > 0) {

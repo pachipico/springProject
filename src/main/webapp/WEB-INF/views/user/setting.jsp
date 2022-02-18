@@ -10,7 +10,7 @@
       <div >
       	<img class="profileImg" src="/fileUpload/${uvo.profileImg }">
       </div>
-      <span><c:out value="${uvo.nickName }"/></span>
+      <span style="color: ${uvo.fontColor}"><c:out value="${uvo.nickName }"/></span>
     </div>
     <div id="settingContainer">
       <div id="leftMenu">
