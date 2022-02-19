@@ -81,4 +81,10 @@
     <!-- https://themoviedb.org/t/p/w220_and_h330_face/AqpsDP7Mqi0EugpxSJ4UnV6mjrt.jpg -->
   </body>
 </html>
+<script>
+	let msg = `<c:out value="${msg}" />`;
+	if(msg!=null && msg != ""){
+		alert(msg);
+	}
+</script>
 <script src="/resources/js/home.js"></script>

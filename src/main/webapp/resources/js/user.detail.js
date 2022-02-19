@@ -369,6 +369,13 @@ document.addEventListener("click", (e) => {
         alert("즐겨찾기 취소 성공");
         if (list == "liked") {
           movie.remove();
+          if (platform == "tv") {
+            document.querySelector(".tvCnt").innerText =
+              parseInt(document.querySelector(".tvCnt").innerText) - 1;
+          } else {
+            document.querySelector(".mCnt").innerText =
+              parseInt(document.querySelector(".mCnt").innerText) - 1;
+          }
         }
       } else {
         console.log("즐겨찾기 취소 실패");
@@ -403,6 +410,12 @@ document.addEventListener("click", (e) => {
         console.log("제거 성공");
         alert("제거 성공");
         movie.remove();
+        if (platform == "movie") {
+          document.querySelector(".mCnt").innerText = parseInt(document.querySelector(".mCnt").innerText) - 1;
+        } else {
+          document.querySelector(".tvCnt").innerText =
+            parseInt(document.querySelector(".tvCnt").innerText) - 1;
+        }
       } else {
         console.log("제거 실패");
       }
@@ -443,6 +456,13 @@ document.addEventListener("click", (e) => {
         // 평점 항이면 삭제
         if (list != null && list == "rated") {
           document.querySelector(`div[data-id="${id}"]`).remove();
+          if (platform == "tv") {
+            document.querySelector(".tvCnt").innerText =
+              parseInt(document.querySelector(".tvCnt").innerText) - 1;
+          } else {
+            document.querySelector(".mCnt").innerText =
+              parseInt(document.querySelector(".mCnt").innerText) - 1;
+          }
         }
       }
     });

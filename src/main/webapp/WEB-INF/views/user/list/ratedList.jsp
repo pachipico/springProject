@@ -13,8 +13,8 @@
       <div class="listTitle">
       	<div class="left">
         <span id="listTitleText">${authEmail eq email ? "나" : email }의 평점</span>
-        <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/ratedList"><span class="platformBtn" >영화</span> <span class="platformCnt">${mRatedCnt}</span></a>
-        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/ratedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt">${tRatedCnt }</span></a>
+        <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/ratedList"><span class="platformBtn" >영화</span> <span class="platformCnt mCnt">${mRatedCnt}</span></a>
+        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/ratedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt tvCnt">${tRatedCnt }</span></a>
         </div>
         
       </div>

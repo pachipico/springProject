@@ -14,8 +14,8 @@
        <div class="left">
         <span id="listTitleText">
         ${email eq authEmail ? "나" : email  }의 즐겨찾기</span>
-        <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/likedList"><span class="platformBtn" >영화</span> <span class="platformCnt">${mLikedCnt}</span></a>
-        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/likedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt">${tLikedCnt }</span></a>
+        <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/likedList"><span class="platformBtn" >영화</span> <span class="platformCnt mCnt">${mLikedCnt}</span></a>
+        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/likedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt tvCnt">${tLikedCnt }</span></a>
        </div>
         
       </div>

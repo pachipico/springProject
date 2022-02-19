@@ -26,7 +26,7 @@
             <div class="score">
             <c:choose>
             	<c:when test="${movieAvg > 0 }">
-            		<fmt:formatNumber type="number" pattern="0" value="${movieAvg }" />
+            		<span id="mAvg"><fmt:formatNumber type="number" pattern="0" value="${movieAvg }" /></span>
             	</c:when>
             	<c:otherwise>
             		<span style="font-size: 11px;">평점없음</span>
@@ -43,7 +43,7 @@
             <div class="score">
             <c:choose>
             	<c:when test="${tvAvg > 0 }">
-           			<fmt:formatNumber type="number" pattern="0" value="${tvAvg }" />
+           			<span id="tvAvg"><fmt:formatNumber type="number" pattern="0" value="${tvAvg }" /></span>
             	</c:when>
             	<c:otherwise>
             		<span style="font-size: 11px;">평점없음</span>

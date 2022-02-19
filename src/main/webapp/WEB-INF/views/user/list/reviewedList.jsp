@@ -12,8 +12,8 @@
       <div class="listTitle">
        <div class="left">
         <span id="listTitleText">${authEmail eq email ? "나" : email }의 리뷰</span>
-         <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/reviewedList"><span class="platformBtn" >영화</span> <span class="platformCnt">${mReviewedCnt}</span></a>
-        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/reviewedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt">${tReviewedCnt }</span></a>
+         <a ${platform eq "movie" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/reviewedList"><span class="platformBtn" >영화</span> <span class="platformCnt mCnt">${mReviewedCnt}</span></a>
+        <a ${platform eq "tv" ? 'style="border-bottom: 5px solid #dd54be;"' : '' } href="/user/${email }/reviewedList/tv"><span class="platformBtn">TV</span> <span class="platformCnt tvCnt">${tReviewedCnt }</span></a>
        </div>
         
       

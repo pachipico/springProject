@@ -36,8 +36,9 @@ public class MovieServiceTest {
 
 	@Test
 	public void getMovieData() {
-		MovieDTO dto = msv.getMovieData(111L, "123@123.com");
-		log.info("{}", dto);
+//		MovieDTO dto = msv.getMovieData(111L, "123@123.com");
+		msv.getRatingRankList();
+//		log.info("{}", dto);
 	}
 
 	@Test
