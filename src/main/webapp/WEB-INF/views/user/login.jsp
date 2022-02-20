@@ -30,11 +30,15 @@
   <script>
   let email = `<c:out value="${email}" />`;
   let isUp = `<c:out value="${isUp}" />`;
+  let isSuccess = `<c:out value="${isSuccess}" />`;
 	if(isUp > 0){
 		alert("정보 수정 완료");
 	}
 	if(email != null && email != ""){
 		alert(`회원님의 이메일은 ${email} 입니다.`);
+	}
+	if(isSuccess == true) {
+		alert("회원가입이 완료되었습니다.");
 	}
   let errMsg = `<c:out value="${errMsg}" />`;
 	if(errMsg != null && errMsg != ''){
