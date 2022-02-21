@@ -215,5 +215,6 @@
 	if(msg != null && msg != ""){
 		alert(msg);
 	}
+	msg = null;
 </script>
 <script src="/resources/js/user.detail.js"></script>

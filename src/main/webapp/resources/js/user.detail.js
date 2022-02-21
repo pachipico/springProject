@@ -221,6 +221,7 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
     postRating(email, e.target.value, id).then((result) => {
       if (parseFloat(result) > 0) {
         alert("평점 등록 성공, 1포인트 획득!");
+
         gainPoints(email, 1);
         moviesData.map((movie) => {
           if (movie.mid == id) {

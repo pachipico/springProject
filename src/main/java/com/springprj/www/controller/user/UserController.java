@@ -360,6 +360,16 @@ public class UserController {
 	}
 
 	
+	@GetMapping("/{email}/tvAvgRating")
+	public ResponseEntity<String> getTVAvgRating(@PathVariable("email") String email){
+		return new ResponseEntity<String>(String.valueOf(usv.getUsersAvgTVRating(email)), HttpStatus.OK);
+	}
+	
+	@GetMapping("/{email}/mvAvgRating")
+	public ResponseEntity<String> getMVAvgRating(@PathVariable("email") String email){
+		return new ResponseEntity<String>(String.valueOf(usv.getUsersAvgMovieRating(email)), HttpStatus.OK);
+	}
+	
 	// ====================== admin =======================
 
 	@GetMapping("/userList")
