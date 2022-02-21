@@ -221,7 +221,7 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
     postRating(email, e.target.value, id).then((result) => {
       if (parseFloat(result) > 0) {
         alert("평점 등록 성공, 1포인트 획득!");
-
+        // 헤더 부분 tv 평점, mv 평점 변하게 하기.
         gainPoints(email, 1);
         moviesData.map((movie) => {
           if (movie.mid == id) {
@@ -237,7 +237,7 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
         document.querySelector(
           `a[data-id="${id}"]`
         ).outerHTML = `<a class="btn ratingBtn headerRateBtn btn-sm headerBtn" style="background-color: #25e525; color: white;font-weight:bold;border:none;"  data-bs-toggle="modal" data-bs-target="#ratingModal" data-id="${id}" data-email="${email}">${e.target.value}</a>`;
-        // 평균 평점 result로 변하게.
+        // 헤더 부분 tv 평점, mv 평점 변하게 하기.
       } else {
         alert("평점 등록 실패..");
         currentRating = null;
@@ -248,7 +248,7 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
     modifyRating(email, e.target.value, id).then((result) => {
       if (parseFloat(result) > 0) {
         alert("평점 수정 성공");
-        // 평균 평점 result로 변하게
+        // 헤더 부분 tv 평점, mv 평점 변하게 하기.
 
         moviesData.map((movie) => {
           if (movie.mid == id) {
@@ -331,6 +331,26 @@ const remove = async (data, url) => {
       body: JSON.stringify(data),
     };
     const res = await fetch(url, config);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getTVAvgRating = async (email) => {
+  try {
+    const res = await fetch(`/${email}/tvAvgRating`);
+    const result = await res.text();
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const getMVAvgRating = async (email) => {
+  try {
+    const res = await fetch(`/${email}/mvAvgRating`);
     const result = await res.text();
     return result;
   } catch (e) {
@@ -442,7 +462,7 @@ document.addEventListener("click", (e) => {
     removeRating(email, id).then((result) => {
       if (result != null || result != "NoData") {
         alert("평점 삭제 성공");
-
+        // 헤더 부분 tv 평점, mv 평점 변하게 하기.
         moviesData.map((movie) => {
           if (movie.mid == id) {
             movie.rating = null;

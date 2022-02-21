@@ -214,7 +214,8 @@
 	let msg = `<c:out value="${msg}" />`;
 	if(msg != null && msg != ""){
 		alert(msg);
-	}
 	msg = null;
+	}
 </script>
+<c:set value="${null }" var="msg" />
 <script src="/resources/js/user.detail.js"></script>

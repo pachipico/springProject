@@ -85,8 +85,9 @@
 	let msg = `<c:out value="${msg}" />`;
 	if(msg!=null && msg != ""){
 		alert(msg);
-	}
 	msg = null;
+	}
+	<c:set value="${null }" var="msg" />
 </script>
-<c:set value="${null }" var="msg"  />
+
 <script src="/resources/js/home.js"></script>
