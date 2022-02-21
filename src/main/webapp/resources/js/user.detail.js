@@ -222,6 +222,14 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
       if (parseFloat(result) > 0) {
         alert("평점 등록 성공, 1포인트 획득!");
         // 헤더 부분 tv 평점, mv 평점 변하게 하기.
+        getTVAvgRating(email).then((rating) => {
+          console.log(`유저 tv 평균: ${rating}`);
+          document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
+        getMVAvgRating(email).then((rating) => {
+          console.log(`유저 mv 평균: ${rating}`);
+          document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
         gainPoints(email, 1);
         moviesData.map((movie) => {
           if (movie.mid == id) {
@@ -238,9 +246,19 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
           `a[data-id="${id}"]`
         ).outerHTML = `<a class="btn ratingBtn headerRateBtn btn-sm headerBtn" style="background-color: #25e525; color: white;font-weight:bold;border:none;"  data-bs-toggle="modal" data-bs-target="#ratingModal" data-id="${id}" data-email="${email}">${e.target.value}</a>`;
         // 헤더 부분 tv 평점, mv 평점 변하게 하기.
+        getTVAvgRating(email).then((rating) => {
+          console.log(`유저 tv 평균: ${rating}`);
+          document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
+        getMVAvgRating(email).then((rating) => {
+          console.log(`유저 mv 평균: ${rating}`);
+          document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
       } else {
         alert("평점 등록 실패..");
         currentRating = null;
+        document.getElementById("ratingStar").value = 0;
+        document.querySelector(`.star span`).style.width = `${0}%`;
       }
     });
   } else {
@@ -249,7 +267,14 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
       if (parseFloat(result) > 0) {
         alert("평점 수정 성공");
         // 헤더 부분 tv 평점, mv 평점 변하게 하기.
-
+        getTVAvgRating(email).then((rating) => {
+          console.log(`유저 tv 평균: ${rating}`);
+          document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
+        getMVAvgRating(email).then((rating) => {
+          console.log(`유저 mv 평균: ${rating}`);
+          document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
         moviesData.map((movie) => {
           if (movie.mid == id) {
             movie.rating = e.target.value;
@@ -340,7 +365,10 @@ const remove = async (data, url) => {
 
 const getTVAvgRating = async (email) => {
   try {
-    const res = await fetch(`/${email}/tvAvgRating`);
+    const config = {
+      method: "GET",
+    };
+    const res = await fetch(`/user/${email}/tvAvgRating`, config);
     const result = await res.text();
     return result;
   } catch (e) {
@@ -350,7 +378,10 @@ const getTVAvgRating = async (email) => {
 
 const getMVAvgRating = async (email) => {
   try {
-    const res = await fetch(`/${email}/mvAvgRating`);
+    const config = {
+      method: "GET",
+    };
+    const res = await fetch(`/user/${email}/mvAvgRating`, config);
     const result = await res.text();
     return result;
   } catch (e) {
@@ -360,7 +391,9 @@ const getMVAvgRating = async (email) => {
 
 document.addEventListener("click", (e) => {
   let movie = e.target.closest(".movie");
-
+  if (e.target.classList.contains("bi-star-fill")) {
+    e.target.closest("a").click();
+  }
   if (e.target.classList.contains("likeBtn") && !e.target.classList.contains("clicked")) {
     const id = movie.dataset.id;
 
@@ -426,10 +459,19 @@ document.addEventListener("click", (e) => {
         break;
     }
     remove(data, url).then((result) => {
-      // 두번째는 삭제후 평균 레이팅 값이 올때, 세번째는 삭제후 레이팅 값이 없을때 NoData가 옴.
+      // 두번째는 삭제후 평균 레이팅 값이 올때, 세번째는 삭제후 레이팅 값이 없을때 NoData 옴.
+      console.log(result);
       if (parseInt(result) > 0 || parseFloat(result) > 0 || result == "NoData") {
         console.log("제거 성공");
         alert("제거 성공");
+        getTVAvgRating(email).then((rating) => {
+          console.log(`유저 tv 평균: ${rating}`);
+          document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
+        getMVAvgRating(email).then((rating) => {
+          console.log(`유저 mv 평균: ${rating}`);
+          document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
         movie.remove();
         if (platform == "movie") {
           document.querySelector(".mCnt").innerText = parseInt(document.querySelector(".mCnt").innerText) - 1;
@@ -443,6 +485,7 @@ document.addEventListener("click", (e) => {
     });
   } else if (e.target.classList.contains("ratingBtn")) {
     const id = movie.dataset.id;
+    console.log(movie);
     let ratingStar = document.getElementById("ratingStar");
     ratingStar.dataset.id = id;
     ratingStar.dataset.email = email;
@@ -460,9 +503,21 @@ document.addEventListener("click", (e) => {
     const id = document.getElementById("ratingStar").dataset.id;
     const email = document.getElementById("ratingStar").dataset.email;
     removeRating(email, id).then((result) => {
-      if (result != null || result != "NoData") {
+      if (result != null || result != "vud") {
         alert("평점 삭제 성공");
         // 헤더 부분 tv 평점, mv 평점 변하게 하기.
+
+        document.querySelector(
+          `a[data-id="${id}"]`
+        ).outerHTML = `<a class="btn ratingBtn headerRateBtn btn-sm headerBtn"  data-bs-toggle="modal" data-bs-target="#ratingModal" data-id="${id}" data-email="${email}"><i class="bi bi-star-fill"></i></a>`;
+        getTVAvgRating(email).then((rating) => {
+          console.log(`유저 tv 평균: ${rating}`);
+          document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
+        getMVAvgRating(email).then((rating) => {
+          console.log(`유저 mv 평균: ${rating}`);
+          document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+        });
         moviesData.map((movie) => {
           if (movie.mid == id) {
             movie.rating = null;
@@ -473,7 +528,9 @@ document.addEventListener("click", (e) => {
             tv.rating = null;
           }
         });
-
+        currentRating = null;
+        document.getElementById("ratingStar").value = 0;
+        document.querySelector(`.star span`).style.width = `${0}%`;
         // 평점 항이면 삭제
         if (list != null && list == "rated") {
           document.querySelector(`div[data-id="${id}"]`).remove();

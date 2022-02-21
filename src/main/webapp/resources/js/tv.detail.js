@@ -130,6 +130,7 @@ const renderReview = (list, writtenReview) => {
 };
 
 const addToList = (data) => {
+  console.log(data);
   let reviewWrapper = document.getElementById("reviewWrapper");
   if (userData.rvList.length == 0) {
     reviewWrapper.innerHTML = "";
