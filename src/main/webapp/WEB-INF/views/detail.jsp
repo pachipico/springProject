@@ -37,7 +37,7 @@
           </div>
           <div class="tagLine"><i class="tLine">태그라인</i></div>
           <div class="overview">
-            <h3 class="overviewTitle">개요</h3>
+            <h3 class="overviewTitle">개요 </h3>
             <p class="overviewSub">줄거리</p>
           </div>
         </div>
