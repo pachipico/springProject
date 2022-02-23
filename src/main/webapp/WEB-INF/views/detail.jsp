@@ -49,13 +49,15 @@
 	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          <sec:authentication property="principal.uvo.authList" var="auths" />
 	          <sec:authentication property="principal.uvo.profileImg" var="profileImg"/>
+	          <sec:authentication property="principal.uvo.fontColor" var="fontColor"/>
     			<c:set value="${profileImg }" var="profileImg"/>
     			<c:set value="${authEmail}" var="loggedInEmail" />
-    		
+    			<c:set value="${fontColor }" var="fontColor" />
     	</sec:authorize>
     	<script>
     		let loggedInEmail = `<c:out value="${loggedInEmail}" />`;
     		let profileImg = `<c:out value="${profileImg}" />`;
+    		let fontColor = `<c:out value="${fontColor}" />`
     	</script>
     	<div class="mainTitle">시리즈 출연진</div>
 		<div id="castDiv">
