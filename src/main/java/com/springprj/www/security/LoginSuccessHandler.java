@@ -84,6 +84,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		}
 		SavedRequest savedReq = reqCache.getRequest(request, response);
 		log.debug("login success, redirect to : {}", savedReq);
+		
 		reStg.sendRedirect(request, response, (savedReq != null ? savedReq.getRedirectUrl() : getAuthUrl()));
 	}
 

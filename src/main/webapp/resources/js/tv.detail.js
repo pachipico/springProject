@@ -130,7 +130,7 @@ const renderReview = (list, writtenReview) => {
 };
 
 const addToList = (data) => {
-  console.log(data);
+  console.log("addToList", data);
   let reviewWrapper = document.getElementById("reviewWrapper");
   if (userData.rvList.length == 0) {
     reviewWrapper.innerHTML = "";
@@ -143,7 +143,7 @@ const addToList = (data) => {
     data.profileImg
   }" alt="" class="reviewProfileImg" /></a>
         </div>
-        <span class="reviewContent" style="color:${data.fontColor}">
+        <span class="reviewContent" style="color:${userData.rvdto.fontColor}">
           ${data.content}
         </span>
       </div>
@@ -366,7 +366,7 @@ document.addEventListener("click", (e) => {
         alert("리뷰 작성 성공, 2포인트 획득!");
         gainPoints(writer, 2);
         reviewCnt++;
-        addToList({ writer, content, profileImg, regAt: Date.now() });
+        addToList({ writer, content, profileImg, fontColor, regAt: Date.now() });
         document.querySelector(".reviewRegBtn").disabled = true;
         document.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
         document.querySelector("[name=content]").readOnly = true;
@@ -453,7 +453,7 @@ document.addEventListener("click", (e) => {
         addToList({
           writer: inputDiv.querySelector("[name=writer]").value,
           content: inputDiv.querySelector("[name=content]").value,
-          profileImg,
+          profileImg, // 이부분 제대로 된 데이터가 안들어감, fontColor도 넣어야함.
           regAt: Date.now(),
         });
         inputDiv.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
@@ -518,7 +518,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   getTVData().then((result) => {
     userData = result;
-    console.log(userData);
+    console.log("userData", userData);
     reviewCnt = userData.rvList.length;
     renderReview(userData.rvList, userData.rvdto);
     if (userData.avgRating != null) {

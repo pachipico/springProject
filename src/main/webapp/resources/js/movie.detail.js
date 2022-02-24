@@ -141,6 +141,7 @@ const renderReview = (list, writtenReview) => {
 };
 
 const addToList = (data) => {
+  console.log("addToList", data);
   let reviewWrapper = document.getElementById("reviewWrapper");
   if (userData.rvList.length == 0) {
     reviewWrapper.innerHTML = "";
@@ -154,7 +155,7 @@ const addToList = (data) => {
     data.profileImg
   }" alt="" class="reviewProfileImg" /></a>
         </div>
-        <span class="reviewContent" style="color: ${data.fontColor}">
+        <span class="reviewContent" style="color: ${userData.rvdto.fontColor}">
           ${data.content}
         </span>
       </div>
@@ -466,6 +467,7 @@ document.addEventListener("click", (e) => {
           content: inputDiv.querySelector("[name=content]").value,
           profileImg,
           regAt: Date.now(),
+          fontColor,
         });
         inputDiv.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
         e.target.disabled = true;
