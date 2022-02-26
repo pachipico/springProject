@@ -370,6 +370,15 @@ public class UserController {
 		return new ResponseEntity<String>(String.valueOf(usv.getUsersAvgMovieRating(email)), HttpStatus.OK);
 	}
 	
+	@GetMapping("/userRank")
+	public String userRank(@RequestParam("query") String query , Model model) {
+		List<UserVO> list = usv.getUsersList(query);
+		model.addAttribute("list", list);
+		model.addAttribute("query", query);
+		log.info("userList: {}", list);
+		return "rank/ranklist";
+	}
+	
 	// ====================== admin =======================
 
 	@GetMapping("/userList")

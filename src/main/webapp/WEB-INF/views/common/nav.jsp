@@ -52,7 +52,7 @@
         	<a class="btn" style="color: #fff;" href="/notice/list">공지사항</a>
         </div>
         <div class="menu">
-        	<a class="btn" style="color: #fff;" href="/rank/pointlist">랭킹</a>
+        	<a class="btn" style="color: #fff;" href="/user/userRank?query=reg_at">랭킹</a>
         </div>
         <div class="menu">
         	<a class="btn" style="color: #fff;" href="/purchase/font">shop</a>

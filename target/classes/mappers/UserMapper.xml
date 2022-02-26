@@ -54,21 +54,24 @@
 	
 	<select id="selectUserList" parameterType="string" resultType="uvo">
 		select email, name, nick_name, profile_img, curr_points,total_points, grade, reg_at, last_login, slang, adult, font_color ,
-		(select count(ml.email) from m_like ml where ml.email = u.email)+0 +(select count(tl.email) from tv_like tl where tl.email = u.email) 'likeCnt'
-		, (select  count(mrv.writer) from m_review mrv where u.email = mrv.writer)+ (select  count(trv.writer) from tv_review trv where u.email = trv.writer) 'reviewCnt'
-		, (select  count(mr.email) from m_rating mr where u.email = mr.email)+(select  count(tr.email) from tv_rating tr where u.email = tr.email) 'ratingCnt'
+		(select count(ml.email) from m_like ml where ml.email = u.email)+0 +(select count(tl.email) from tv_like tl where tl.email = u.email) 'like_cnt'
+		, (select  count(mrv.writer) from m_review mrv where u.email = mrv.writer)+ (select  count(trv.writer) from tv_review trv where u.email = trv.writer) 'review_Cnt'
+		, (select  count(mr.email) from m_rating mr where u.email = mr.email)+(select  count(tr.email) from tv_rating tr where u.email = tr.email) 'rating_Cnt'
 		from user u 
 		<if test="sortBy != null">
 			order by
 			<choose>
-			<when test='sortBy eq "likeCnt".toString()'>
+			<when test='sortBy eq "like_cnt".toString()'>
 			(select count(ml.email) from m_like ml where ml.email = u.email)+0 +(select count(tl.email) from tv_like tl where tl.email = u.email) desc
 			</when>
-			<when test='sortBy eq "reviewCnt".toString()'>
+			<when test='sortBy eq "review_cnt".toString()'>
 			(select  count(mrv.writer) from m_review mrv where u.email = mrv.writer) + (select  count(trv.writer) from tv_review trv where u.email = trv.writer) desc
 			</when>
-			<when test='sortBy == "ratingCnt".toString()'>
+			<when test='sortBy == "rating_cnt".toString()'>
 			(select  count(mr.email) from m_rating mr where u.email = mr.email)+(select  count(tr.email) from tv_rating tr where u.email = tr.email) desc
+			</when>
+			<when test='sortBy == "reg_at".toString()'>
+				reg_at asc
 			</when>
 			<otherwise>
 				${sortBy} desc
