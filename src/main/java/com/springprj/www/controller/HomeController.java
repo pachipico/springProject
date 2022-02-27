@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springprj.www.domain.movietv.MovieVO;
+import com.springprj.www.domain.movietv.TVVO;
 import com.springprj.www.service.movie.MovieService;
+import com.springprj.www.service.tv.TVService;
 import com.springprj.www.service.user.UserService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +27,9 @@ public class HomeController {
 	@Inject
 	private MovieService msv;
 	
+	@Inject 
+	private TVService tsv;
+	
 	@Inject
 	private UserService usv;
 	
@@ -34,11 +39,13 @@ public class HomeController {
 			log.info("last login time{}",usv.getUserDetail(principal.getName()).getLastLogin());
 		}
 		model.addAttribute("ses",session.getAttribute("ses"));
-		List<MovieVO> ratingRank = msv.getRatingRankList();
-		List<MovieVO> likeRank = msv.getLikeRankList(); 
+		List<MovieVO> movieRatingRank = msv.getRatingRankList();
+		List<TVVO> tvRatingRank = tsv.getRatingRankList();
 		
-		model.addAttribute("ratingRank", ratingRank);
-		model.addAttribute("likeRank", likeRank);
+		
+		model.addAttribute("tvRatingRank", tvRatingRank);
+		model.addAttribute("movieRatingRank", movieRatingRank);
+		
 		return "home";
 	}
 }

@@ -13,6 +13,17 @@ const t3cnt = Object.entries(tvGenres[2])[0][1];
 
 const mp = `<p><span class="genreName">${m1gen}</span>: <span class="genreCnt"><i>${m1cnt}편</i></span></p><p><span class="genreName">${m2gen}</span>: <span class="genreCnt"><i>${m2cnt}편</i></span></p><p><span class="genreName">${m3gen}</span>: <span class="genreCnt"><i>${m3cnt}편</i></span></p>`;
 const tp = `<p><span class="genreName">${t1gen}</span>: <span class="genreCnt"><i>${t1cnt}편</i></span></p><p><span class="genreName">${t2gen}</span>: <span class="genreCnt"><i>${t2cnt}편</i></span></p><p><span class="genreName">${t3gen}</span>: <span class="genreCnt"><i>${t3cnt}편</i></span></p>`;
-
-document.querySelector(".favoriteMGenre").innerHTML += mp;
-document.querySelector(".favoriteTGenre").innerHTML += tp;
+if (m3cnt != 0) {
+  document.querySelector(".favoriteMGenre").innerHTML += mp;
+} else {
+  document.querySelector(
+    ".favoriteMGenre"
+  ).innerHTML += `<p>정보가 부족합니다! 리뷰나 평점을 남겨주세요!</p>`;
+}
+if (t3cnt != 0) {
+  document.querySelector(".favoriteTGenre").innerHTML += tp;
+} else {
+  document.querySelector(
+    ".favoriteTGenre"
+  ).innerHTML += `<p>정보가 부족합니다! 리뷰나 평점을 남겨주세요!</p>`;
+}

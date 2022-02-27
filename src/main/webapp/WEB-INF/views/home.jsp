@@ -17,16 +17,16 @@
           <span>평점 순 영화</span>
         </div>
         <div  class="cardContainer">
-        <c:forEach items="${ratingRank }" var="ratingmovie">
+        <c:forEach items="${movieRatingRank }" var="movie">
           <div class="movieCard">
-            <a href="/movie/detail/${ratingmovie.mid}">
+            <a href="/movie/detail/${movie.mid}">
            <img
-                src="https://themoviedb.org/t/p/w220_and_h330_face${ratingmovie.poster }"
+                src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster }"
                 alt=""
               /> 
             </a>
             <div class="cardDesc">
-              <div class="cardTitle"><a href="/movie/detail/${ratingmovie.mid }">${ratingmovie.title }</a></div>
+              <div class="cardTitle"><a href="/movie/detail/${movie.mid }">${movie.title }</a></div>
             </div>
           </div>          
         </c:forEach>
@@ -35,19 +35,19 @@
       <!--  -->
       <div class="trending">
         <div class="listName">
-          <span>즐겨찾기 순 영화</span>
+          <span>평점 순 tv</span>
         </div>
         <div  class="cardContainer">
-        <c:forEach items="${likeRank }" var="likedmovie">
+        <c:forEach items="${tvRatingRank }" var="tv">
           <div class="movieCard">
-            <a href="/movie/detail/${likedmovie.mid}">
+            <a href="/tv/detail/${tv.tvid}">
            <img
-                src="https://themoviedb.org/t/p/w220_and_h330_face${likedmovie.poster }"
+                src="https://themoviedb.org/t/p/w220_and_h330_face${tv.poster }"
                 alt=""
               /> 
             </a>
             <div class="cardDesc">
-              <div class="cardTitle"><a href="/movie/detail/${likedmovie.mid }">${likedmovie.title }</a></div>
+              <div class="cardTitle"><a href="/movie/detail/${tv.tvid }">${tv.title }</a></div>
             </div>
           </div>          
         </c:forEach>
