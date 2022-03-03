@@ -19,6 +19,7 @@ import net.coobird.thumbnailator.Thumbnails;
 public class ProfileImgHandler {
 
 	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
+//	private final String UP_DIR = "/home/profile_img";
 
 	public String uploadFile(MultipartFile file) {
 		

@@ -17,18 +17,65 @@
         
       </div>
       <div id="settingMain">
-        <h4>폰트컬러 구매</h4>
+        <h4>포스터 구매</h4>
         <div class="setting" style="text-align: end">
         	잔여 포인트: ${currPoints }
         </div>
         <div class="setting">
-         <h4 style="padding: 150px;text-align:center;">준비중인 페이지 입니다.</h4>
+        
+	        <div id="searchDiv">
+	         <input type="text" class="form-control" id="posterInput">
+	         <button class="btn" id="buyBtn">Search!</button>
+	        </div>
         </div>
+        <div class="setting">
+        <!--  -->
+	        <div id="posterDiv">
+	        	<div class="poster">
+	        		<div class="imgWrapper">
+	        			<img style="width: 300px;height:300px;">
+	        		</div>	
+	        		<h4>title</h4>
+	        	</div>
+	        	<div class="poster">
+	        		<div class="imgWrapper">
+	        			<img style="width: 300px;height:300px;">
+	        		</div>	
+	        		<h4>title</h4>
+	        	</div>
+	        	<div class="poster">
+	        		<div class="imgWrapper">
+	        			<img style="width: 300px;height:300px;">
+	        		</div>	
+	        		<h4>title</h4>
+	        	</div>
+	        	<div class="poster">
+	        		<div class="imgWrapper">
+	        			<img style="width: 300px;height:300px;">
+	        		</div>	
+	        		<h4>title</h4>
+	        	</div>
+	        	<div class="poster">
+	        		<div class="imgWrapper">
+	        			<img style="width: 300px;height:300px;">
+	        		</div>	
+	        		<h4>title</h4>
+	        	</div>
+	        	<div class="poster">
+	        		<div class="imgWrapper">
+	        			<img style="width: 300px;height:300px;">
+	        		</div>	
+	        		<h4>title</h4>
+	        	</div>
+	        </div>	
+        	<!--  -->
+        </div>
+        
 
        
       </div>
     </div>
   </body>
   <!-- Modal -->
-<script src="/resources/js/purchase.font.js" ></script>
+<script src="/resources/js/purchase.poster.js" ></script>
 <jsp:include page="../common/footer.jsp" />

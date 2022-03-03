@@ -36,6 +36,8 @@ public class RootConfig {
 		hikariConfig.setJdbcUrl("jdbc:log4jdbc:mysql://localhost:3306/springprj?serverTimezone=Asia/Seoul");
 		hikariConfig.setUsername("root");
 		hikariConfig.setPassword("jimmywin12");
+//		hikariConfig.setUsername("springuser");
+//		hikariConfig.setPassword("Mysql1234!@#$");
 		hikariConfig.setMinimumIdle(5);
 
 		hikariConfig.setConnectionTestQuery("SELECT now()");

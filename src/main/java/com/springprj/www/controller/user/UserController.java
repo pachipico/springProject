@@ -406,4 +406,13 @@ public class UserController {
 	public ResponseEntity<UserVO> profileImgAndNick(@PathVariable("email") String email) {
 		return new ResponseEntity<UserVO>(usv.getUserDetail(email), HttpStatus.OK);
 	}
+	@GetMapping(value = "/info/{email}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<UserVO> getUserInfo (@PathVariable("email") String email){
+		if(email != null) {
+			return new ResponseEntity<UserVO>(usv.getUserDetail(email), HttpStatus.OK);
+		}
+		return null;
+	} 
+
 }
+

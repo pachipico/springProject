@@ -51,8 +51,11 @@ public class PurchaseController {
 	}
 	
 	@GetMapping("/poster")
-	public void poster(Model model, String email) {
-		List<ProductVO> list =  psv.getUsersPosterList(email);
+	public void poster(Model model, String email, Principal principal) {
+		if(principal != null) {
+			List<ProductVO> list =  psv.getUsersPosterList(email);
+			}
+		model.addAttribute("currPoints", usv.getUsersCurrPoints(principal.getName()));
 		
 	}
 	

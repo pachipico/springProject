@@ -1,92 +1,129 @@
 #settingContainer {
-	display: flex;
-	flex-direction: row;
-	padding: 40px;
+  display: flex;
+  flex-direction: row;
+  padding: 40px;
 }
 
 #leftMenu {
-	-webkit-box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
-	box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
-	width: 220px;
-	border-radius: 8px;
+  -webkit-box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 2px 9px -1px rgba(0, 0, 0, 0.35);
+  width: 220px;
+  border-radius: 8px;
+  height: 300px;
 }
 
 #settingTitle {
-	background-color: rgb(235, 92, 216);
-	color: #fff;
-	padding: 15px;
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
+  background-color: rgb(235, 92, 216);
+  color: #fff;
+  padding: 15px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
 .settingMenu {
-	padding: 10px 20px;
+  padding: 10px 20px;
 }
 
 .settingMenu a {
-	text-decoration: none;
-	color: black;
+  text-decoration: none;
+  color: black;
 }
 
 #currMenu {
-	color: rgb(235, 92, 216);
+  color: rgb(235, 92, 216);
 }
 
 #settingMain {
-	padding: 0 40px;
-	width: 100%;
+  padding: 0 40px;
+  width: 100%;
 }
 
 #settingMain h4 {
-	font-weight: bold;
-	margin-bottom: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .setting {
-	margin: 15px 0px;
+  margin: 15px 0px;
 }
 
 #fontColorDiv {
-	margin-top: 20px;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-around;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .fontColor {
-	width: 60px;
-	height: 60px;
-	border-radius: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 12px;
-	font-weight: bold;
-	color: #fff;
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
 }
 
 .buyAble:hover {
-	cursor: pointer;
-	border: 3px solid #fff;
+  cursor: pointer;
+  border: 3px solid #fff;
 }
 
 .selected {
-	border: 3px solid #fff;
+  border: 3px solid #fff;
 }
 
 #buyForm {
-	text-align: end;
-	margin: 40px;
+  text-align: end;
+  margin: 40px;
 }
 
 #buyBtn {
-	background-color: rgb(91, 189, 250);
-	color: #fff;
-	border-radius: 8px;
-	margin-right: 10px;
+  background-color: rgb(91, 189, 250);
+  color: #fff;
+  border-radius: 8px;
+  margin-right: 10px;
 }
 
 #buyBtn:hover {
-	background-color: black;
+  background-color: black;
 }
+
+#searchDiv {
+  text-align: right;
+}
+
+#posterInput {
+  margin-bottom: 20px;
+}
+
+#posterDiv{
+	position: reletive;
+}
+.poster{
+	float: left;
+	margin: 10px;
+	text-align: center;
+}
+
+.img:hover{
+	background-color:rgba(5.88%, 7.06%, 3.92%, 1);
+}
+
+
+.select{
+	position: absolute;
+	background-color: blue;
+	color: #fff;
+	width: 300px;
+	height: 100px;
+	top: 43%;
+	visibility: hidden;
+}
+
+.img:hover + div{
+	visibility: visible;
+} 

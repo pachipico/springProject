@@ -56,9 +56,6 @@
     	</sec:authorize>
     	<script>
     		let loggedInEmail = `<c:out value="${loggedInEmail}" />`;
-    		let profileImg = `<c:out value="${profileImg}" />`;
-    		let fontColor = `<c:out value="${fontColor}" />`;
-    		console.log(fontColor);
     	</script>
     	<div class="mainTitle">시리즈 출연진</div>
 		<div id="castDiv">

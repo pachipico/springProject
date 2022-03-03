@@ -100,6 +100,8 @@ public class MovieController {
 		
 		return new ResponseEntity<MovieDTO>(dto, HttpStatus.OK);
 	}
+	
+	
 
 	// ============================== review ==================================
 

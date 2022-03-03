@@ -16,6 +16,19 @@ let userData = {
   likeCount: 0,
   avgRating: 0,
 };
+let userInfo = {};
+
+const getUserInfo = async (email) => {
+  try {
+    const config = { headers: { "Content-Type": "application/json" }, method: "GET" };
+    const res = await fetch(`/user/info/${email}`, config);
+    const result = await res.json();
+    return await result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 const getTVDetail = async () => {
   try {
     const url = `https://api.themoviedb.org/3/tv/${detailId}?api_key=${API_KEY}&language=ko-KR`;
@@ -132,7 +145,7 @@ const renderReview = (list, writtenReview) => {
 const addToList = (data) => {
   console.log("addToList", data);
   let reviewWrapper = document.getElementById("reviewWrapper");
-  if (userData.rvList.length == 0) {
+  if (reviewCnt == 0) {
     reviewWrapper.innerHTML = "";
   }
   const li = `
@@ -140,10 +153,10 @@ const addToList = (data) => {
       <div class="reviewLeft">
         <div class="reviewImgDiv">
           <a href="/user/${data.writer}" ><img src="/fileUpload/${
-    data.profileImg
+    userInfo.profileImg
   }" alt="" class="reviewProfileImg" /></a>
         </div>
-        <span class="reviewContent" style="color:${userData.rvdto.fontColor}">
+        <span class="reviewContent" style="color:${userInfo.fontColor}">
           ${data.content}
         </span>
       </div>
@@ -359,14 +372,20 @@ document.addEventListener("click", (e) => {
       alert("내용을 입력하세요.");
       return;
     }
-    console.log(writer, content, profileImg, Date.now());
+    console.log(writer, content, userInfo.profileImg, Date.now());
     postReview(content, writer).then((result) => {
       console.log(result);
       if (parseInt(result) > 0) {
         alert("리뷰 작성 성공, 2포인트 획득!");
         gainPoints(writer, 2);
+        addToList({
+          writer,
+          content,
+          profileImg: userInfo.profileImg,
+          fontColor: userInfo.fontColor,
+          regAt: Date.now(),
+        });
         reviewCnt++;
-        addToList({ writer, content, profileImg, fontColor, regAt: Date.now() });
         document.querySelector(".reviewRegBtn").disabled = true;
         document.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
         document.querySelector("[name=content]").readOnly = true;
@@ -431,7 +450,8 @@ document.addEventListener("click", (e) => {
         document.getElementById("revInput").value = "";
         document.getElementById("revInput").placeholder = "리뷰를 남겨주세요!";
         btn.disabled = false;
-        if (--reviewCnt == 0) {
+        reviewCnt--;
+        if (reviewCnt == 0) {
           document.getElementById("reviewWrapper").innerHTML =
             "<h4>등록된 리뷰가 없습니다. 리뷰를 등록해보세요!</h4>";
         }
@@ -453,7 +473,7 @@ document.addEventListener("click", (e) => {
         addToList({
           writer: inputDiv.querySelector("[name=writer]").value,
           content: inputDiv.querySelector("[name=content]").value,
-          profileImg, // 이부분 제대로 된 데이터가 안들어감, fontColor도 넣어야함.
+          profileImg: userInfo.profileImg, // 이부분 제대로 된 데이터가 안들어감, fontColor도 넣어야함.
           regAt: Date.now(),
         });
         inputDiv.querySelector("[name=content]").value = "이미 리뷰를 작성하셨습니다.";
@@ -515,6 +535,9 @@ document.addEventListener("DOMContentLoaded", () => {
       genres: result.genres.map((each) => each.id).join(","),
     }; // 평점, 즐겨찾기, 리뷰 남길때 같이 보내줄 데이터
     renderDetail(result);
+  });
+  getUserInfo(loggedInEmail).then((info) => {
+    userInfo = info;
   });
   getTVData().then((result) => {
     userData = result;

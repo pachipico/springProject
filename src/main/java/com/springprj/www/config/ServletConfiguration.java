@@ -24,6 +24,7 @@ public class ServletConfiguration implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 		registry.addResourceHandler("/fileUpload/**").addResourceLocations("file:/Users/jhs/Desktop/ezenSpring/profile_img/");
+//		registry.addResourceHandler("/fileUpload/**").addResourceLocations("file:/home/profile_img/");
 	}
 
 	@Override
