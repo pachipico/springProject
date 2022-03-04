@@ -101,29 +101,36 @@
 }
 
 #posterDiv{
-	position: reletive;
 }
 .poster{
+	position: reletive;
 	float: left;
 	margin: 10px;
 	text-align: center;
+	width: 300px;
 }
 
-.img:hover{
-	background-color:rgba(5.88%, 7.06%, 3.92%, 1);
+.img:hover {
+	opacity: 0.5;
+	cursor:pointer;
 }
 
+.imgWrapper{
+	background-color: black;
+}
+
+.img:hover + .select{
+	visibility: visible;
+}
+
+.imgWrapper{
+	position: relative;
+}
 
 .select{
 	position: absolute;
-	background-color: blue;
-	color: #fff;
-	width: 300px;
-	height: 100px;
-	top: 43%;
+	top: 50%;
+	background-color: #fff;
+	width: 100%;
 	visibility: hidden;
 }
-
-.img:hover + div{
-	visibility: visible;
-} 

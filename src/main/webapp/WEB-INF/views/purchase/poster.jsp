@@ -24,49 +24,18 @@
         <div class="setting">
         
 	        <div id="searchDiv">
-	         <input type="text" class="form-control" id="posterInput">
+	         <input type="text" class="form-control" placeholder="포스터를 검색해 보세요!" id="posterInput">
 	         <button class="btn" id="buyBtn">Search!</button>
 	        </div>
         </div>
         <div class="setting">
+        <script>
+        	let posterList = ${list};
+        	let email = `<c:out value="${email}" />`;
+        </script>
         <!--  -->
 	        <div id="posterDiv">
-	        	<div class="poster">
-	        		<div class="imgWrapper">
-	        			<img style="width: 300px;height:300px;">
-	        		</div>	
-	        		<h4>title</h4>
-	        	</div>
-	        	<div class="poster">
-	        		<div class="imgWrapper">
-	        			<img style="width: 300px;height:300px;">
-	        		</div>	
-	        		<h4>title</h4>
-	        	</div>
-	        	<div class="poster">
-	        		<div class="imgWrapper">
-	        			<img style="width: 300px;height:300px;">
-	        		</div>	
-	        		<h4>title</h4>
-	        	</div>
-	        	<div class="poster">
-	        		<div class="imgWrapper">
-	        			<img style="width: 300px;height:300px;">
-	        		</div>	
-	        		<h4>title</h4>
-	        	</div>
-	        	<div class="poster">
-	        		<div class="imgWrapper">
-	        			<img style="width: 300px;height:300px;">
-	        		</div>	
-	        		<h4>title</h4>
-	        	</div>
-	        	<div class="poster">
-	        		<div class="imgWrapper">
-	        			<img style="width: 300px;height:300px;">
-	        		</div>	
-	        		<h4>title</h4>
-	        	</div>
+	        	
 	        </div>	
         	<!--  -->
         </div>
