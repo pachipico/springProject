@@ -103,7 +103,7 @@ body {
 
 .cardContent {
   display: flex;
-  padding: 10px;
+  padding: 10px;   
   flex-direction: column;
   justify-content: flex-end;
   flex-basis: 100px;
