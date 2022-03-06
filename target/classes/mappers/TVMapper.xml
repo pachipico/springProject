@@ -128,6 +128,7 @@
 		SELECT t.tvid , t.title , t.poster , avg(tr.rating) 'rating'
 		from tv t left join tv_rating tr on t.tvid = tr.tvid 
 		GROUP BY t.tvid, t.title , t.poster
+		having avg(tr.rating)
 		ORDER BY AVG(tr.rating) DESC 
 		limit 0, 10
 	</select>

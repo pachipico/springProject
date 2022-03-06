@@ -18,6 +18,7 @@
           <div class="image">
             <img id="poster" src="" alt="" />
           </div>
+          <div id="watchProviders"></div>
         </div>
         <div class="headerContent">
           <div class="headerTitle" id="movieTitle">영화 제목</div>

@@ -287,10 +287,16 @@ const renderTVs = async (json, page = 1) => {
     const card = `
     <div class="cards col-lg-3">
       <a href="/tv/detail/${tv.id}" >
-        <img id="listImg"
-        src="https://www.themoviedb.org/t/p/w440_and_h660_face${tv.poster_path}"
-        alt=""
-        />
+        ${
+          tv.poster_path
+            ? `<img id="listImg"
+          src="https://www.themoviedb.org/t/p/w440_and_h660_face${tv.poster_path}"
+          alt=""
+          />`
+            : `
+        <div style="height:275.9px; display:flex;justify-content:center;align-items:center;background:#e6e6e6;border-top-left-radius:10px;border-top-right-radius:10px;">no image</div>
+        `
+        }
     
         <div class="dropdown menu">
           <a class="moreBtn" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

@@ -131,6 +131,7 @@
 		select m.mid, m.title,m.poster, avg(mr.rating) 'rating'
 		from movie m left join m_rating mr on m.mid = mr.mid 
 		group by m.mid, m.title, m.poster
+		having avg(mr.rating)
 		ORDER BY avg(mr.rating) desc
 		limit 0, 10
 	</select>

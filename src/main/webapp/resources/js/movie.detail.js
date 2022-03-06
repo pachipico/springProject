@@ -96,7 +96,7 @@ const renderCredits = (json) => {
 				${
           each.profile_path != null
             ? `<img  src="https://themoviedb.org/t/p/w138_and_h175_face${each.profile_path}">`
-            : `<div style="height: 175px;width: 138px;display:flex;justify-content:center;align-items:center;color:black;background-colol:#e6e6e6;" >no image</>`
+            : `<div style="height: 175px;width: 138px;display:flex;justify-content:center;align-items:center;color:black;background-color:#e6e6e6;" >no image</>`
         }
 				</a>
 				</div>
@@ -571,10 +571,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   getCredits().then((result) => renderCredits(result));
   getWatchProviders().then((result) => {
-    console.log("watch providers: ", result.results.KR);
-    // movieTitle.innerHtml =
-    //   movieTitle.innerHTML +
-    //   `<img id="watchProvider" src="https://www.themoviedb.org/t/p/original/${result.results.KR.flatrate[0].logo_path}" />`;
-    //	https://www.themoviedb.org/t/p/original/dgPueyEdOwpQ10fjuhL2WYFQwQs.jpg
+    console.log("watch providers: ", result);
+    document.getElementById("watchProviders").innerHTML = result.results.KR.rent[0].provider_name;
   });
 });

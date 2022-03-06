@@ -26,6 +26,7 @@
               /> 
             </a>
             <div class="cardDesc">
+              <div class="rating">${movie.rating }</div>
               <div class="cardTitle"><a href="/movie/detail/${movie.mid }">${movie.title }</a></div>
             </div>
           </div>          

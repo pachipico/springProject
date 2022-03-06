@@ -84,7 +84,7 @@ const renderCredits = (json) => {
 				${
           each.profile_path != null
             ? `<img  src="https://themoviedb.org/t/p/w138_and_h175_face${each.profile_path}">`
-            : `<div style="height: 175px;width: 138px;display:flex;justify-content:center;align-items:center;color:black;background-colol:#e6e6e6;" >no image</>`
+            : `<div style="height: 175px;width: 138px;display:flex;justify-content:center;align-items:center;color:black;background-color:#e6e6e6;" >no image</>`
         }
 				</a>
 				</div>
