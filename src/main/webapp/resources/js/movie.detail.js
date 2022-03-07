@@ -571,7 +571,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   getCredits().then((result) => renderCredits(result));
   getWatchProviders().then((result) => {
-    console.log("watch providers: ", result);
+    let providerData;
+    if (result.results.KR) {
+      providerData = Object.values(result.results.KR)
+        .filter((data) => data[0].logo_path != null)
+        .map((data) => {
+          return { provider_name: data[0].provider_name, logo_path: data[0].logo_path };
+        });
+    }
+
+    console.log("providers", providerData);
     document.getElementById("watchProviders").innerHTML = result.results.KR.rent[0].provider_name;
   });
 });

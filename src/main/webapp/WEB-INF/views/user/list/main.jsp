@@ -6,6 +6,7 @@ h4{
 	font-weight: bold;
 }
 </style>
+
 <div class="content">
 	<h2>통계</h2>
 	<div class="stats">
@@ -26,16 +27,16 @@ h4{
 			<h4>평점 분포</h4>
 			<div>
 				<div id="graph">
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.one + tRateData.one)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.two + tRateData.two)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv"><div class="bar" style="width: 10px;height:${(mRateData.three + tRateData.three)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.four + tRateData.four)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.five + tRateData.five)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.six + tRateData.six)*10}px;background-color: red;"></div> </div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.seven + tRateData.seven)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.eight + tRateData.eight)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.nine + tRateData.nine)*10}px;background-color: red;"></div></div>
-					<div class="colorDiv" ><div class="bar" style="width: 10px;height:${(mRateData.ten + tRateData.ten)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="1점: ${(mRateData.one + tRateData.one) }개" class="bar"  style="width: 10px;height:${(mRateData.one + tRateData.one)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="2점: ${(mRateData.two + tRateData.two) }개" class="bar" style="width: 10px;height:${(mRateData.two + tRateData.two)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv"><div data-bs-toggle="tooltip" data-bs-placement="right" title="3점: ${(mRateData.three + tRateData.three) }개️" class="bar" style="width: 10px;height:${(mRateData.three + tRateData.three)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="4점: ${(mRateData.four + tRateData.four) }개️" class="bar" style="width: 10px;height:${(mRateData.four + tRateData.four)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="5점: ${(mRateData.five + tRateData.five) }개️" class="bar" style="width: 10px;height:${(mRateData.five + tRateData.five)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="6점: ${(mRateData.six + tRateData.six) }개" class="bar" style="width: 10px;height:${(mRateData.six + tRateData.six)*10}px;background-color: red;"></div> </div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="7점: ${(mRateData.seven + tRateData.seven) }개️" class="bar" style="width: 10px;height:${(mRateData.seven + tRateData.seven)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="8점: ${(mRateData.eight + tRateData.eight) }개️" class="bar" style="width: 10px;height:${(mRateData.eight + tRateData.eight)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="9점: ${(mRateData.nine + tRateData.nine) }개" class="bar" style="width: 10px;height:${(mRateData.nine + tRateData.nine)*10}px;background-color: red;"></div></div>
+					<div class="colorDiv" ><div data-bs-toggle="tooltip" data-bs-placement="right" title="10점: ${(mRateData.ten + tRateData.ten) }개️" class="bar" style="width: 10px;height:${(mRateData.ten + tRateData.ten)*10}px;background-color: red;"></div></div>
 					
 				</div>
 				<div id="params">

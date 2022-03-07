@@ -76,7 +76,7 @@
   <script src="/resources/js/user.setting.js"></script>
   <script>
   	let isSuccess = `<c:out value="${isSuccess}" />`;
-  	if(isSuccess != null){
+  	if(isSuccess != null && isSuccess != ""){
   		alert("정보 수정 완료!");
   	}
   </script>

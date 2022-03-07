@@ -27,3 +27,7 @@ if (t3cnt != 0) {
     ".favoriteTGenre"
   ).innerHTML += `<p>정보가 부족합니다! 리뷰나 평점을 남겨주세요!</p>`;
 }
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+  return new bootstrap.Tooltip(tooltipTriggerEl);
+});
