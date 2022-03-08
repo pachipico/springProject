@@ -242,6 +242,9 @@
 	overflow: hidden;
 	pointer-events: none;
 }
+.modal-body{
+	text-align:center;
+}
 /*  */
 .content {
 	padding: 20px;

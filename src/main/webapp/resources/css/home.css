@@ -115,3 +115,22 @@ box-shadow: 1px 4px 18px -6px rgba(0,0,0,0.68);
   font-size: 0.9rem;
   color: lightslategrey;
 }
+
+.imgWrapper{
+	position: relative;
+}
+.rating{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30px;
+	height: 30px;
+	background: #fff;
+	border-radius: 15px;
+	font-style: italic;
+	position: absolute;
+	font-size: 14px;
+	font-weight: 500;
+	right: 10px;
+	top: 10px;
+}

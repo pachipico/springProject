@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <jsp:include page="common/header.jsp" />
 
 <jsp:include page="common/nav.jsp" />
@@ -19,14 +21,19 @@
         <div  class="cardContainer">
         <c:forEach items="${movieRatingRank }" var="movie">
           <div class="movieCard">
-            <a href="/movie/detail/${movie.mid}">
-           <img
-                src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster }"
-                alt=""
-              /> 
-            </a>
+          <div class="imgWrapper">
+              <div class="rating">
+              <%-- <fmt:formatNumber value="${movie.rating }" maxFractionDigits="0" /> --%>
+              ${movie.rating }
+              </div>
+	            <a href="/movie/detail/${movie.mid}">
+	           <img
+	                src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster }"
+	                alt=""
+	              /> 
+	            </a>
+            </div>
             <div class="cardDesc">
-              <div class="rating">${movie.rating }</div>
               <div class="cardTitle"><a href="/movie/detail/${movie.mid }">${movie.title }</a></div>
             </div>
           </div>          
@@ -41,12 +48,18 @@
         <div  class="cardContainer">
         <c:forEach items="${tvRatingRank }" var="tv">
           <div class="movieCard">
-            <a href="/tv/detail/${tv.tvid}">
-           <img
-                src="https://themoviedb.org/t/p/w220_and_h330_face${tv.poster }"
-                alt=""
-              /> 
-            </a>
+          	<div class="imgWrapper">
+              <div class="rating">
+              <%-- <fmt:formatNumber value="${tv.rating }" maxFractionDigits="0" /> --%>
+              ${tv.rating }
+              </div>
+	            <a href="/tv/detail/${tv.tvid}">
+	           <img
+	                src="https://themoviedb.org/t/p/w220_and_h330_face${tv.poster }"
+	                alt=""
+	              /> 
+	            </a>
+          	</div>
             <div class="cardDesc">
               <div class="cardTitle"><a href="/movie/detail/${tv.tvid }">${tv.title }</a></div>
             </div>

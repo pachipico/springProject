@@ -129,6 +129,7 @@ main {
 	border-radius: 10px;
 	margin: 10px;
 	height: 300px;
+	width: 138px;
 }
 
 .castImg a img {
@@ -214,3 +215,18 @@ li.review {
   font-size: 0.9rem;
 }
 
+#watchProviders{
+	color: #fff;
+	text-align: center;
+}
+
+.providers{
+	display: flex;
+	flex-direction: row;
+}
+
+.watchProviderImg{
+	width: 40px;
+	height:40px;
+	margin: 0px 5px;
+}

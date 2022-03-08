@@ -18,7 +18,13 @@
           <div class="image">
             <img id="poster" src="" alt="" />
           </div>
-          <div id="watchProviders"></div>
+          <div id="watchProviders">
+          	<!-- <div style="margin-top: 20px;">스트리밍 서비스가 없습니다.</div> -->
+          <!-- <span style="font-size:12px;">스트리밍 중:</span> -->
+          	<!-- <div>
+          		<img class="watchProviderImg" src="https://www.themoviedb.org/t/p/original/t2yyOv40HZeVlLjYsCsPHnWLk4W.jpg">
+          	</div> -->
+          </div>
         </div>
         <div class="headerContent">
           <div class="headerTitle" id="movieTitle">영화 제목</div>

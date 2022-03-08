@@ -572,6 +572,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getCredits().then((result) => renderCredits(result));
   getWatchProviders().then((result) => {
     let providerData;
+    let providerDiv = document.getElementById("watchProviders");
     if (result.results.KR) {
       providerData = Object.values(result.results.KR)
         .filter((data) => data[0].logo_path != null)
@@ -581,6 +582,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     console.log("providers", providerData);
-    document.getElementById("watchProviders").innerHTML = result.results.KR.rent[0].provider_name;
+    if (providerData) {
+      providerDiv.innerHTML += `<span style="font-size:12px;">스트리밍 중:</span>`;
+      providerDiv.innerHTML += `<div class="providers">`;
+      providerData.forEach((provider) => {
+        // providerDiv.innerHTML += provider.provider_name;
+        let img = `
+          <img class="watchProviderImg" src="https://www.themoviedb.org/t/p/original${provider.logo_path}">
+        `;
+        providerDiv.innerHTML += img;
+      });
+      providerDiv.innerHTML += `</div>`;
+    } else {
+      providerDiv.innerHTML += `<div style="margin-top: 20px;">현재 스트리밍 중인 서비스가 없습니다.</div>`;
+    }
   });
 });
