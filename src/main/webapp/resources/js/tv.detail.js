@@ -89,7 +89,7 @@ const renderCredits = (json) => {
 				</a>
 				</div>
 				<div class="castDesc">
-					<div class="realNameText"><a href="">${each.name}</a></div>
+					<div class="realNameText"><a href="/actor/${each.id}">${each.name}</a></div>
 					<div class="castNameText">${each.character} 역</div>
 				</div>
 			</div>

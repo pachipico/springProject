@@ -21,33 +21,38 @@ const search = async (query) => {
 const renderPosters = (data) => {
   let posterDiv = document.getElementById("posterDiv");
   posterDiv.innerHTML = "";
-  data
-    .sort((a, b) => b.popularity - a.popularity)
-    .forEach((movie) => {
-      if (!movie.poster_path) return;
-      let poster;
-      if (!posterList.includes(movie.title)) {
-        poster = `
-        <div class="poster" data-title="${movie.title}">
-          <div class="imgWrapper">
-            <img class="img" data-src="${movie.poster_path}" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}" style="width: 300; height: 400" >
-            <div class="select">이 포스터 선택</div>
-          </div>	
-          <h4>${movie.title}</h4>
-        </div>`;
-      } else {
-        poster = `
-        <div class="poster" data-title="${movie.title}">
-          <div class="imgWrapper">
-            <img  style="opacity: 0.5;" data-src="${movie.poster_path}" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}" style="width: 300; height: 400" >
-            <div class="select" style="visibility: visible">이미 보유하신 포스터 입니다.</div>
-          </div>	
-          <h4>${movie.title}</h4>
-        </div>`;
-      }
 
-      posterDiv.innerHTML += poster;
-    });
+  if (data.length > 0) {
+    data
+      .sort((a, b) => b.popularity - a.popularity)
+      .forEach((movie) => {
+        if (!movie.poster_path) return;
+        let poster;
+        if (!posterList.includes(movie.title)) {
+          poster = `
+        <div class="poster" data-title="${movie.title}">
+        <div class="imgWrapper">
+        <img class="img" data-src="${movie.poster_path}" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}" style="width: 300; height: 400" >
+        <div class="select">이 포스터 선택</div>
+        </div>	
+        <h4>${movie.title}</h4>
+        </div>`;
+        } else {
+          poster = `
+        <div class="poster" data-title="${movie.title}">
+        <div class="imgWrapper">
+        <img  style="opacity: 0.5;" data-src="${movie.poster_path}" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}" style="width: 300; height: 400" >
+        <div class="select" style="visibility: visible">이미 보유하신 포스터 입니다.</div>
+        </div>	
+        <h4>${movie.title}</h4>
+        </div>`;
+        }
+
+        posterDiv.innerHTML += poster;
+      });
+  } else {
+    posterDiv.innerHTML += `<h4>검색 결과가 없습니다.</h4>`;
+  }
 };
 
 const buyPoster = async (title, src) => {

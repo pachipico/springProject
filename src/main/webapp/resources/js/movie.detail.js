@@ -101,7 +101,7 @@ const renderCredits = (json) => {
 				</a>
 				</div>
 				<div class="castDesc">
-					<div class="realNameText"><a href="">${each.name}</a></div>
+					<div class="realNameText"><a href="/actor/${each.id}">${each.name}</a></div>
 					<div class="castNameText">${each.character} 역</div>
 				</div>
 			</div>
@@ -583,14 +583,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("providers", providerData);
     if (providerData) {
+      let dupleChkArr = [];
       providerDiv.innerHTML += `<span style="font-size:12px;">스트리밍 중:</span>`;
       providerDiv.innerHTML += `<div class="providers">`;
       providerData.forEach((provider) => {
-        // providerDiv.innerHTML += provider.provider_name;
-        let img = `
+        if (!dupleChkArr.includes(provider.provider_name)) {
+          let img = `
           <img class="watchProviderImg" src="https://www.themoviedb.org/t/p/original${provider.logo_path}">
-        `;
-        providerDiv.innerHTML += img;
+          `;
+          providerDiv.innerHTML += img;
+        } else return;
+        dupleChkArr.push(provider.provider_name);
       });
       providerDiv.innerHTML += `</div>`;
     } else {
