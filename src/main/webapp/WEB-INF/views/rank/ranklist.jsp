@@ -7,7 +7,7 @@
 	<div id="selectDiv" style="text-align:right;padding:10px 30px 0px;">
 		<select id="rankSelect">
 			<option value="curr_points" ${query == 'curr_points' ? 'selected' : ''}>현재 포인트순</option>
-			<option value="reg_at" ${query == 'reg_at' ? 'selected' : ''}>등록일순</option>
+			<option value="reg_at" ${query == 'reg_at' ? 'selected' : ''}>가입일순</option>
 			<option value="like_cnt" ${query == 'like_cnt' ? 'selected' : ''}>즐겨찾기 많은 순</option>
 			<option value="rating_cnt" ${query == 'rating_cnt' ? 'selected' : ''}>평점 왕</option>
 			<option value="review_cnt" ${query == 'review_cnt' ? 'selected' : ''}>리뷰 왕</option>
