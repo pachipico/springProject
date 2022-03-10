@@ -33,7 +33,7 @@ const renderPosters = (data) => {
         <div class="poster" data-title="${movie.title}">
         <div class="imgWrapper">
         <img class="img" data-src="${movie.poster_path}" src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}" style="width: 300; height: 400" >
-        <div class="select">이 포스터 선택</div>
+        <div class="select" style="cursor:pointer;">이 포스터 선택</div>
         </div>	
         <h4>${movie.title}</h4>
         </div>`;

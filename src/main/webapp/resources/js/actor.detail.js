@@ -41,10 +41,14 @@ const renderCard = (data) => {
       const card = `
       <div class="cards">
       <a href="/movie/detail/${movie.id}">
-        <img
+      ${
+        movie.poster_path
+          ? `<img
         src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2${movie.poster_path}"
         alt=""
-        />
+        />`
+          : `<div style="height:250px;width:166px;display:flex;justify-content:center;align-items:center;background:#e6e6e6;border-radius:8px;">no image</div>`
+      }
       </a>
       <div class="cardContent">
       <div class="cardTitle">${movie.title}</div>

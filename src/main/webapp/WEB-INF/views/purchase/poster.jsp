@@ -17,7 +17,7 @@
         
       </div>
       <div id="settingMain">
-        <h4>포스터 구매</h4>
+        <h4>포스터 구매 (100포인트)</h4>
         <div class="setting" style="text-align: end">
         	잔여 포인트: ${currPoints }
         </div>
