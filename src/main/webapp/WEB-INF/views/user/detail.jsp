@@ -29,7 +29,7 @@
             		<span id="mvAvg">${movieAvg }</span>
             	</c:when>
             	<c:otherwise>
-            		<span  id="mvAvg">평점없음</span>
+            		<span style="font-size: 14px;"  id="mvAvg">평점없음</span>
             	</c:otherwise>
             </c:choose>
             		</div>
@@ -46,7 +46,7 @@
            			<span id="tvAvg">${tvAvg }</span>
             	</c:when>
             	<c:otherwise>
-            		<span  id="tvAvg">평점없음</span>
+            		<span style="font-size: 14px;"  id="tvAvg">평점없음</span>
             	</c:otherwise>
             </c:choose>
             </div>

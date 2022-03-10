@@ -225,10 +225,12 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
         getTVAvgRating(email).then((rating) => {
           console.log(`유저 tv 평균: ${rating}`);
           document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("tvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         getMVAvgRating(email).then((rating) => {
           console.log(`유저 mv 평균: ${rating}`);
           document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("mvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         gainPoints(email, 1);
         moviesData.map((movie) => {
@@ -249,10 +251,12 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
         getTVAvgRating(email).then((rating) => {
           console.log(`유저 tv 평균: ${rating}`);
           document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("tvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         getMVAvgRating(email).then((rating) => {
           console.log(`유저 mv 평균: ${rating}`);
           document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("mvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
       } else {
         alert("평점 등록 실패..");
@@ -270,10 +274,12 @@ document.getElementById("ratingStar").addEventListener("change", (e) => {
         getTVAvgRating(email).then((rating) => {
           console.log(`유저 tv 평균: ${rating}`);
           document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("tvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         getMVAvgRating(email).then((rating) => {
           console.log(`유저 mv 평균: ${rating}`);
           document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("mvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         moviesData.map((movie) => {
           if (movie.mid == id) {
@@ -467,9 +473,11 @@ document.addEventListener("click", (e) => {
         getTVAvgRating(email).then((rating) => {
           console.log(`유저 tv 평균: ${rating}`);
           document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("tvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         getMVAvgRating(email).then((rating) => {
           console.log(`유저 mv 평균: ${rating}`);
+          document.getElementById("mvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
           document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
         });
         movie.remove();
@@ -513,10 +521,12 @@ document.addEventListener("click", (e) => {
         getTVAvgRating(email).then((rating) => {
           console.log(`유저 tv 평균: ${rating}`);
           document.getElementById("tvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("tvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         getMVAvgRating(email).then((rating) => {
           console.log(`유저 mv 평균: ${rating}`);
           document.getElementById("mvAvg").innerText = rating != "null" ? rating : "평점없음";
+          document.getElementById("mvAvg").style.fontSize = rating != "null" ? "17px" : "14px";
         });
         moviesData.map((movie) => {
           if (movie.mid == id) {

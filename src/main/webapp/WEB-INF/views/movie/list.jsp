@@ -66,7 +66,7 @@
         <h5 class="modal-title" id="exampleModalLabel">평점을 남겨주세요!</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div style="text-align:center;" class="modal-body">
         <span class="star">
         ★★★★★
         <span>★★★★★</span>
