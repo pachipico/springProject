@@ -364,6 +364,17 @@ const gainPoints = async (email, point) => {
   }
 };
 
+const getWatchProviders = async () => {
+  try {
+    const url = `https://api.themoviedb.org/3/tv/${detailId}/watch/providers?api_key=${API_KEY}`;
+    const res = await fetch(url);
+    const result = await res.json();
+    return await result;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("reviewRegBtn")) {
     const content = document.querySelector("[name=content]").value;
@@ -566,4 +577,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   getCredits().then((result) => renderCredits(result));
+  getWatchProviders().then((result) => {
+    let providerData;
+    let providerDiv = document.getElementById("watchProviders");
+    if (result.results.KR) {
+      providerData = Object.values(result.results.KR)
+        .filter((data) => data[0].logo_path != null)
+        .map((data) => {
+          return { provider_name: data[0].provider_name, logo_path: data[0].logo_path };
+        });
+    }
+
+    console.log("providers", providerData);
+    if (providerData) {
+      let dupleChkArr = [];
+      providerDiv.innerHTML += `<span style="font-size:12px;">스트리밍 중:</span>`;
+      providerDiv.innerHTML += `<div class="providers">`;
+      providerData.forEach((provider) => {
+        if (!dupleChkArr.includes(provider.provider_name)) {
+          let img = `
+          <img class="watchProviderImg" src="https://www.themoviedb.org/t/p/original${provider.logo_path}">
+          `;
+          providerDiv.innerHTML += img;
+        } else return;
+        dupleChkArr.push(provider.provider_name);
+      });
+      providerDiv.innerHTML += `</div>`;
+    } else {
+      providerDiv.innerHTML += `<div style="margin-top: 20px;">현재 스트리밍 중인 서비스가 없습니다.</div>`;
+    }
+  });
 });
