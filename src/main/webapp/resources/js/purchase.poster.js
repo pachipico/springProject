@@ -79,10 +79,14 @@ const buyPoster = async (title, src) => {
 
 document.getElementById("buyBtn").addEventListener("click", () => {
   const query = document.getElementById("posterInput").value;
-  search(query).then((result) => {
-    console.log(result);
-    renderPosters(result.results);
-  });
+  if (query) {
+    search(query).then((result) => {
+      console.log(result);
+      renderPosters(result.results);
+    });
+  } else {
+    alert(`검색어를 입력하세요!`);
+  }
 });
 
 document.addEventListener("click", (e) => {

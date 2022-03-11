@@ -4,7 +4,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
    <nav>
       <div id="left">
-        <div id="logo"><a href="/home">TMDB</a></div>
+        <div id="logo"><a href="/home">MovieDB</a></div>
         <div class="leftMenu">
         	<div class="dropdown dropdownNav menu">
   				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,7 +29,7 @@
   				</ul>
 			</div>
           
-          <div class="dropdown dropdownNav menu">
+         <!--  <div class="dropdown dropdownNav menu">
   				<button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     			영화 게시판
   				</button>
@@ -46,11 +46,10 @@
 				    <li><a class="dropdown-item" href="/tvBoard/likeList">좋아요</a></li>
 				    <li><a class="dropdown-item" href="/tvBoard/hateList">싫어요</a></li>
   				</ul>
-			</div>
-        </div>
-        <div class="menu">
+			</div> -->
+       <!--  <div class="menu">
         	<a class="btn" style="color: #fff;" href="/notice/list">공지사항</a>
-        </div>
+        </div> -->
         <div class="menu">
         	<a class="btn" style="color: #fff;" href="/user/userRank?query=reg_at">랭킹</a>
         </div>
@@ -59,6 +58,7 @@
         </div>
        </div>
         
+        </div>
     
       <div id="right">
         <div class="rightMenu">
@@ -82,7 +82,7 @@
           	<div class="menu">
           	<%-- <form action="/user/detail/${ authEmail}" method="get" id="myPageForm"> --%>
           		
-          	<a class="nav-btn" href="/user/${ authEmail}" >${authNick }(${authEmail })</a>
+          	<a class="nav-btn" id="navId" href="/user/${ authEmail}" >${authNick }(${authEmail })</a>
           	<!-- </form> -->
           	</div>
        	</sec:authorize>

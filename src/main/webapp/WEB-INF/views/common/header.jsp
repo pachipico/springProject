@@ -30,6 +30,6 @@
     <link rel="stylesheet" href="/resources/css/index.css" />
     
     
-    <title>Document</title>
+    <title>MovieDB</title>
   </head>
   <body>

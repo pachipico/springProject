@@ -52,6 +52,11 @@ document.addEventListener("click", (e) => {
       document.getElementById("todayTrend").style.backgroundColor = "#FFF";
       document.getElementById("todayTrend").style.color = "black";
     });
+  } else if (e.target.id == "searchBtn") {
+    if (document.getElementById("searchInput").value.length == 0) {
+      e.preventDefault();
+      alert("검색어를 입력하세요!");
+    }
   }
 });
 

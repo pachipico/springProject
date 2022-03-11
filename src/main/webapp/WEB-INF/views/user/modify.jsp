@@ -104,6 +104,7 @@
   	let isUp = `<c:out value="${isUp}" />`;
   	if(isUp > 0){
   		alert("정보 수정 완료");
+  		document.getElementById("navId").innerText = `${uvo.nickName}(${uvo.email})`;
   	}
   	if(parseInt(wrongPwd) > 0){
   		alert("비밀번호가 일치하지 않습니다.");

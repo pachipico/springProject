@@ -259,8 +259,12 @@ public class UserController {
 	}
 
 	@GetMapping("/{email}/modify")
-	public String modify(@PathVariable("email") String email, Model model) {
-
+	public String modify(@PathVariable("email") String email, Model model, Principal principal, RedirectAttributes reAttr) {
+		
+		if(!principal.getName().equals(email)) {
+			reAttr.addFlashAttribute("msg", "권한이 없습니다.");
+			return "redirect:/home";
+		}
 		model.addAttribute("uvo", usv.getUserDetail(email));
 		model.addAttribute("fontList", psv.getUsersFontColorList(email));
 		return "user/modify";
@@ -327,7 +331,11 @@ public class UserController {
 	}
 
 	@GetMapping("/{email}/setting")
-	public String setting(Model model, @PathVariable("email") String email) {
+	public String setting(Model model, @PathVariable("email") String email, Principal principal, RedirectAttributes reAttr) {
+		if(!principal.getName().equals(email)) {
+			reAttr.addFlashAttribute("msg", "권한이 없습니다.");
+			return "redirect:/home";
+		}
 		UserVO uvo = usv.getUserDetail(email);
 		model.addAttribute("uvo", uvo);
 		model.addAttribute("adult", uvo.isAdult());

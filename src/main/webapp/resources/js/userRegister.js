@@ -33,8 +33,22 @@ const validNickNameChk = async () => {
     console.log(e);
   }
 };
-
+function email_check(email) {
+  var regex =
+    /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  return email != "" && email != "undefined" && regex.test(email);
+}
 document.getElementById("validEmailChk").addEventListener("click", (e) => {
+  if (emailInput.value.trim() == "") {
+    alert("이메일을 입력해주세요!");
+    emailInput.focus();
+    return;
+  } else if (!email_check(emailInput.value)) {
+    alert("올바른 이메일 형식이 아닙니다.");
+    emailInput.value = "";
+    emailInput.focus();
+    return;
+  }
   validEmailChk().then((result) => {
     if (parseInt(result) > 0) {
       alert("사용 가능한 이메일 입니다.");
@@ -49,6 +63,11 @@ document.getElementById("validEmailChk").addEventListener("click", (e) => {
 });
 
 document.getElementById("validNickNameChk").addEventListener("click", (e) => {
+  if (nickNameInput.value.trim() == "") {
+    alert("닉네임을 입력해주세요!");
+    return;
+  }
+
   validNickNameChk().then((result) => {
     if (parseInt(result) > 0) {
       alert("사용 가능한 닉네임 입니다.");

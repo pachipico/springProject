@@ -32,7 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.antMatchers("/movie/detail/*", "/tv/detail/*").hasRole("ADMIN")
 //		.antMatchers("/home","/user/register","/resources/**", "/user/login", "/user/findId","/user/findPwd", "/movie/popular", "/movie/up-coming", "/movie/now-playing", "/movie/rating")
 //		.permitAll().anyRequest().authenticated();
-//		
+		
+		http.authorizeRequests()
+		.antMatchers("/user/userList").hasRole("ADMIN")
+		.antMatchers("/user/*/modify", "/user/*/setting","/user/modify/nickName","/user/modify/pwd").hasAnyRole("USER")
+		.antMatchers("/home","/movie/*", "/tv/*","/movie/popular", "/movie/now-playing", "/movie/up-coming", "/movie/rating", "/tv/netflix", "/tv/amazon", "/tv/watcha", "/tv/waave","/movie/detail/*", "/tv/detail/*",
+			"/actor/*",	"/resources/**", "/fileUpload/**",
+			"/user/login", "/user/register", "/user/findPwd", "/user/findId", "/user/*", "/user/userRank", "/user/info/*" ).permitAll().anyRequest().authenticated();
+		
+		
+		
 		http.formLogin().usernameParameter("email").passwordParameter("pwd").loginPage("/user/login")
 				.successHandler(authSuccessHandler()).failureHandler(authFailureHandler());
 

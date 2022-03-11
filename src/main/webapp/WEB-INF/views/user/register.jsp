@@ -17,7 +17,7 @@
         <form action="/user/register" id="registerForm" method="post">
           <label for="email">이메일</label>
           <div class="wrapper">
-            <input type="text" id="email" name="email" />
+            <input type="email" id="email" name="email" />
             <button type="button" class="btn" id="validEmailChk">중복 확인</button>
           </div>
           <label for="name">이름</label>

@@ -10,7 +10,7 @@
       <div >
       	<img class="profileImg" src="/fileUpload/${uvo.profileImg }">
       </div>
-      <span><c:out value="${uvo.nickName }"/></span>
+      <span style="color:${uvo.fontColor}"><c:out value="${uvo.nickName }"/></span>
     </div>
     <div id="settingContainer">
       <div id="leftMenu">
@@ -32,7 +32,7 @@
           <div class="setting">
 	          <label for="pwd">비밀번호</label>
 	          <br>
-	          <input id="pwd" type="password" value="password" name="pwd">
+	          <input id="pwd" type="password"  name="pwd">
           </div>
           <div class="setting">
 	          <label for="nickName">닉네임</label>

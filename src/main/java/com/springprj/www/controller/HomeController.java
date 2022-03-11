@@ -46,6 +46,6 @@ public class HomeController {
 		model.addAttribute("tvRatingRank", tvRatingRank);
 		model.addAttribute("movieRatingRank", movieRatingRank);
 		
-		return "home";
+		return "index";
 	}
 }

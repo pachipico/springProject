@@ -23,8 +23,8 @@
           <div class="movieCard">
           <div class="imgWrapper">
               <div class="rating">
-              <%-- <fmt:formatNumber value="${movie.rating }" maxFractionDigits="0" /> --%>
-              ${movie.rating }
+              <fmt:formatNumber value="${movie.rating }" pattern=".0" /> 
+              
               </div>
 	            <a href="/movie/detail/${movie.mid}">
 	           <img
@@ -50,8 +50,8 @@
           <div class="movieCard">
           	<div class="imgWrapper">
               <div class="rating">
-              <%-- <fmt:formatNumber value="${tv.rating }" maxFractionDigits="0" /> --%>
-              ${tv.rating }
+              <fmt:formatNumber value="${tv.rating }" pattern=".0" /> 
+              
               </div>
 	            <a href="/tv/detail/${tv.tvid}">
 	           <img
