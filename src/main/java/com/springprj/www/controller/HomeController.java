@@ -33,7 +33,7 @@ public class HomeController {
 	@Inject
 	private UserService usv;
 	
-	@GetMapping("/home")
+	@GetMapping("/")
 	public String home(Model model, HttpSession session, Principal principal) {
 		if(principal != null) {
 			log.info("last login time{}",usv.getUserDetail(principal.getName()).getLastLogin());
