@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// 로그아웃도 무조건 POST 로
 		http.logout().logoutUrl("/user/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID")
-				.logoutSuccessUrl("/home");
+				.logoutSuccessUrl("/");
 	}
 
 	@Bean

@@ -93,6 +93,11 @@ const drawStar = (target) => {
 };
 
 const addLike = async (mid, title, poster, genres) => {
+  if (email == null) {
+    alert("로그인이 필요한 서비스 입니다!");
+    location.href = "/user/login";
+    return;
+  }
   try {
     const data = {
       mvvo: { mid, title, poster, genres },
@@ -148,6 +153,11 @@ const removeLike = async (mid, title, poster, genres) => {
 };
 
 const setData = (rating, mid, title, poster, genres) => {
+  if (email == null) {
+    alert("로그인이 필요한 서비스 입니다!");
+    location.href = "/user/login";
+    return;
+  }
   let ratingStar = document.getElementById("ratingStar");
   if (rating != null) {
     ratingStar.value = rating;

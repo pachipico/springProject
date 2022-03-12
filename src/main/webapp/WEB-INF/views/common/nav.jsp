@@ -4,7 +4,7 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
    <nav>
       <div id="left">
-        <div id="logo"><a href="/home">MovieDB</a></div>
+        <div id="logo"><a href="/">MovieDB</a></div>
         <div class="leftMenu">
         	<div class="dropdown dropdownNav menu">
   				<button class="btn " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

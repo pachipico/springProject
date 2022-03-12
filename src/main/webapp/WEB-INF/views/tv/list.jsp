@@ -4,12 +4,15 @@
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <jsp:include page="../common/header.jsp" />
 <jsp:include page="../common/nav.jsp" />
+<script>
+	let email = null;
+</script>
 <sec:authorize access="isAuthenticated()" >
        	 <sec:authentication property="principal.uvo.email" var="authEmail" />
 	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          <sec:authentication property="principal.uvo.authList" var="auths" />
 	          <script type="text/javascript">
-				const email = "${authEmail}";
+				email = "${authEmail}";
 			  </script>
 	    </sec:authorize>
 <link rel="stylesheet" href="/resources/css/movieList.css" />
@@ -68,7 +71,7 @@
         <h5 class="modal-title" id="exampleModalLabel">평점을 남겨주세요!</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div style="text-align:center;" class="modal-body">
+      <div class="modal-body">
         <span class="star">
         ★★★★★
         <span>★★★★★</span>

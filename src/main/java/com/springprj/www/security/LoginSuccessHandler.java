@@ -51,7 +51,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		setAuthEmail(authentication.getName());
-		setAuthUrl("/home");
+		setAuthUrl("/");
 		LocalDateTime current = LocalDateTime.now();
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
 		String formatted = current.format(formatter);
@@ -83,9 +83,10 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			ses.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
 		}
 		SavedRequest savedReq = reqCache.getRequest(request, response);
-		log.debug("login success, redirect to : {}", savedReq);
-		
-		reStg.sendRedirect(request, response, (savedReq != null ? savedReq.getRedirectUrl() : getAuthUrl()));
+//		log.debug("login success, redirect to : {}", savedReq);
+//		
+//		reStg.sendRedirect(request, response, (savedReq != null ? savedReq.getRedirectUrl() : getAuthUrl()));
+		reStg.sendRedirect(request, response, "/");
 	}
 
 }

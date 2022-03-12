@@ -18,8 +18,8 @@ import net.coobird.thumbnailator.Thumbnails;
 @Component
 public class ProfileImgHandler {
 
-	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
-//	private final String UP_DIR = "/pachipico/profile_img";
+//	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
+	private final String UP_DIR = "/pachipico/profile_img";
 
 	public String uploadFile(MultipartFile file) {
 		

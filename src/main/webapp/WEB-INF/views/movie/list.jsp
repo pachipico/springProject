@@ -3,7 +3,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 	<jsp:include page="../common/header.jsp" />
-
+	<script type="text/javascript">
+		let email = null;
+	</script>
 
     <jsp:include page="../common/nav.jsp" />
     
@@ -12,7 +14,7 @@
 	          <sec:authentication property="principal.uvo.nickName" var="authNick" />
 	          <sec:authentication property="principal.uvo.authList" var="auths" />
 	          <script type="text/javascript">
-				const email = "${authEmail}";
+				 email = "${authEmail}";
 			  </script>
 	    </sec:authorize>
     <link rel="stylesheet" href="/resources/css/movieList.css" />

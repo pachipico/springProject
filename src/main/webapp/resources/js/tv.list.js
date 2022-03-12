@@ -91,6 +91,12 @@ const drawStar = (target) => {
 };
 
 const addLike = async (tvid, title, poster, genres) => {
+  if (email == null) {
+    alert("로그인이 필요한 서비스 입니다!");
+    location.href = "/user/login";
+
+    return;
+  }
   try {
     const data = {
       tvvo: { tvid, title, poster, genres },
@@ -146,6 +152,11 @@ const removeLike = async (tvid, name, poster, genres) => {
 };
 
 const setData = (rating, tvid, title, poster, genres) => {
+  if (email == null) {
+    alert("로그인이 필요한 서비스 입니다!");
+    location.href = "/user/login";
+    return;
+  }
   let ratingStar = document.getElementById("ratingStar");
   if (rating != null) {
     ratingStar.value = rating;
