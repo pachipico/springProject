@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.springprj.www.security.CustomAuthUserService;
 import com.springprj.www.security.LoginFailureHandler;
@@ -23,11 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+	
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.csrf().disable();
-
+		
 //		http.authorizeRequests()
 //		.antMatchers("/movie/detail/*", "/tv/detail/*").hasRole("ADMIN")
 //		.antMatchers("/home","/user/register","/resources/**", "/user/login", "/user/findId","/user/findPwd", "/movie/popular", "/movie/up-coming", "/movie/now-playing", "/movie/rating")

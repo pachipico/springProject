@@ -31,9 +31,13 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 		log.debug("login failure");
 		setAuthEmail(request.getParameter("email")); // 로그인 실패한 이메일
 		if(exception instanceof BadCredentialsException || exception instanceof InternalAuthenticationServiceException) {
+			if(exception.getMessage() != null) {				
 			setErrorMessage(exception.getMessage().toString());
+			} else {
+				setErrorMessage("이메일을 확인해 주세요");
+			}
 		}
-		log.debug(">>> Login Failure : {}", errorMessage);
+		log.debug(">>> Login Failure : {}", exception.getMessage());
 		request.setAttribute("failedemail" , getAuthEmail());
 		request.setAttribute("errMsg", errorMessage);
 		request.getRequestDispatcher("/user/login?error").forward(request, response);
