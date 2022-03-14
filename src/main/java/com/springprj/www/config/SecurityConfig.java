@@ -1,21 +1,29 @@
 package com.springprj.www.config;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.springprj.www.security.CustomAuthUserService;
 import com.springprj.www.security.LoginFailureHandler;
 import com.springprj.www.security.LoginSuccessHandler;
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -49,10 +57,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.successHandler(authSuccessHandler()).failureHandler(authFailureHandler());
 
 		// 로그아웃도 무조건 POST 로
-		http.logout().logoutUrl("/user/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID")
-				.logoutSuccessUrl("/");
+		http.logout().logoutUrl("/user/logout").invalidateHttpSession(true).deleteCookies("JSESSIONID").addLogoutHandler(new LogoutHandler() {
+			
+			@Override
+			public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+				HttpSession ses = request.getSession();
+				ses.invalidate();
+			}
+		}).logoutSuccessHandler(logoutSuccessHandler());
+//				.logoutSuccessUrl("/");
 	}
 
+	@Bean
+	public LogoutSuccessHandler logoutSuccessHandler () {
+		return new com.springprj.www.security.LogoutSuccessHandler();
+	}
+	
 	@Bean
 	public AuthenticationSuccessHandler authSuccessHandler() {
 		return new LoginSuccessHandler();

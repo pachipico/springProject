@@ -133,9 +133,9 @@ public class UserController {
 	}
 
 	@PostMapping("/logout")
-	public String logout(String email, HttpSession session) {
+	public String logout(String email, HttpSession session, RedirectAttributes reAttr) {
 		session.invalidate();
-
+		reAttr.addFlashAttribute("msg","로그아웃 완료");
 		return "redirect:/user/login";
 	}
 
