@@ -3,6 +3,7 @@ package com.springprj.www.handler;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.tika.Tika;
@@ -18,8 +19,8 @@ import net.coobird.thumbnailator.Thumbnails;
 @Component
 public class ProfileImgHandler {
 
-//	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
-	private final String UP_DIR = "/pachipico/profile_img";
+	private final String UP_DIR = "/Users/jhs/Desktop/ezenSpring/profile_img";
+//	private final String UP_DIR = "/pachipico/profile_img";
 
 	public String uploadFile(MultipartFile file) {
 		
@@ -63,7 +64,6 @@ public class ProfileImgHandler {
 		File ogFile = new File(file, ogFileName);
 		File thFile = new File(file, fileName);
 		ogFile.delete();
-		
 		return thFile.delete();
 	}
 
