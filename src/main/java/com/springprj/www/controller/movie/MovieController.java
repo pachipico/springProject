@@ -93,7 +93,6 @@ public class MovieController {
 	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<MovieDTO> getMovieData(@PathVariable("id") long id,  Principal principal) {
 		
-			
 		String loggedInEmail = principal != null ? principal.getName() : "notLoggedIn";
 		log.debug("currently logged in user: {}", loggedInEmail);
 		MovieDTO dto = msv.getMovieData(id, loggedInEmail);
