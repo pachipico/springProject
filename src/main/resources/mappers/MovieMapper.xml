@@ -124,7 +124,7 @@
 		from movie m left join m_like ml on m.mid = ml.mid
 		GROUP BY  m.mid, m.title, m.poster
 		ORDER by count(ml.email) desc
-		limit 0 , 10
+		limit 0 , 20
 	</select>	
 	
 	<select id="selectListRatingRankMovie" resultType="mvvo">
@@ -133,6 +133,6 @@
 		group by m.mid, m.title, m.poster
 		having avg(mr.rating)
 		ORDER BY avg(mr.rating) desc
-		limit 0, 10
+		limit 0, 20
 	</select>
 </mapper>
