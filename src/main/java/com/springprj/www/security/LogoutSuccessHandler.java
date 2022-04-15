@@ -15,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 public class LogoutSuccessHandler implements org.springframework.security.web.authentication.logout.LogoutSuccessHandler {@Override
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
 			throws IOException, ServletException {
-		
 		HttpSession session = request.getSession();
 		session.setAttribute("msg", "로그아웃 완료!");
 		response.sendRedirect("/");
