@@ -13,7 +13,7 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon">=</span>
+          <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01" style="height:60px;">
           <a id="logo" class="navbar-brand" href="/">MovieDB</a>
@@ -55,7 +55,7 @@
                 aria-labelledby="navbarScrollingDropdown"
               >
                 <li><a class="dropdown-item" href="/tv/netflix">넷플릭스</a></li>
-                <li><a class="dropdown-item" href="/tv/amazone">아마존</a></li>
+                <li><a class="dropdown-item" href="/tv/amazon">아마존</a></li>
                 <li><a class="dropdown-item" href="/tv/watcha">왓챠</a></li>
                 <li><a class="dropdown-item" href="/tv/waave">웨이브</a></li>
               </ul>
